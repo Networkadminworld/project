@@ -1,5 +1,5 @@
 FROM ubuntu
-MAINTAINER rajkishore "rajkishore@risecorp.com"
+MAINTAINER vikas chennybirru@gmail.com
 ENV MYSQL_ROOT_PASSWORD root
 
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
