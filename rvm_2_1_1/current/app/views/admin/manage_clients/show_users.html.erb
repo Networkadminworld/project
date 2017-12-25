@@ -1,0 +1,56 @@
+<div style="padding-top: 16px;font-size: 15px; text-decoration: underline;">
+  <%= link_to 'Back ', admin_manage_clients_path %>
+</div>
+<% if @client_users.present? %>
+  <div class= "table-responsive" style="margin-top:15px;">
+  	<table class= "table user-table">
+  		<thead>
+  			<tr>
+  				<th class="align-cen"> FirstName</th>
+  				<th class="align-cen">LastName</th>
+  				<th class="align-cen">Email</th>
+  				<th class="align-cen">Action</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<% @client_users.each do |user| %>
+  			<tr>
+  				<td style="text-align: center;"> <%= user.first_name %> </td>
+  				<td style="text-align: center;"><%= user.last_name%></td>
+  				<td style="text-align: center;"><%= user.email%></td>
+  				<td>
+  					<div class="action-items">
+  					<a href="/admin/manage_clients/<%= user["id"] %>/edit" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+            <a href="javascript:void(0);" title="de-activate" onclick="resetClient('<%= user["id"] %>','<%= user["is_active"]%>')"><i class="fa fa-ban" aria-hidden="true"></i></a>
+  					</div>
+  				</td>
+  			</tr>
+  			<% end %>
+  		</tbody>
+  	</table>
+  	<div class="row" style="margin:20px;">
+      <div class="col-sm-12 col-lg-12 col-md-12">
+        <%= will_paginate @client_users, renderer: BootstrapPagination::Rails %>
+      </div>
+    </div>
+    <% else %>
+      <div style="color: #d9534f;text-align: center;top: 61px;position: relative;font-size: 17px;">
+        No user results found.
+      </div>
+    <% end %>
+  </div>
+
+  <div id="reset-client" class="modal fade">
+    <div class="modal-dialog" style="width:755px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Are you sure you want activate this user?</h4>
+        </div>
+        <div class="modal-footer" style="text-align: center;border-top:none">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="deactivate-client" user-id="" status="">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>

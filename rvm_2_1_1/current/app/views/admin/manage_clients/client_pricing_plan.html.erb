@@ -1,0 +1,87 @@
+<% if @client_pricing_plans.blank? %>
+<div class="row">
+      <div class="col-xs-6 col-md-offset-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">Choose Plan</label>
+            <select class="form-control" name="pricing_plan_id" id="pricing_plan_id">
+              <% @pricing_plans.each do |plan|%>
+                  <option value="<%= plan.id %>"><%= plan.name %></option>
+              <% end %>
+            </select>
+            <a style="top: 193px;cursor: pointer;" id="show-hide-details">Show Details</a>
+          </div>
+          <div id="render_plan_detail"></div>
+          <div class="date-picker">
+            <div class="row">
+              <div class="col-sm-6 col-lg-6 col-md-6">
+                <label>Start Date</label>
+                <div class="form-group">
+                  <input type="text" tabindex="4" placeholder="Start Date" name="user[start_date]" id="start_date" readonly='true' class="text_field rc_5 form-control input-medium date datepicker fliter-from-date">
+                  <p><span id="error_start_date" style="width:190px;color: red;display: none;">Please select the start date</span></p>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-6 col-md-6">
+                <label> Expiry In(months)</label>
+                <div class="form-group">
+                  <select name="expiry_in" class="form-control" id="expiry_in">
+                    <% @expiry_months.each do |month|%>
+                        <option value="<%= month %>"><%= month %></option>
+                    <% end %>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="client_id" value="<%= params[:client_id] %>">
+          <button class="btn btn-success btn-small pull-left" type="button" style="font-size: 14px;" id="client-pricing-plan-form">Save</button>
+        </div>
+      </div>
+    </div>
+
+<!-- Edit pricing Plan details -->
+<% else %>
+<a href="/admin/manage_clients/<%= params[:client_id]%>/edit" style="margin-left: 20px;font-size: 15px">Back</a>
+<div class="row">
+  <div class="col-xs-6 col-md-offset-3">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="control-label">Action</label>
+        <%= select_tag "user[action_name]", options_for_select(DEFAULTS["payment_action"]), :class => "form-control input-small", :id => 'update_action', :tabindex => "2" %>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Plans</label>
+        <%= select_tag "user[pricing_plan]", options_from_collection_for_select(@pricing_plans, :id, :name), :class => "form-control input-small", :id => "pricing_plan_id", :tabindex => "2" %>
+        <a style="top: 193px;cursor: pointer;" id="show-hide-details">Show Details</a>
+      </div>
+
+      <div id="render_plan_detail"></div>
+      <div class="date-picker">
+        <div class="row">
+          <div class="col-sm-6 col-lg-6 col-md-6">
+            <label>Start Date</label>
+            <div class="form-group">
+              <input type="text" tabindex="4" placeholder="Start Date" name="user[start_date]" id="plan_start_date" readonly='true' class="text_field rc_5 form-control input-medium date datepicker fliter-from-date">
+              <p><span id="error_start_date" style="width:190px;color: red;display: none;">Please select the start date</span></p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-6 col-md-6">
+            <label> Expiry In(months)</label>
+            <div class="form-group">
+              <select name="expiry_in" class="form-control" id="expiry_in">
+                <% @expiry_months.each do |month|%>
+                    <option value="<%= month %>"><%= month %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="client_id" value="<%= params[:client_id] %>">
+      <input type="hidden" id="upgrade_min_date" value="<%= upgrade_plan_start_date(params[:client_id])%>">
+      <button class="btn btn-success btn-small pull-left" type="button" style="font-size: 14px;" id="update-client-pricing-plan-form">Save</button>
+    </div>
+  </div>
+</div>
+<% end %>

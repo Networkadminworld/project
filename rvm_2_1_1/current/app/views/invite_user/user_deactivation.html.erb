@@ -1,0 +1,19 @@
+<% if !@status%>
+<p>Dear <%= @first_name %>, </p>
+<p>Your account has been de-activated. You cannot access the application<p>
+<p>Thanks & Regards</p>
+<p>Admin</p>
+<p><%= @admin_email %></p>
+<p>(for any clarification please contact the Admin)</p>
+<% else %>
+<p>Dear <%= @first_name %>, </p>
+<p>Welcome to Inquirly Product<p>
+<p>Sign In Email: <b><%= @email %></b> </p>
+<p>Current Status: <b><%= @status %></b></p>
+<p>Role: <b><%= @role_name %></b></p>
+<p>Assigned to Tenant: <b><%= @tenant_name %></b></p>
+<p>Please contact <%= @admin_email %> if you have problems.</p>
+<p>Thanks & Regards</p>
+<p><%= @admin_email %></p>
+<p>(for any clarification please contact the Admin)</p>
+<% end %>

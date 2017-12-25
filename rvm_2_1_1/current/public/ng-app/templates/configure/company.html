@@ -1,0 +1,166 @@
+<div class="nav-menu msg" ng-show="myForm.$dirty && !submitted" ui-scrollpoint>
+    <div class="row M0">
+        <div class="col-sm-12 col-md-12 col-lg-12 P0">
+            <div class="fourth-nav">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="fnt-sm msg">You have made changes in your Company Settings! </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 align-cen">
+                    <a href="javascript:void(0);" ng-click="submit(picFile)" class="fnt-sm"><div ng-bind-html="parseContent(buttonText)"></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nav-menu msg" ng-show="submitted" ui-scrollpoint>
+    <div class="row M0">
+        <div class="col-sm-12 col-md-12 col-lg-12 P0">
+            <div class="fourth-nav">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="fnt-sm msg">You have made changes in your Company Settings! </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 align-cen">
+                    <a href="javascript:void(0);" ng-click="submit(picFile)" class="fnt-sm" data-ng-show="submitted && myForm.$invalid">SAVE CHANGES</a>
+                    <a href="javascript:void(0);" ng-click="submit(picFile)" class="fnt-sm" data-ng-show="submitted && !myForm.$invalid"><div ng-bind-html="parseContent(buttonText)"></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+            <div class="container-fluid P0M0">
+              <form  action="/companies" class="new_company"  id="new_company" method="post" remote="true" name="myForm" >
+              <div class="col-sm-8 col-md-8 col-lg-8">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">ABOUT THE COMPANY</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inq-panel-container">
+
+                    <div class="container-fluid">
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Company Name</label>
+                          <input type="text" ng-model="formData.name"  name="name" ng-required="true"  class="form-control" placeholder="" required>
+                          <span style="color:red" ng-show="submitted && myForm.name.$error.required">Name is required.</span>
+                          <span style="color:red" ng-show="isNameDuplicate">Company Name already exists.</span>
+                        </div>
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Company Address</label>
+                          <input type="text" ng-model="formData.address" name="address" ng-required="true" class="form-control" placeholder="">
+                          <span style="color:red" ng-show="submitted && myForm.address.$error.required">Address is required.</span>
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Area</label>
+                          <input type="text"  ng-model="formData.area" name="area" id= "txtPlaces"  class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group inq-form-group">
+                          <input id="lat" type="hidden" name="lat" class="form-control" />
+                          <input id="lng" type="hidden" name="lng" class="form-control" />
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Company Description</label>
+                          <textarea ng-model="formData.description" name="description" class="form-control"> </textarea>
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Industry</label>
+                          <select ng-model="formData.industry_id" name="industry_id"  class="form-control" ng-change=updateTags(formData.industry_id)>
+                              <option ng-selected="industry[0] == formData.industry_id" value="{{industry[0]}}" ng-repeat="industry in industry_types"> {{industry[1]}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group inq-form-group" >
+                          <label class="fnt-sm">Tags</label>
+                          <tags-input  ng-model="formData.tags"></tags-input>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">ADD AN ACCOUNT</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="inq-panel-container">
+                    <div class="container-fluid" style="padding-bottom:20px;">
+                      <div class="row">
+                        <div class="inq-upload-img col-md-12 col-md-12 col-lg-12">
+                          <div class="img-container">
+                              <img ng-src="{{ image || '/ng-app/Images/thumbnail-default.jpg' }}"  style="width:100%;" />
+                            <div class="actions-container">
+                              <span type="button"  accept="image/*" ngf-select="" ng-model="picFile" name="file" ngf-change="onImageSelect($files)" ngf-max-size="5000000" class="action"><a href=""> {{ imageText }}</a></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">LINKS</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inq-panel-container">
+                    <div class="container-fluid" style="padding-bottom:20px;">
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Company Website</label>
+                          <input type="text" ng-model="formData.website_url" name="website_url" class="form-control" placeholder="" ng-pattern="/^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/">
+                          <span style="color:red" ng-show="submitted && myForm.website_url.$error.pattern">Please enter valid url (e.g) http://www.example.com</span>
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Facebook page</label>
+                          <input type="text" ng-model="formData.facebook_url" name="facebook_url" class="form-control" placeholder="">
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Twitter profile</label>
+                          <input type="text" ng-model="formData.twitter_url" name="twitter_url" class="form-control" placeholder="">
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">LinkedIn page</label>
+                          <input type="text" ng-model="formData.linkedin_url" name="linkedin_url" class="form-control" placeholder="">
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                            <label class="fnt-sm">Redirect Url</label>
+                            <input type="text" ng-model="formData.redirect_url" name="redirect_url" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+<script type="text/javascript">
+      var places = new google.maps.places.Autocomplete(document.getElementById('txtPlaces'));
+      google.maps.event.addListener(places, 'place_changed', function () {
+          var place = places.getPlace();
+          document.getElementById('lat').value = place.geometry.location.lat();
+          document.getElementById('lng').value = place.geometry.location.lng();
+      });
+</script>

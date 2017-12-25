@@ -1,0 +1,64 @@
+<div style="padding:40px;">
+
+  <div class="row">
+      <div class="col-sm-1 col-md-1 col-lg-1">
+      </div>
+      <div class="col-sm-10 col-md-10 col-lg-1o">
+          <center><h3> Export Data </h3> </center>
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+           <span><i class="fa fa-close" style="color:#ccc;cursor:pointer; font-size:25px" ng-click="cancel()"></i> 
+           </span>
+      </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+       <div class="form-group">
+          <div class="col-sm-4">
+           <label for="inputCustomerDeal" class="control-label">Start Date</label>
+            <p class="input-group">
+               <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="openSD()"><i class="fa fa-calendar-o"></i></button>
+               </span>
+               <input type="text" class="form-control" datepicker-popup ng-model="dtSD" is-open="popup.isOpenedSD" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </p> 
+         </div>
+         <div class="col-sm-4">
+           <label for="inputCustomerDeal" class="control-label">End Date</label>
+            <p class="input-group">
+               <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="openED()"><i class="fa fa-calendar-o"></i></button>
+               </span>
+               <input type="text" class="form-control" datepicker-popup ng-model="dtED" is-open="popup.isOpenedED" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            </p> 
+         </div>
+
+           <div class="col-sm-4">
+           <label for="inputCustomerDeal" class="control-label">Lead Source</label>
+            <p class="input-group">
+               <span class="input-group-btn">
+                  <span class="dropdown">
+                <div class="dropdown-toggle fnt-blue" style="cursor:pointer;" data-toggle="dropdown">{{selectedSourceType}}<i class="fa fa-angle-down"> </i></div>
+                <ul class="dropdown-menu">
+                  <li ng-repeat="type in sourceType" ><a ng-click="onTypeSelect(type)">{{type}}</a></li>
+                </ul>
+          </span>
+               </span>
+            </p> 
+         </div>
+        </div>
+    </div>
+  </div>
+
+
+<div class="row">
+<div class="col-sm-4 col-md-4 col-lg-4">
+ &nbsp;
+</div>
+  <div class="col-sm-4 col-md-4 col-lg-4">
+    <button class="btn inq-btn" style="margin-left:5px;width:80px;font-size:12px;" ng-csv="getExportData()" csv-header="csvHeaders" filename="{{fileName}}">Export </button>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,12 @@
+<div class="modal-header fnt-lg align-cen">Schedule
+    <div class="x-close fa fa-times" ng-click="cancel();">
+    </div>
+</div>
+<div class="modal-footer social">
+    <datetimepicker min-date="minDate" show-weeks="showWeeks" hour-step="hourStep" minute-step="minuteStep" ng-model="date" show-meridian="showMeridian" date-format="dd-MMM-yyyy" date-options="dateOptions" readonly-time="false"></datetimepicker>
+    <button type="button" class="btn btn-lt-orng" ng-click="shareNow(campaign_id, date)" ng-disabled="(allRemoved || (charCount < 0 && twitterList.length > 0)) && campaign_id == 0">SCHEDULE</button>
+    <span style="color:red" class="help-block" ng-show="isInvalid">Please enter a valid date</span>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()" style="color: #E74C4B !important;">Close this window</a>
+</div>

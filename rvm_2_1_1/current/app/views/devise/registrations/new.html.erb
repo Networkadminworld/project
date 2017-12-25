@@ -1,0 +1,264 @@
+<% content_for :title, "Sign Up" %>
+<%= javascript_include_tag "password_strength" %>
+<style type="text/css">
+::-ms-clear { display: none; }
+    h1 a {
+        color: #000;
+    }
+
+    input {
+        border: 1px solid #999;
+        margin: 0 5px;
+    }
+
+    .password_strength {
+        display: table-caption;
+        margin-left: 5px;
+        margin-top: 10px;
+        padding: 0 5px;
+        width: 120px;
+    }
+
+    ._1 {
+        background-color: #fcb6b1;
+    }
+
+    .password_strength_2 {
+        background-color: #fccab1;
+    }
+
+    .password_strength_3 {
+        background-color: #fcfbb1;
+    }
+
+    .password_strength_4 {
+        background-color: #dafcb1;
+    }
+
+    .password_strength_5 {
+        background-color: #bcfcb1;
+    }
+</style>
+<div class="site_wrapper">
+  <h2 class="header">sign up</h2>
+
+  <div class="sign-up">
+    <div class="social-network-login">
+      <h4>Sign Up using</h4>
+      <%= render "devise/shared/links" %>
+      <div class="or rc_20">OR</div>
+    </div>
+
+    <div class="form">
+      <a href="/users/login" class="already-member">Already a member ?</a>
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+          <%= f.hidden_field :parent_id, :value => params[:user] && params[:user][:parent_id].present? ? params[:user][:parent_id] : "" %>
+          <%= f.hidden_field :role, :value => params[:user] && params[:user][:role].present? ? params[:user][:role] : "" %>
+          <%#= f.hidden_field :parent_id, :value => params[:parent_id]%>
+          <%#= f.hidden_field :role, :value => params[:role]%>
+          <div class="entry">
+            <%= f.label 'Company Name', :class => "name" %>
+						<%if resource.errors[:company_name].present? %>
+							<% auto_focus = true %>
+							<% auto_index =1 %>
+							<%else%>
+							<% auto_focus = false %>
+							<% auto_index =0 %>
+						<%end%>
+            <%= f.text_field :company_name, :placeholder => 'Company Name', :autofocus => auto_focus , :class => "fl-text rc_5 long ", :tabindex => "1" %>
+            <p><span class="error" style="width:320px;"> <%= resource.errors[:company_name][0] %> </span></p>
+          </div>
+
+          <div class="entry">
+            <div class="fl f-name">
+						<%if auto_index==0 %>
+						<%if resource.errors[:first_name].present? %>
+							<% auto_focus = true %>
+							<% auto_index =1 %>
+							<%else%>
+							<% auto_focus = false %>
+							<% auto_index =0 %>
+						<%end%>
+						<%else%>
+						<% auto_focus = false %>
+						<%end%>
+              <%= f.label 'First Name', :class => "name" %>
+              <%= f.text_field :first_name, :class => "fl-text rc_5",:autofocus => auto_focus, :placeholder => 'First Name', :tabindex => "2" %>
+              <p><span class="error" style="width:190px;"> <%= resource.errors[:first_name][0] %> </span></p>
+            </div>
+            <div class="fr l-name">
+						<%if auto_index ==0 %>
+						<%if resource.errors[:last_name].present? %>
+							<% auto_focus = true %>
+							<% auto_index =1 %>
+							<%else%>
+							<% auto_focus = false %>
+							<% auto_index =0 %>
+						<%end%>
+						<%else%>
+						<% auto_focus = false %>
+						<%end%>
+              <%= f.label 'Last Name', :class => "name" %>
+              <%= f.text_field :last_name, :class => "fl-text rc_5", :autofocus => auto_focus, :placeholder => 'Last Name', :tabindex => "3" %>
+              <p><span class="error" style="width:190px;"> <%= resource.errors[:last_name][0] %> </span></p>
+            </div>
+          </div>
+          <div class="entry">
+					<%if auto_index ==0 %>
+						<%if resource.errors[:email].present? %>
+							<% auto_focus = true %>
+							<% auto_index =1 %>
+							<%else%>
+							<% auto_focus = false %>
+							<% auto_index =0 %>
+						<%end%>
+						<%else%>
+						<% auto_focus = false %>
+						<%end%>
+            <%= f.label :email, :class => "name" %>
+            <%= f.email_field :email, :class => "fl-text rc_5 long", :autofocus => auto_focus, :placeholder => 'Email', :type => 'text', :tabindex => "4", :value => params[:user] && params[:user][:email].present? ? params[:user][:email] : "" %>
+            <p><span class="error" style="width:190px;"> <%= resource.errors[:email][0] %> </span></p>
+          </div>
+          <div class="entry">
+            <div class="fl pwd">
+						<%if auto_index ==0 %>
+						<%if resource.errors[:password].present? %>
+							<% auto_focus = true %>
+							<% auto_index =1 %>
+							<%else%>
+							<% auto_focus = false %>
+							<% auto_index =0 %>
+						<%end%>
+						<%else%>
+						<% auto_focus = false %>
+						<%end%>
+              <%= f.label :password, :class => "name" %>
+              <%= f.password_field :password, :class => "fl-text rc_5", :autofocus => auto_focus, :placeholder => 'Password', :type => 'password', :tabindex => "5" %>
+              <p><span class="error" style="width:190px;"> <%= resource.errors[:password][0] %> </span></p>
+            </div>
+            <div class="fr c-pwd">
+							<%if auto_index ==0 %>
+						<%if resource.errors[:password_confirmation].present? %>
+							<% auto_focus = true %>
+							<% auto_index =1 %>
+							<%else%>
+							<% auto_focus = false %>
+							<% auto_index =0 %>
+						<%end%>
+						<%else%>
+						<% auto_focus = false %>
+						<%end%>
+              <%= f.label :password_confirmation, :class => "name" %>
+              <%= f.password_field :password_confirmation, :class => "fl-text rc_5", :autofocus => auto_focus, :placeholder => 'Password', :type => 'password', :tabindex => "6" %>
+              <p><span class="error" style="width:190px;"> <%= resource.errors[:password_confirmation][0] %> </span></p>
+            </div>
+            <div class="c-pwd">
+              <span id="password_strength_postion" style="visibility:hidden;"></span>
+            </div>
+
+          </div>
+          <!--p><span id="passwordDescription"></span>
+                                                                                                                    <span id="passwordStrength" class="strength0"></span></p-->
+          <div class="entry">
+            <label class="name">Plans</label>
+
+            <div class="plans rc_5">
+              <div class="fl invi-plan">
+                <%= f.radio_button :business_type_id, 1, :class => "fl", :tabindex => "7" %>
+                <%= f.label :carbonated, "I'm an Individual This is an explanation of the type of plan", :class => "fl", :for => "individual-plan" %>
+              </div>
+              <div class="fl business-plan">
+                <% if params[:user] && params[:user][:parent_id].present? %>
+                    <%= f.radio_button :business_type_id, 2, :class => "fl", :tabindex => "8" , :disabled => "true" %>
+                <% else %>
+                    <%= f.radio_button :business_type_id, 2, :class => "fl", :tabindex => "8"%>
+                <% end %>
+                <%= f.label :carbonated, "I'm a Business This is an explanation of the type of plan", :class => "fl", :for => "individual-plan" %>
+              </div>
+            </div>
+            <p><span class="error" style="width:190px;"> <%= resource.errors[:business_type_id][0] %> </span></p>
+          </div>
+          <div class="btn-wrap">
+            <%#= f.submit "Sign up", :class => "sign-up-btn rc_5", :tabindex =>"9" %>
+            <button type="submit" class="sign-up-btn rc_5" tabindex="9">
+              <span class="sign-up-icon fl"></span>
+              <span class="sign-up-txt fl">Sign Up</span>
+            </button>
+          </div>
+      <% end %>
+
+      <p class="form_agreement">By signing up you are indicating that you have read and agree to our
+        <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+    </div>
+  </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        //~ $('input[type=password]').password_strength(texts);
+        $(':input[data-placeholder]').each(function (index) {
+            if ($(this).val() == '') {
+                $(this).val($(this).data('placeholder'));
+                $(this).addClass('placeholder');
+            }
+            $(this).closest('form').submit(function () {
+                $(':input[data-placeholder]').each(function () {
+                    if ($(this).hasClass('placeholder')) {
+                        $(this).removeClass('placeholder');
+                        $(this).val('');
+                        //console.log($(this));
+                    }
+                });
+            });
+        }).on(this, 'focus',function () {
+                    //check if the field not filled
+                    if ($(this).hasClass('placeholder')) {
+                        $(this).removeClass('placeholder');
+                        $(this).val('');
+                    }
+                }).on(this, 'blur', function () {
+                    if ($(this).val() == '') {
+                        $(this).val($(this).data('placeholder'));
+                        $(this).addClass('placeholder');
+                    }
+                });
+
+
+        $("#user_password").focus(function () {
+            $(this).replaceWith('<input type="password" value="' + this.value + '" id="' + this.id + '" class="fl-text rc_5t" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=5>');
+            $("#" + this.id).focus();
+        }).blur(function () {
+                    if ($("#user_password").val() == "Password") {
+                        $(this).replaceWith('<input type="text" value="' + this.value + '" id="' + this.id + '" class="fl-text rc_5" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=5 >');
+                    }
+
+                });
+
+        $("#user_password_confirmation").focus(function () {
+            $(this).replaceWith('<input type="password" value="' + this.value + '" id="' + this.id + '" class="fl-text rc_5t" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=6>');
+            $("#" + this.id).focus();
+        }).blur(function () {
+                    if ($("#user_password_confirmation").val() == "Password") {
+                        $(this).replaceWith('<input type="text" value="' + this.value + '" id="' + this.id + '" class="fl-text rc_5" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=6 >');
+                    }
+
+
+                });
+    });
+</script>
+<script type="text/javascript">
+
+    jQuery("body").delegate("#user_password", "keyup", function () {
+        jQuery(".password_strength").remove();
+        $('#password_strength_postion').siblings().text('');
+        $('#user_password').password_strength();
+    })
+    /*	jQuery("body").delegate("#user_password_confirmation","blur", function(){
+     $('#user_password').siblings().text('');
+     })*/
+/*
+ *jQuery.each(jQuery("input.fl-text.rc_5"), function(i, dat){ console.log(jQuery(dat).next("p").children("span").text().trim()) })
+ *
+ **/
+</script>
+

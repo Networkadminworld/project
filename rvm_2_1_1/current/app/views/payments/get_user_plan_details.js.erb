@@ -1,0 +1,6 @@
+<% unless params[:email].present? && params[:pay_action].present? %>
+jQuery("#user_action_name").html('<%=escape_javascript(select_tag "user[action_name]", options_for_select(@user_action), :prompt => "-- Choose Action --", :class => "form-control input-small", :tabindex => "2")%>');
+jQuery("#user_plan_name").html('<%=escape_javascript(select_tag "user[plan_name]", options_from_collection_for_select(@plans, "id", "plan_name"), :prompt => "-- Choose Plan --", :class => "form-control input-small", :tabindex => "3" )%>');
+<% else %>
+jQuery("#user_plan_name").html('<%=escape_javascript(select_tag "user[plan_name]", options_from_collection_for_select(@plans, "id", "plan_name"), :prompt => "-- Choose Plan --", :class => "form-control input-small", :tabindex => "3" )%>');
+<% end %>

@@ -1,0 +1,116 @@
+<div class="tab-content inner">
+  <div class="tab-wrapper">
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 col-md-12 col-xs-12">
+        <%= form_for [:admin, @pricing_plan] do |f| %>
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Name</label>
+                <div class="form-group">
+                  <%= f.text_field :name, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Plan Name" , :tabindex => 1%>
+                  <p><span id="error_first_name" style="width:190px;color: red;"> <%= @pricing_plan.errors && @pricing_plan.errors.messages ? @pricing_plan.errors.messages[:name][0] : '' %></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12" style="width: 136%">
+                <label>Channels</label>
+                    <div class="form-group" style="display: inline-block">
+                      <% @channels.each do |channel|%>
+                        <%= check_box_tag 'channels_id[]', channel.id,(true if selected_channels(@pricing_plan,channel,params)) %>
+                        <%= label_tag "channels_id[][#{channel.id}]", channel.name %>
+                      <% end %>
+                    </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Email Count</label>
+                <div class="form-group">
+                  <%= f.number_field :email_count, :class => "text_field rc_5 form-control input-medium", :placeholder => "Email Count" , :tabindex => 2 %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>SMS Count</label>
+                <div class="form-group">
+                  <%= f.number_field :sms_count, :class => "text_field rc_5 form-control input-medium", :placeholder => "SMS Count" , :id => "sms_count", :tabindex => 3 %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Campaigns Count</label>
+                <div class="form-group">
+                  <%= f.number_field :campaigns_count, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Campaigns Count", :id => "call_count", :tabindex => 4 %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Customer Records Count</label>
+                <div class="form-group">
+                  <%= f.number_field :customer_records_count, :class => "text_field rc_5 form-control input-medium", :placeholder => "Customer Records Count" , :tabindex => 5 %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <label>FB Boost budget</label>
+                <div class="form-group">
+                  <%= f.number_field :fb_boost_budget, :class => "text_field rc_5 form-control input-medium", :placeholder => "FB boost budget" , :tabindex => 6 %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Total Reach</label>
+                <div class="form-group">
+                  <%= f.number_field :total_reach, :class => "text_field rc_5 form-control input-medium", :placeholder => "Total Reach" , :tabindex => 7 %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Country</label>
+                <div class="form-group">
+                  <%= f.select :country, options_for_select(Country.all, :selected => selected_country(@pricing_plan)), {}, { :class => 'text_field rc_5 form-control input-medium', :tabindex => 8 } %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Currency</label>
+                <div class="form-group">
+                  <%= f.select :currency_id, options_from_collection_for_select(Currency.all, :id, :name), {}, { :class => 'text_field rc_5 form-control input-medium', :tabindex => 9 } %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Default Plan</label>
+                <div class="form-group">
+                  <%= f.check_box :is_default, :disabled => @pricing_plan.is_default %>
+                </div>
+              </div>
+            </div>
+            <div class="btn-wrap btn-update-info">
+              <%= f.submit  "Save", :class => "button medium orange", :tabindex => 10  %>
+              <a href="/admin/pricing_plans" class="article" id="back_to_users">Back</a>
+            </div>
+            </div>
+            </div>
+        <% end %>
+        </div>
+</div>
+</div>

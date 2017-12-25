@@ -1,0 +1,2 @@
+customer_name,email,age,gender,mobile(*Add mobile number without country code),country,state,city,area,custom_field
+Rani,raj121@gmail.com,24,Female,8754450923,india,TamilNadu,Chennai,vadapalani,BE

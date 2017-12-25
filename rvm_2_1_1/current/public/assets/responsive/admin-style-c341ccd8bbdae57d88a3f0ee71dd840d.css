@@ -1,0 +1,94 @@
+/* Inquirly Admin */
+#admin-page{
+    margin-top: 30px;
+}
+.white-box-wrapper:last-child{
+    margin-bottom: 0;
+}
+.form-head{
+    margin: 5px 0 15px;
+}
+.user-list .table-bordered th:first-child{
+    text-align: left;
+    padding-left: 20px;
+}
+.user-list .table-bordered td:first-child{
+    text-align: left;
+    padding-left: 20px;
+}
+.user-list .table-bordered td:last-child{
+    text-align: left;
+}
+.user-list .table-bordered th:last-child{
+    text-align: left;
+}
+.col-name{
+    color: #0191a9;
+    font-family: 'museo_sans500';
+}
+.col-email{
+    color: #0191a9;
+}
+.no-data{
+    color: #a7a8aa;
+}
+
+/* Created Question */
+.created-quest-list .table-bordered th.cl1{
+    width: 5%;
+}
+.created-quest-list .table-bordered th.cl2{
+    width: 35%;
+}
+.created-quest-list .table-bordered th.cl3{
+    width: 30%;
+}
+.created-quest-list .table-bordered th.cl4{
+    width: 15%;
+}
+.created-quest-list .table-bordered th.cl5{
+    width: 15%;
+}
+
+
+/* active users table */
+.active-users .table-bordered th.cl1{
+    width:5%;
+}
+.active-users .table-bordered th.cl2{
+    width:50%;
+}
+.active-users .table-bordered th.cl3{
+    width:15%;
+}
+.active-users .table-bordered th.cl4{
+    width:15%;
+}
+.active-users .table-bordered th.cl5{
+    width:15%;
+}
+
+/* new signup users list */
+.new-signup-list .table-bordered th.cl1{
+    width: 30%;
+}
+.new-signup-list .table-bordered th.cl2{
+    width: 30%;
+}
+.new-signup-list .table-bordered th.cl3{
+    width: 40%;
+}
+
+
+/* Media Query */
+@media only screen and (max-width: 800px) {
+    .active-users .table-bordered th{
+        width: auto !important;
+    }
+    .created-quest-list .table-bordered th{
+        width: auto !important;
+    }
+    .new-signup-list .table-bordered th.cl2{
+        width: auto !important;
+    }
+}

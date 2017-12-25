@@ -1,0 +1,9 @@
+jQuery("#sentimental_report_modal").modal('show');
+jQuery("#modal-content-display").css("display","none");
+jQuery("#sentimental_comments_list").css("display","none");
+jQuery("#sentimental_keywords_list").css("display","none");
+jQuery("#modal-content-display").css("display","block");
+jQuery("#modal-title").html("Location Detail Report");
+jQuery('#modal-content-display').html('<%=escape_javascript(render :partial => "dashboard/customer_info", :locals => {:cust_count => @cust_count, :customers => @customers})%>');
+jQuery('.pagination a').attr('data-remote', 'true');
+jQuery(".loading").hide();

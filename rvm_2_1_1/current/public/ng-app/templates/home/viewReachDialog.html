@@ -1,0 +1,50 @@
+<div class="modal-header fnt-lg align-cen">
+    <div class="container reach-dialog">
+        <div class="reach-inner-container">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="col-sm-1">
+                <i class="fa fa-bullseye icn-style"></i></div>
+                <div class="col-sm-5">
+                    <div>{{ reach || 0 }}</div>
+                    <div class="msg-detail">Reach</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="col-sm-1"><i class="fa fa-eye icn-style"></i></div>
+                <div class="col-sm-5 views-margin"><div>{{ views || 0 }}</div>
+                <div class="msg-detail">Visibility</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<hr class="border-high">
+<div class="modal-body row">
+    <div class="col-md-6">
+        <div class="container-fluid">
+            <div class="chart-container">
+                <donut-chart chart-data="reachData"></donut-chart>
+                <div class="donut-info"><div class="reach"></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="inq-seperator" ng-repeat="reach in reaches">
+            <div class="row">
+                <div class="col-sm-2 col-md-2 col-lg-2">
+                    <div class="locator" ng-class="{'sms-chnl': reach.channel == 'SMS','email-chnl': reach.channel == 'Email','twt-chnl': reach.channel == 'Twitter','fb-chnl': reach.channel == 'Facebook','linkin-chnl': reach.channel == 'LinkedIn'}"></div>
+                </div>
+                <div class="col-sm-8 col-md-8 col-lg-8 Pl0">
+                    {{ reach.channel }}
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                    <div class="loc-popularity-msg">{{ reach.value }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

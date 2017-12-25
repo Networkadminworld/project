@@ -1,0 +1,188 @@
+<div class="row M0">
+            <div class="secondary-nav">
+              <div class="col-md-2">
+                <div class="fnt-lg secondary-nav-title"> Campaigns </div>
+              </div>
+            </div>
+          </div>
+<div class="row M0">
+            <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container">
+              <div class="container-fluid P0M0">
+                <!-- Sales Campaign -->
+                <div class="campaign-category">
+                  <div class="row M0">
+                    <div class="campaign-category-title-bar fnt-md">
+                      <div class="col-sm-6 col-md-6 col-lg-6 title-block"> SALES </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 title-block" style="text-align:right;"> 
+                        <button type="button" class="btn btn-inq-blue fnt-xs"><i class="fa fa-bar-chart-o"></i> View Stats</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="campaign-container">
+                    <div class="row M0">
+
+                      <div class="col-sm-3 col-md-3 col-lg-3 ">
+                        <div class="campaign-card sales-campaign-default" ng-click="createCampaign('sales')">
+                          <div class="default-campaign-logo"><i class="fa fa-ticket"></i></div>
+                          <div class="default-campaign-text"> New Sales Campaign </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-3 col-md-3 col-lg-3 "  ng-repeat="salesCampaign in salesCampaigns">
+                        <div class="campaign-card">
+                          <div class="container-fluid">
+                            <div class="row campaign-card-title-bar">
+                              <div class="col-sm-6 col-md-6 col-lg-6 campaign-card-title fnt-xs">
+                                <a href="#">#{{ salesCampaign.hash_tag }}</a>
+                              </div>
+                              <div class="col-sm-6 col-md-6 col-lg-6 campaign-card-title-actions">
+                                <span class="action fnt-gry"> <i class="fa fa-external-link" ng-click="navSharePage(salesCampaign.id,salesCampaign.campaign_type_id,'sales')"></i> </span>
+                                <span class="action fnt-gry"> <i class="fa fa-ban"></i> </span>
+                                <span class="action fnt-gry"> <i class="fa fa-bell-o"></i> </span>
+                              </div>
+                            </div>
+                            <div class="row campaign-card-image">
+                            </div>
+                            <div class="row campaign-card-stats">
+                              <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm Pr0">
+                                <span>98</span> <span class="fnt-gry">Delivered</span>
+                              </div>
+                              <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm">
+                                <span>43%</span> <span class="fnt-gry">Popular</span>
+                              </div>
+                            </div>
+                            <div class="row campaign-card-footer">
+                              <div class="col-sm-12 col-md-12 col-lg-12 fnt-xs">
+                                <span class="fnt-gry"><i class="fa fa-calendar"></i> Valid till</span> <span>{{ salesCampaign.exp_date }}</span>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Sales Campaign end -->
+
+
+                <!-- Engage Campaign -->
+                <div class="campaign-category">
+                  <div class="row M0">
+                    <div class="campaign-category-title-bar fnt-md">
+                      <div class="col-sm-6 col-md-6 col-lg-6 title-block"> ENGAGE </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 title-block" style="text-align:right;"> 
+                        <button type="button" class="btn btn-inq-blue fnt-xs"><i class="fa fa-bar-chart-o"></i> View Stats</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="campaign-container">
+                    <div class="row M0">
+
+                      <div class="col-sm-3 col-md-3 col-lg-3 ">
+                        <div class="campaign-card engage-campaign-default" ng-click="createCampaign('engage')">
+                          <div class="default-campaign-logo"><i class="fa fa-envelope-o"></i></div>
+                          <div class="default-campaign-text"> New Engage Campaign </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-3 col-md-3 col-lg-3 " ng-repeat="engageCampaign in engageCampaigns">
+                            <div class="campaign-card">
+                                <div class="container-fluid">
+                                    <div class="row campaign-card-title-bar">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 campaign-card-title fnt-xs">
+                                            <a href="#">#{{ engageCampaign.hash_tag }}</a>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6 campaign-card-title-actions">
+                                            <span class="action fnt-gry"> <i class="fa fa-external-link"></i> </span>
+                                            <span class="action fnt-gry"> <i class="fa fa-ban"></i> </span>
+                                            <span class="action fnt-gry"> <i class="fa fa-bell-o"></i> </span>
+                                        </div>
+                                    </div>
+                                    <div class="row campaign-card-image">
+                                    </div>
+                                    <div class="row campaign-card-stats">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm Pr0">
+                                            <span>98</span> <span class="fnt-gry">Delivered</span>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm">
+                                            <span>43%</span> <span class="fnt-gry">Popular</span>
+                                        </div>
+                                    </div>
+                                    <div class="row campaign-card-footer">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 fnt-xs">
+                                            <span class="fnt-gry"><i class="fa fa-calendar"></i> Valid till</span> <span>{{ engageCampaign.exp_date }}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Engage Campaign end -->
+
+                <!-- Opinions Campaign -->
+                <div class="campaign-category">
+                  <div class="row M0">
+                    <div class="campaign-category-title-bar fnt-md">
+                      <div class="col-sm-6 col-md-6 col-lg-6 title-block"> OPINIONS</div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 title-block" style="text-align:right;"> 
+                        <button type="button" class="btn btn-inq-blue fnt-xs"><i class="fa fa-bar-chart-o"></i> View Stats</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="campaign-container">
+                    <div class="row M0">
+
+                      <div class="col-sm-3 col-md-3 col-lg-3 ">
+                        <div class="campaign-card opinions-campaign-default" ng-click="createCampaign('opinions')">
+                          <div class="default-campaign-logo"><i class="fa fa-comments-o"></i></div>
+                          <div class="default-campaign-text"> New Opinions Campaign </div>
+                        </div>
+                      </div>
+
+                        <div class="col-sm-3 col-md-3 col-lg-3 " ng-repeat="opinionCampaign in opinionCampaigns">
+                            <div class="campaign-card">
+                                <div class="container-fluid">
+                                    <div class="row campaign-card-title-bar">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 campaign-card-title fnt-xs">
+                                            <a href="#">#{{ opinionCampaign.hash_tag }}</a>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6 campaign-card-title-actions">
+                                            <span class="action fnt-gry"> <i class="fa fa-external-link"></i> </span>
+                                            <span class="action fnt-gry"> <i class="fa fa-ban"></i> </span>
+                                            <span class="action fnt-gry"> <i class="fa fa-bell-o"></i> </span>
+                                        </div>
+                                    </div>
+                                    <div class="row campaign-card-image">
+                                    </div>
+                                    <div class="row campaign-card-stats">
+                                        <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm Pr0">
+                                            <span>98</span> <span class="fnt-gry">Delivered</span>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm">
+                                            <span>43%</span> <span class="fnt-gry">Popular</span>
+                                        </div>
+                                    </div>
+                                    <div class="row campaign-card-footer">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 fnt-xs">
+                                            <span class="fnt-gry"><i class="fa fa-calendar"></i> Valid till</span> <span>{{ opinionCampaign.exp_date }}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Opinions Campaign end -->
+
+              </div>
+            </div>
+          </div>

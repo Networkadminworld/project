@@ -1,0 +1,42 @@
+Plan-A:
+ plan_name: 'Plan A'
+ form_builder: true
+ offline_mode: true
+ nrts_results: true
+ surveys_count: <%=$unlimited%>
+ responses_count: <%=$unlimited%>
+ tell_the_world: false
+ multilingual: false
+ professional_template: false
+ multitenant_structure: false
+ download_reports: false
+ sentiment_analysis: false
+ media_content: "Only picture"
+Plan-B:
+ plan_name: 'Plan B'
+ form_builder: true
+ offline_mode: true
+ nrts_results: true
+ surveys_count: <%=$unlimited%>
+ responses_count: <%=$unlimited%>
+ tell_the_world: true
+ multilingual: true
+ professional_template: true
+ multitenant_structure: true
+ download_reports: true
+ sentiment_analysis: true
+ media_content: "Picture and video"
+Plan-C:
+ plan_name: 'Plan C'
+ form_builder: true
+ offline_mode: true
+ nrts_results: true
+ surveys_count: <%=$unlimited%>
+ responses_count: <%=$unlimited%>
+ tell_the_world: true
+ multilingual: true
+ professional_template: true
+ multitenant_structure: true
+ download_reports: true
+ sentiment_analysis: true
+ media_content: "Picture and video"

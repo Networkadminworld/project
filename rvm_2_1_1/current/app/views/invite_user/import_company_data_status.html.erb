@@ -1,0 +1,18 @@
+<p>Dear <%= @user_name%>,</p>
+
+  <%if @remaining_records != 0 %>
+    <p>Business contacts have been uploaded successfully.</p>
+  <%else%>
+    <p>You have reached the maximum upload limit.</p>
+  <%end%>
+
+	<p>Total contacts : <%= @total_record%> </p>
+
+	<p>No of contacts uploaded successfully : <%= @imported_count%></p>
+
+	<p>No of contacts not loaded : <%= @error_values %></p>
+
+    <p>Remaining no of contacts in allocated limit : <%= @remaining_records%></p>
+
+Regards,<br>
+Inquirly Admin<br>

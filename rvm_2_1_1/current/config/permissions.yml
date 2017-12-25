@@ -1,0 +1,19 @@
+Super-Admin:
+  power_share: 1
+  campaigns: 1
+  listen: 1
+  chat: 1
+  pipeline: 0
+  delivery: 0
+  configure: 1
+  configure_social: 1
+  configure_mobile: 1
+  configure_company: 1
+  configure_listen: 1
+  account: 1
+  account_settings: 1
+  account_payments: 1
+  alerts: 1
+  client: 1
+  client_roles: 1
+  client_users: 1

@@ -1,0 +1,2 @@
+customer_name,email,age,gender,mobile(*Add mobile number without country code),country,state,city,area,custom_field
+albert,sample@gmail.com,26,male,1234567895,india,tamilnadu,chennai,mambalam,

@@ -1,0 +1,220 @@
+<div class="row M0">
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+        <div class="container-fluid P0M0">
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" data-ng-animate="'fade'">{{alert.msg}}</alert>
+            <div class="col-sm-8 col-md-8 col-lg-8">
+                <div class="inq-panel">
+                    <div class="inq-panel-title-bar">
+                        <div class="row">
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <div class="inq-panel-title fnt-sm">BEACONS</div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                                <a ng-click="createOrEditBeacon('add')">
+                                    <div class="inq-panel-title fnt-sm">Add Beacon</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg-content" ng-show="loaded && beacons.length == 0">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="msg-wrapper">
+                                    <i class="fa fa-thumb-tack icon-style"></i>
+                                    <br>You haven't added any beacons yet.
+                                    <br><a href="javascript:void(0);" ng-click="createOrEditBeacon('add')">Add a new Beacon</a> to start using in-location share.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inq-panel-container" ng-show="beacons.length > 0">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                    <div class="roles-wrapper">
+                                        <div class="inq-seperator header">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <div class="fnt-sm">DEVICE ID</div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="fnt-sm">NAME</div>
+                                                </div>
+
+                                                <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                                                    <div class="fnt-sm">ACTION</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inq-seperator" ng-repeat="beacon in beacons">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <a class="fnt-sm">{{ beacon.uid }}</a>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <a class="fnt-sm">{{ beacon.name }}</a>
+                                                </div>
+
+                                                <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                                                    <switch name="onOff" ng-model="beacon.status" on="active" off="Inactive" disabled="true" status="true" ng-change="changeStatus(beacon)"></switch>
+                                                    <span class="inq-table-action fnt-sm" style="margin-left: 5px;cursor: pointer"><i class="fa fa-edit" ng-click="editBeacon(beacon)"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <nav ng-show="beacons.length > 10">
+                                            <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" ng-change="pageChanged()" items-per-page="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-8">
+                <div class="inq-panel">
+                    <div class="inq-panel-title-bar">
+                        <div class="row">
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <div class="inq-panel-title fnt-sm">QR CODES</div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                                <a ng-click="createQrCode()">
+                                    <div class="inq-panel-title fnt-sm">Add QrCode</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg-content" ng-show="qloaded && qrcodes.length == 0">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="msg-wrapper">
+                                    <i class="fa fa-qrcode icon-style"></i>
+                                    <br>You haven't added any QrCode yet.
+                                    <br><a href="javascript:void(0);" ng-click="createQrCode()">Add a new Qrcode</a> to start using in-location share.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inq-panel-container" ng-show="qrcodes.length > 0">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                    <div class="roles-wrapper">
+                                        <div class="inq-seperator header">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <div class="fnt-sm">Name</div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <div class="fnt-sm">URL</div>
+                                                </div>
+
+                                                <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                                                    <div class="fnt-sm">ACTION</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inq-seperator" ng-repeat="qrcode in qrcodes" data-ng-class="{'active': qrcode.id == selectedQrCode['id']}">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4" data-ng-click="selectQrCode(qrcode)">
+                                                    <a class="fnt-sm">{{ qrcode.name }}</a>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6 col-lg-6" data-ng-click="selectQrCode(qrcode)">
+                                                    <a class="fnt-sm">{{ qrcode.url }}</a>
+                                                </div>
+
+                                                <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                                                    <switch name="onOff" ng-model="qrcode.status" on="active" off="Inactive" disabled="true" status="true" ng-change="changeQrStatus(qrcode)"></switch>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <nav ng-show="qrcodes.length > 10">
+                                            <pagination boundary-links="true" total-items="totalQrItems" ng-model="currentPage" class="pagination-sm" ng-change="qrPageChanged()" items-per-page="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+                <div class="inq-panel" data-ng-show="qrcodes.length > 0">
+                    <div class="inq-panel-title-bar">
+                        <div class="row">
+                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                <div class="inq-panel-title fnt-sm"> {{ selectedQrCode.name | uppercase }}</div>
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <span class="dropdown" dropdown>
+                                   <span class="dropdown-toggle" dropdown-toggle>
+                                     <div class="qr-download-label">
+                                         <div class="profile-user-name fnt-xs">Download</div>
+                                     </div>
+                                   </span>
+                                   <ul class="dropdown-menu" style="margin-top:21px;margin-left: -121px;"dropdown-menu>
+                                       <li>
+                                           <a data-ng-click="downloadQr(selectedQrCode,'pdf')"> Download as PDF document</a>
+                                           <a data-ng-click="downloadQr(selectedQrCode,'eps')"> Download as EPS image</a>
+                                           <a data-ng-click="downloadQr(selectedQrCode,'ai')"> Download as AI image</a>
+                                       </li>
+                                   </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inq-panel-container">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                    <div class="roles-wrapper">
+                                        <div class="profile-wrapper">
+                                            <div class="row M0">
+                                                <div class="col-sm-5 col-md-5 col-lg-5 qr-container">
+                                                    <div class="profile-img" back-img-width="250px" back-img-height="250px" user-img='{{ selectedQrCode.image }}'></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inq-seperator">
+                                            <form class="form-horizontal" name="form.qrcode">
+                                                <div class="form-group inq-form-group remove-top-padding">
+                                                    <label class="col-md-2 control-label fnt-sm">Name</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" id="name" placeholder="Name" ng-model="selectedQrCode.name">
+                                                        <span style="color:red" class="help-block" ng-show="form.selectedQrCode.name.$error.serverMessage">{{form.selectedQrCode.name.$error.serverMessage}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group inq-form-group remove-top-padding">
+                                                    <label class="col-md-2 control-label fnt-sm">URL</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" id="url" placeholder="URL" ng-model="selectedQrCode.url">
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions row M0">
+                                                    <div class="container-fluid P0M0">
+                                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                                            <button type="button" class="btn btn-lt-orng fnt-sm" data-ng-click="updateQrCode(selectedQrCode)" style="margin-bottom: 10px;width: 213%;">{{ updateBtn }}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

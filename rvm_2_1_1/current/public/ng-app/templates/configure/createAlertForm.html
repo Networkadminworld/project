@@ -1,0 +1,42 @@
+<div class="modal-header fnt-lg align-cen">Consumer Alert
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<div class="modal-body">
+    <div class="container-fluid P0M0">
+        <div class="row M0">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        Event Name
+                    </div>
+                    <input type="text" class="form-control ng-pristine ng-valid ng-touched" ng-model="consumer_event"/>
+                </div>
+            </div>
+        </div>
+        <div class="row M0">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        Event Placeholders
+                        <button type="button" class="btn btn-inq fnt-sm" style="margin-left: 260px;" data-ng-disabled="items.length >= 10" ng-click="addPlaceholder()">+ Add Placeholder</button>
+                    </div>
+                    <div ng-repeat="item in items">
+                        <div class="form-inline" style="padding-top: 5px;padding-bottom: 5px;">
+                            <input type="text" class="form-control ng-pristine ng-valid ng-touched input-md"  style="width:45%" placeholder="Enter name" ng-model="item.name">
+                            <input class="form-control ng-pristine ng-valid ng-touched input-md" style="width:50%" type="text" placeholder="Enter description" ng-model="item.title">
+                            <span data-ng-click="removePlaceholder($index)" style="cursor: pointer;color: #808080"><i class="fa fa-times" aria-hidden="true"></i></span>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <span data-ng-show="consumerEventError" style="color: red;">{{ consumerEventError }}</span>
+    <div class="row">
+        <div class="col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-sm-2 col-md-2 col-lg-2 P0">
+            <button class="btn inq-btn btn-block ng-scope" data-ng-disabled="!consumer_event" data-ng-click="saveConsumerAlert(alertEvent)"> Save </button>
+        </div>
+    </div>
+</div>

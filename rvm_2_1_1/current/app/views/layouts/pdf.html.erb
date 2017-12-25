@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8" />
+    <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+    <%= wicked_pdf_javascript_include_tag %>
+     <Style>
+      .Table {
+          width: 100%;
+          margin-bottom: 20px;
+          border-collapse: collapse;
+          border-spacing: 0;
+          Width: 100%;
+      }
+
+      td,
+      th {
+          font-size: 14px;
+          Text-Align: Left;
+          Vertical-Align: Middle;
+      }
+
+      .Table > thead th{
+        background: lightgray;
+      }
+      
+      .Table > thead > tr > th{
+       border-bottom: none;
+      }
+      .Table > thead > tbody > tr > td, .Table tbody > tr > th, .Table tfoot > tr > th .Table thead > tr > td, .Table tbody > tr > td, .Table tfoot > tr > td, .Table thead th, .Table thead tr > th{
+        border: 1px solid #9b9b9b;
+        padding: 4px;
+      }
+      .Table > thead > tr > th, .Table > tbody > tr > th, .Table > tfoot > tr > th, .Table > thead > tr > td, .Table > tbody > tr > td, .Table > tfoot > tr > td{
+        padding: 4px;
+      }
+  </Style>
+  </head>
+  <body >
+    <%= yield %>
+  </body>
+</html>

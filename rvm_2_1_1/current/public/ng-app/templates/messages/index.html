@@ -1,0 +1,191 @@
+<div>
+  <div class="container-fluid P0M0">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12 P0">
+      </div>
+    </div>
+    <div class="nav-menu" ui-scrollpoint>
+      <div class="row M0">
+        <div class="secondary-nav">
+          <div class="secondary-nav-div fnt-sm">
+            <div class="col-md-1 col-md-1 col-lg-1 P0" >
+              <div class="row M0">
+                <div class="col-md-12 P0">
+                  <div class="fnt-sm tab-head"  ng-click="onTabSelect('chats')" ng-class="{active: selectedGroup == 'chats'}">
+                    <img src="/ng-app/Images/ic_chat_bubble.svg" width="17px" height="17px" /> Chats
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1 col-md-1 col-lg-1 P0" >
+              <div class="row M0">
+                <div class="col-md-12 P0">
+                  <div class="fnt-sm tab-head" ng-click="onTabSelect('users')" ng-class="{active: selectedGroup == 'users'}">
+                    <img src="/ng-app/Images/ic_person.svg" width="17px" height="17px" /> Users
+                  </div>
+                </div>
+              </div>
+            </div>
+           <!-- <div class="col-md-1 col-md-1 col-lg-1 P0">
+              <div class="fnt-sm tab-head">
+                <img src="/ng-app/Images/ic_group.svg" width="17px" height="17px" /> Groups
+              </div>
+            </div>-->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row M0">
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 fnt-sm">
+      <div class="container-fluid P0M0">
+        <div class="chat-panel">
+          <div class="row M0">
+            <div class="col-sm-4 col-md-4 col-lg-4 P0">
+              <div class="user-container">
+                <div ng-if="selectedGroup == 'chats'">
+                  <div class="inq-seperator active" ng-repeat="user in chatList" ng-click="onUserSelection(user)" ng-class="{selected: user.id == selectedUserID}">
+                    <div class="row M0">
+                      <div class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-1 col-md-1 col-lg-1 P0">
+                        <div ng-if="user.avatar_url != null">
+                          <div class="user-img" user-img='{{ user.avatar_url }}'>
+                          </div>
+                        </div>
+                        <div ng-if="user.avatar != null">
+                          <div class="user-img" user-img='{{ user.avatar }}'>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-8 col-md-8 col-lg-8 Pr0">
+                        <div class="user-detail">
+                          <div class="fnt-blue">{{user.first_name}} {{user.last_name}}</div>
+                          <div class="fnt-gry">{{user.email}}</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 col-md-2 col-lg-2 align-cen">
+
+                        <div ng-if="user.read_count >0" class="msg-count"> {{user.read_count}}
+                        </div>
+                        <div class="fa fa-angle-right">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--user item -->
+                <div ng-if="selectedGroup == 'users'">
+                  <div class="inq-seperator active" ng-repeat="user in chatList" ng-click="onUserSelection(user)" ng-class="{selected: user.id.Int64 == selectedUserID}">
+                    <div class="row M0">
+                      <div class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-1 col-md-1 col-lg-1 P0">
+                        <div ng-if="user.avatar_url != null">
+                          <div class="user-img" user-img='{{ user.avatar_url }}'>
+                          </div>
+                        </div>
+                        <div ng-if="user.avatar != null">
+                          <div class="user-img" user-img='{{ user.avatar }}'>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-8 col-md-8 col-lg-8 Pr0">
+                        <div class="user-detail">
+                          <div class="fnt-blue">{{user.first_name}} {{user.last_name}}</div>
+                          <div class="fnt-gry">{{user.email}}</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-2 col-md-2 col-lg-2 align-cen">
+                        <!--<div class="msg-count"> 2
+                        </div>-->
+                        <div class="fa fa-angle-right">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-sm-8 col-md-8 col-lg-8 P0">
+              <div class="conversation-container">
+                <div class="msg-container" ui-scrollpoint="">
+                  <div class="row inq-from" ng-repeat="conv in conversations">
+                     <div ng-if="conv.sender != currentUserUID">
+                       <div class="">
+                         <div class="">
+                           <div class="row M0">
+                             <div class="col-sm-1 col-md-1 col-lg-1 Pr0">
+                               <div class="user-img" user-img="{{selectedUserAvatar}}">
+                               </div>
+                             </div>
+                             <div class="col-sm-6 col-md-6 col-lg-6">
+                               <div class="boxborder">
+                                 {{conv.message}}
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                       </div>
+
+                      <div ng-if="conv.sender == currentUserUID">
+                        <div class="">
+                          <div class="">
+                            <div class="row M0">
+                              <div class="col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-sm-7 col-md-7 col-lg-7">
+                                <div class="boxborder1">
+                                 {{conv.message}}
+                                </div>
+                              </div>
+                              <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                <div class="user-img" user-img='{{currentUserAvatar}}'>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+               <div class="`">
+                  <div class="row M0">
+                    <div class="col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-sm-10 col-md-10 col-lg-10 P0">
+                      <div class="chat-input-wrapper">
+                        <input type="text" class="form-control fnt-sm" ng-keypress="sendChat($event)" placeholder="Type a message" ng-model="chat_message">
+                        <!--<span class="fa fa-link"></span> -->
+                        <span class="fa fa-paper-plane-o" ng-click="sendMessage(chat_message)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+
+  $(function(){
+    console.log("dom loaded slimscroll");
+    $('.msg-container').slimScroll({
+      height: '500px'
+    });
+
+    $('.user-container').slimScroll({
+      height: '500px'
+    });
+    var scrollTo_val = $('.msg-container').prop('scrollHeight') + 'px';
+    $('.msg-container').slimScroll({ scrollTo : scrollTo_val });
+
+  });
+</script>

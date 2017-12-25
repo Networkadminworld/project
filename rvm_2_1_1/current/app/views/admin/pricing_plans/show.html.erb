@@ -1,0 +1,30 @@
+<p>
+  <strong>Plan name:</strong>
+  <%= @pricing_plan.name %>
+</p>
+
+<p>
+  <strong>Customer Records count:</strong>
+  <%= @pricing_plan.customer_records_count %>
+</p>
+<p>
+  <strong>Email count:</strong>
+  <%= @pricing_plan.email_count %>
+</p>
+<p>
+  <strong>Sms count:</strong>
+  <%= @pricing_plan.sms_count %>
+</p>
+<p>
+  <strong>Campaigns count:</strong>
+  <%= @pricing_plan.campaigns_count %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @pricing_plan.amount %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_pricing_plan_path(@pricing_plan) %> |
+<%= link_to 'Back', admin_pricing_plans_path %>

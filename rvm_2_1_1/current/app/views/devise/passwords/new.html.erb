@@ -1,0 +1,22 @@
+<div class="site_wrapper forgot-pwd-wrap">
+  <h2 class="header">forgot your password?</h2>
+  <div class="forgot-pwd">
+    <div class="form">
+      <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post}) do |f| %>
+          <%#= devise_error_messages! %>
+          <div class="entry">
+            <!--<span class="error">1 error prohibited this user from being saved:</span>-->
+            <%= f.label "Enter your email address", :class => "name" %>
+            <%= f.email_field :email, :autofocus => true, :class => "fl-text rc_5 ", :tabindex => "1" %>
+            <p>
+              <span class="error" style="width:190px;"> <%= !resource.nil? ? resource.errors[:email][0] : @email_error %> </span>
+            </p>
+          </div>
+          <div class="btn-wrap">
+            <%= f.submit "Send me reset password instructions", :class => "btn rc_5", :tabindex => "2" %>
+          </div>
+      <% end %>
+    </div>
+    <!--sign In-->
+  </div>
+</div>

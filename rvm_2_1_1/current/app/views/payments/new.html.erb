@@ -1,0 +1,186 @@
+<style>
+    .ui-widget-content{
+     border: 1px solid #aaaaaa/*{borderColorContent}*/;
+     background: #ffffff/*{bgColorContent}*/ "<%= asset_path 'responsive/ui-bg_flat_75_ffffff_40x100.png' %>" /*{bgImgUrlContent}*/ 50%/*{bgContentXPos}*/ 50%/*{bgContentYPos}*/ repeat-x/*{bgContentRepeat}*/;
+     color: #222222/*{fcContent}*/;
+     top: 58px; left: 38px; width: 189px;
+    }
+    .ui-widget {
+     font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
+     font-size: 1.1em/*{fsDefault}*/;
+    }
+    .ui-corner-all{
+     border-top-right-radius: 4px;
+    }
+    .ui-menu .ui-menu-item {
+     margin: 0;
+     padding: 0;
+     zoom: 1;
+     width: 100%;
+    }
+    .ui-menu .ui-menu-item a {
+        text-decoration: none;
+        display: block;
+        padding: 2px .4em;
+        line-height: 1.5;
+        zoom: 1;
+        font-weight: normal;
+    }
+    .ui-widget-content a{
+        color: #222222/*{fcContent}*/
+    }
+    .ui-state-focus, .ui-widget-content .ui-state-focus{
+        border: 1px solid #999999/*{borderColorHover}*/;
+        background: #dadada/*{bgColorHover}*/ "<%= asset_path 'responsive/ui-bg_glass_75_dadada_1x400.png' %>" /*{bgImgUrlHover}*/ 50%/*{bgHoverXPos}*/ 50%/*{bgHoverYPos}*/ repeat-x/*{bgHoverRepeat}*/;
+        font-weight: normal/*{fwDefault}*/;
+        color: #212121/*{fcHover}*/;
+    }
+    .ui-menu .ui-menu-item a.ui-state-focus{
+        font-weight: normal;
+        margin: -1px;
+    }
+    .date-picker .ui-datepicker-trigger{
+        position: absolute;
+        right: 11px;
+        top: 18px;
+        margin: 10px 8px 0 0;
+    }
+</style>
+<div class="tab-content">
+  <div class="tab-wrapper">
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 col-md-12 col-xs-12">
+        <%= form_tag("/payments/update_payment_details", method: "post",id:"payment_form") do %>
+          <div class="row">
+            <div class="col-lg-12">
+              <label>Email</label>
+              <div class="form-group">
+                <label for="InputFirstName" class="sr-only">Email</label>
+                <input type="text" value="" tabindex="1" placeholder="Email Address" name="user[email]" id="search_user_email" class="text_field rc_5 form-control input-medium">
+                <p><span id="error_email" style="width:190px;" class="error"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <label>Action</label>
+              <div class="form-group">
+                <%= select_tag "user[action_name]", options_for_select(DEFAULTS["payment_action"]), :prompt => "-- Choose Action --", :class => "form-control input-small", :tabindex => "2" %>
+                <p><span id="error_email" style="width:190px;" class="error"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <label>Plan</label>
+              <div class="form-group">
+                <%= select_tag "user[plan_name]", options_from_collection_for_select(@plans, "id", "name"), :prompt => "-- Choose Plan --", :class => "form-control input-small", :tabindex => "3" %>
+                <p><span id="error_email" style="width:190px;" class="error"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <label>Amount</label>
+              <div class="form-group">
+                <input type="text" tabindex="4" placeholder="Amount" name="user[amount]" id="InputAmount" onkeypress="return isNumberKey(event)" class="text_field rc_5 form-control input-medium">
+                <p><span id="error_amount" style="width:190px;" class="error"></span></p>
+              </div>
+            </div>
+          </div>
+
+            <div class="date-picker">
+           <div class="row">
+              <div class="col-lg-12">
+                <label>Exp Date</label>
+                <div class="form-group">
+                  <input type="text" tabindex="4" placeholder="Expiry Date" name="user[exp_date]" id="expired_date" class="text_field rc_5 form-control input-medium date datepicker fliter-from-date" readonly="true">
+                  <p><span id="error_amount" style="width:190px;" class="error"></span></p>
+                </div>
+              </div>
+            </div></div>
+
+          <div class="btn-wrap btn-update-info">
+            <input type="submit" value="Update" tabindex="7" name="commit" class="button medium orange">
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    $("#expired_date").datepicker({
+        showOn : "button",
+        buttonImage : "/assets/responsive/calendar.png",
+        buttonImageOnly : true,
+        dateFormat : 'yy/mm/dd',
+        minDate: new Date()
+    });
+  $(document).ready(function(){
+      if ($('#user_action_name').val() == "Renewal") {
+          $("#user_plan_name").attr('disabled',true);
+      }
+      $('#user_action_name').on('change', function() {
+          if(this.value == "Renewal"){
+              $("#user_plan_name").attr('disabled',true);
+          }
+          else{ $("#user_plan_name").attr('disabled',false)}
+      });
+
+
+      /* Auto complete Valid email Address */
+      var previousValue = "";
+      $('#search_user_email').autocomplete({
+          autoFocus: true,
+          source: "/payments/get_user_emails",
+          messages: {
+              noResults: '',
+              results: function() {}
+          },
+          minLength: 1,
+          focus: function (event, ui) {
+              $(event).val(ui.item.label);
+          },
+          select: function (event, ui) {
+              $(event).val(ui.item.label);
+          },
+          change: function (event, ui) {
+              if (!ui.item) {
+                  $(this).val('');
+              }else{
+                  $.ajax({
+                      url: "/payments/get_user_plan_details?email="+ ui.item.value,
+                      type: 'GET',
+                      success: function(data){
+
+                      }
+                  });
+              }
+          }
+      })
+
+      /* Change plan Names */
+      $("#user_action_name").on('change', function(){
+          var action = $(this).val();
+          var email = $("#search_user_email").val();
+          if (email != ""){
+          $.ajax({
+              url: "/payments/get_user_plan_details?email="+email+"&pay_action="+ action,
+              type: 'GET',
+              success: function(data){
+
+              }
+          });
+         }
+      });
+  });
+</script>

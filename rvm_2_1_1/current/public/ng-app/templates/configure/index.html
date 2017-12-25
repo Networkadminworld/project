@@ -1,0 +1,41 @@
+<div class="nav-menu" ui-scrollpoint>
+        <div class="row M0">
+          <div class="secondary-nav">
+            <div class="col-sm-9 col-md-9 col-lg-9">
+              <div class="fnt-lg secondary-nav-title"> Configurations </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3">
+              <profile-status profile-data="profileData.myData"></profile-status>
+            </div>
+          </div>
+        </div>
+
+        <div class="row M0">
+          <div class="tertiary-nav">
+              <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.social') }">
+                      <a ui-sref="configure.social">SOCIAL </a>
+                 </div>
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.mobile') }">
+                     <a ui-sref="configure.mobile">CUSTOMERS </a>
+                 </div>
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.company') }">
+                     <a ui-sref="configure.company">COMPANY </a>
+                 </div>
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.listen') }">
+                     <a ui-sref="configure.listen">LISTEN </a>
+                 </div>
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.in-location') }">
+                     <a ui-sref="configure.in-location">IN LOCATION</a>
+                 </div>
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.catalogue') }">
+                     <a ui-sref="configure.catalogue">CATALOGUE</a>
+                 </div>
+                 <div class="config-nav fnt-sm tab-head" ng-class="{active : $state.includes('configure.alerts') }">
+                     <a ui-sref="configure.alerts">ALERTS</a>
+                 </div>
+             </div>
+          </div>
+        </div>
+       </div>
+	<div ui-view></div>

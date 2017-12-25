@@ -1,0 +1,133 @@
+<div class="row M0">
+        <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+          <div class="container-fluid P0M0">
+
+            <div class="col-sm-4 col-md-4 col-lg-4">
+
+              <div class="inq-panel">
+                <div class="inq-panel-title-bar">
+                  <div class="row">
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                      <div class="inq-panel-title fnt-sm">ROLES</div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <a href="javascript:void(0);" data-ng-click="createRole('new')">
+                        <div class="inq-panel-title fnt-sm">Add Role</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="inq-panel-container" style="min-height:0;">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                        <div class="roles-wrapper">
+                          <div class="inq-seperator" data-ng-repeat="role in roles" data-ng-class="{'active': role.id == selectedRole['id']}" data-ng-click="selectRole(role)" style="cursor: pointer">
+                            <div class="row M0">
+                              <div class="col-sm-6 col-md-6 col-lg-6">
+                                <a href="javascript:void(0);" class="fnt-sm">{{role.name | uppercase }}</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+              <div class="inq-panel">
+                <div class="inq-panel-title-bar">
+                  <div class="row">
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                      <div class="inq-panel-title fnt-sm">PERMISSIONS</div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3" data-ng-show="roles.length > 0">
+                      <a data-ng-click="editPermission()" data-ng-show="!isChanged"><div class="inq-panel-title fnt-sm">Edit</div></a>
+                      <a data-ng-click="savePermission()" data-ng-show="isChanged"><div class="inq-panel-title fnt-sm">Done</div></a>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="inq-panel-container">
+                  <div class="container-fluid">
+
+                    <div class="row M0">
+                      <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                        <div class="permission-wrapper">
+                          <div class="profile-name">
+                            {{ selectedRole.name | uppercase}}
+                          </div>
+                          <div class="permission-detail">
+                            <div class="module" data-ng-repeat="permission in permissions">
+                              <div class="row">
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                  {{ permission.title }}
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-log-4" data-ng-show="permission['sub_features'].length == 0">
+                                  <switch name="onOff" class="alert-switch" ng-model="permission.access_level" on="YES" off="NO" disabled="isDisabled" ng-change="changePermission(permission)"></switch>
+                                </div>
+                              </div>
+                              <div class="sub-module" data-ng-repeat="feature in permission['sub_features']">
+                                    <div class="row M0">
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            {{ feature.title }}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4 Pr0 align-cen" style="margin-left: -20px;">
+                                            <switch name="onOff" class="alert-switch" ng-model="feature.access_level" on="YES" off="NO" disabled="isDisabled" ng-change="changePermission(feature)"></switch>
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+              <div class="inq-panel">
+                <div class="inq-panel-title-bar">
+                  <div class="row">
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                      <div class="inq-panel-title fnt-sm">ROLE PROFILE</div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                      <a data-ng-click="editRole(selectedRole)" data-ng-show="roles.length > 0">
+                        <div class="inq-panel-title fnt-sm">Edit</div>
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="inq-panel-container">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                        <div class="roles-wrapper">
+                          <div class="profile-name">
+                            <a href="javascript:void(0);">{{ selectedRole.name | uppercase}}</a>
+                          </div>
+                          <div class="profile-details">
+                            {{ selectedRole.profile }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

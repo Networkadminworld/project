@@ -1,0 +1,115 @@
+<%content_for :page_specific_head_content do%>
+ <%= javascript_include_tag "responsive/highchart", "responsive/exporting"%>
+ <%end%>
+<div class="response-graph" id="dash_board_chart"></div>
+<script>
+
+  jQuery(function()
+  {
+    var yaxies = '<%= @chart_date_collection%>';
+    yaxies = yaxies.substring(1,yaxies.length-1);
+   <% if @chart_view_type == "bar_chart"%>
+
+      jQuery('#dash_board_chart').highcharts({
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'Views and Responses'
+        },
+        subtitle: {
+          text: 'Source: inquirly.com'
+        },
+        xAxis: {
+          categories: yaxies.replace(/&quot;/g,"").split(","),
+          title: { text: "<%=@xaxis_label%>" }
+        },
+        yAxis: {
+          allowDecimals: false,
+          min: 0,
+          title: {
+            text: 'Count'
+          }
+        },
+        tooltip: {
+          valueDecimals: 5,
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+          }
+        },
+        series: [{
+            name: 'Views',
+            data: <%=@chart_view_counts.map{|x| x.to_i} %>
+
+          }, {
+            name: 'Responses',
+            data: <%= @chart_response_counts.map{|x| x.to_i} %>
+
+          }]
+
+      });
+
+<%else%>
+      jQuery('#dash_board_chart').highcharts({
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: 'Views and Responses Count',
+          x: -20 //center
+        },
+        subtitle: {
+          text: 'Source: inquirly.com',
+          x: -20
+        },
+        xAxis: {
+          title: { text: "<%=@xaxis_label%>" },
+          categories: [<% @chart_date_collection.each do |x| %>'<%= x %>',<% end %>],
+          labels: {
+            rotation: -45,
+            align: 'right'
+          },
+        },
+        yAxis: {
+          allowDecimals: false,
+          min :0,
+          title: {
+            text: 'Count'
+          },
+          plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+            }]
+        },
+        tooltip: {
+          valueDecimals: 0,
+          valueSuffix: ''
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+        },
+        series: [{
+            name: 'Views count',
+            data: <%=@chart_view_counts.map{|x| x.to_i} %>
+          }, {
+            name: 'Responses count',
+            data: <%= @chart_response_counts.map{|x| x.to_i} %>
+          }]
+
+      });
+<%end%>
+  });
+</script>

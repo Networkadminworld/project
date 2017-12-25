@@ -1,0 +1,20 @@
+<h5>Welcome to Inquirly</h5>
+<p><%= @message%>,</p><br />
+<%if Rails.env.include?("development")%>
+  <% if @question_logo%>
+    <%=image_tag("#{@question_logo}",:size=>"60x60")%>
+  <% else%>
+    <%=image_tag("#{@bitly_url}" + "/images/default_ques.jpeg",:size=>"60x60")%>
+  <% end%>
+<% elsif Rails.env.include?("production") %>
+  <% if @question_logo %>
+    <%=image_tag("#{@question_logo}")%>
+  <% else%>
+    <%=image_tag("#{@bitly_url}" + "/images/default_ques.jpeg",:size => "60x60")%>
+  <% end%>
+<% end%>
+<br>
+<a href="<%= @custom_url%>"><%= @custom_url%></a>
+
+<p>Regards,</p>
+<p>Inquirly Admin</p>

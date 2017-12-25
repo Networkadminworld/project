@@ -1,0 +1,31 @@
+<table>
+  <tbody >
+    <h1> Share Details </h1>
+    <% if @share_detail.present? %>
+      <tr style="border-bottom:1px solid black;">
+        <td style="padding: 8px;"><label>Email Count:</label></td>
+        <td><%= @share_detail.email_count%></td>
+      </tr>
+      <tr style="border-bottom:1px solid black;">
+        <td style="padding: 8px;"><label> Sms Count:</label></td>
+        <td><%= @share_detail.sms_count%></td>
+      </tr>
+      <tr style="border-bottom:1px solid black;">
+        <td style="padding: 8px;"><label> Customer Record Count:</label></td>
+        <td><%= @share_detail.customer_records_count%></td>
+      </tr>
+  
+      <% else %>
+      <div style="color: #d9534f;text-align: center;top: 61px;position: relative;font-size: 17px;">
+        No user results found.
+      </div>
+    <% end %>
+  </tbody>
+</table>
+<div style="padding-top: 16px;font-size: 15px; text-decoration: underline;">
+<%= link_to 'Back ', admin_manage_clients_path %>
+</div>
+
+
+
+

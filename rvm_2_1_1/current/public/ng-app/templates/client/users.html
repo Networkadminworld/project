@@ -1,0 +1,185 @@
+<div class="row M0">
+        <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+          <div class="container-fluid P0M0">
+           <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout='5000' class="fade-in-out">{{alert.msg}}</alert>
+            <div class="col-sm-8 col-md-8 col-lg-8">
+              <div class="inq-panel">
+                <div class="inq-panel-title-bar">
+                  <div class="row">
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                      <div class="inq-panel-title fnt-sm">USERS LIST</div>
+                    </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 P0">
+                          <div class="inq-panel-title">
+                              <span class="" style="display:inline-block">
+                                <input type="text" class="form-control fnt-sm search-input" ng-model="searchText" style="width:90%" placeholder="SEARCH FOR USERS">
+                              </span>
+                                <span style="cursor: pointer" data-ng-click="searchUser()"><i class="fa fa-search"></i></span>
+                                <span class="reset-search" data-ng-show="resetBtn" data-ng-click="resetSearch()"> reset</span>
+                          </div>
+                      </div>
+                      <div class="col-md-2 col-md-2 col-lg-2">
+                          <div class="inq-panel-title fnt-xs">
+                              <button type="button" class="btn btn-inq fnt-sm" ng-click="createOrEditUser('add')">+ New User</button>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="inq-panel-container">
+                      <div class="container-fluid P0M0">
+                          <div class="msg-content" ng-show="!isSearch && loaded && users.length == 0">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="msg-wrapper">
+                                          <i class="fa fa-users icon-style"></i>
+                                          <br>You haven't added any users to your account.
+                                          <br><a href="javascript:void(0);" ng-click="createOrEditUser('add')">Add a new User</a> to start managing your team.
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="msg-content" ng-show="isSearch && loaded && users.length == 0">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="msg-wrapper">
+                                          <i class="fa fa-users icon-style"></i>
+                                          <br>No users found.
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <table class="table inq-table fnt-sm" ng-show="users.length > 0">
+                              <thead>
+                              <tr>
+                                  <th>NAME</th>
+                                  <th>EMAIL</th>
+                                  <th>MOBILE</th>
+                                  <th>ROLE</th>
+                                  <th>TENANT</th>
+                                  <th>ACTION</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr ng-repeat="user in users" data-ng-class="{'user-active': user.id == selectedUser['id']}" style="cursor: pointer;">
+                                  <td data-ng-click="selectUser(user)"> {{ user.first_name }} {{ user.last_name }} </td>
+                                  <td data-ng-click="selectUser(user)"> {{ user.email |truncate: 20 }}</td>
+                                  <td data-ng-click="selectUser(user)"> {{ user.mobile }}</td>
+                                  <td data-ng-click="selectUser(user)"> {{ user.role }}</td>
+                                  <td data-ng-click="selectUser(user)"> {{ user.tenant || '---' }}</td>
+                                  <td>
+                                      <div>
+                                          <span class="inq-table-action fnt-sm"><switch name="onOff" class="other-switch" ng-model="user.is_active" on="ACTIVE" off="INACTIVE" disabled="true" status="true" ng-change="changeStatus(user)"></switch></span>
+                                          <span class="inq-table-action fnt-sm"><span class="user-reset-password" title="reset-password"><i class="fa fa-key" ng-click="resetPassword(user)"></i></span></span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              </tbody>
+                          </table>
+                          <nav ng-show="users.length > 0">
+                              <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" ng-change="pageChanged()" items-per-page="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                          </nav>
+                        </div>
+                      </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-4 Pl0" ng-show="users.length > 0">
+
+              <div class="inq-panel">
+                <div class="inq-panel-title-bar">
+                  <div class="row">
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                      <div class="inq-panel-title fnt-sm">USER PROFILE</div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                      <a ng-click="editUser(selectedUser)">
+                        <div class="inq-panel-title fnt-sm">Edit</div>
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="inq-panel-container">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                        <div class="roles-wrapper">
+                          <div class="profile-wrapper">
+                            <div class="row M0">
+                              <div class="col-sm-5 col-md-5 col-lg-5">
+                                <div class="profile-img" user-img='{{ selectedUser.profile_image }}'>
+                                </div>
+                              </div>
+                              <div class="col-sm-7 col-md-7 col-lg-7 Pl0">
+                                <div class="name">
+                                  {{ selectedUser.first_name | uppercase }} {{ selectedUser.last_name | uppercase }}
+                                </div>
+                                <div class="email">
+                                    {{ selectedUser.email}}
+                                </div>
+                                <div class="contact">
+                                    {{ selectedUser.mobile }}
+                                </div>
+                                <!--<div class="birth-date">-->
+                                  <!--Septermber 9 1989-->
+                                <!--</div>-->
+                              </div>
+                            </div>
+                          </div>
+                          <div class="inq-seperator">
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="align-cen fnt-blue">{{ selectedUser.role | uppercase }}</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="permission-wrapper">
+                            <div class="row M0">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="permission-detail">
+                                  <div class="title">
+                                    <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        PERMISSIONS
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                    <div class="module" data-ng-repeat="permission in permissions">
+                                        <div class="row">
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                {{ permission.title }}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-log-3" data-ng-show="permission['sub_features'].length == 0">
+                                                <span ng-class="isPermitted(permission)" style="cursor: auto;" ng-disabled="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="sub-module" data-ng-repeat="feature in permission['sub_features']">
+                                            <div class="row M0">
+                                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                                    {{ feature.title }}
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 Pl0 align-cen" style="margin-left: -5px;">
+                                                    <span ng-class="isPermitted(feature)" style="cursor: auto;" ng-disabled="true"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

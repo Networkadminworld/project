@@ -1,0 +1,124 @@
+<div class="modal-header fnt-lg align-cen">{{ title }}
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" name="form.tenant" novalidate>
+        <div class="container-fluid">
+        <div class="profile-wrapper">
+            <div class="row M0">
+                <div class="col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-sm-2 col-md-2 col-lg-2 align-cen">
+                    <div back-img="{{ tenant.logo }}"  class="tenant-logo" ></div>
+                    <div accept="image/*" ngf-select="" ng-model="picFile" name="file" ngf-change="onLogoSelect($files, tenant);" ngf-max-size="5000000" style="cursor: pointer">Upload Logo</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Name</label>
+                        <input type="text" class="form-control" placeholder="Name" name="name" ng-model="tenant.name" required>
+                        <span style="color:red" class="help-block" ng-show="form.tenant.name.$error.serverMessage">{{form.tenant.name.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Email</label>
+                        <input type="text" class="form-control" placeholder="Email" ng-model="tenant.email">
+                        <span style="color:red"  ng-show="form.tenant.email.$error.serverMessage">{{form.tenant.email.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Address</label>
+                        <input type="text" class="form-control" id="txtPlaces" placeholder="address"  name="address" ng-model="tenant.address"  required>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Phone</label>
+                        <input type="text" class="form-control" placeholder="Phone" ng-model="tenant.phone">
+                        <span style="color:red"  ng-show="form.tenant.phone.$error.serverMessage">{{form.tenant.phone.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Contact Number</label>
+                        <input type="text" class="form-control" placeholder="Contact Number" ng-model="tenant.contact_number">
+                        <span style="color:red"  ng-show="form.tenant.contact_number.$error.serverMessage">{{form.tenant.contact_number.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Tenant Type</label>
+                        <select class="form-control" ng-model="tenant.tenant_type_id">
+                            <option  ng-selected="{{ type.id == tenant.tenant_type_id}}" ng-repeat="type in tenantTypes" value="{{type.id}}">{{type.name | uppercase }}</option>
+                        </select>
+                        <span style="color:red"  ng-show="form.tenant.tenant_type_id.$error.serverMessage">{{form.tenant.tenant_type_id.$error.serverMessage}}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Region</label>
+                        <select class="form-control" ng-model="tenant.tenant_region_id">
+                            <option  ng-selected="{{ region.id == tenant.tenant_region_id}}" ng-repeat="region in tenantRegions" value="{{region.id}}">{{region.name | uppercase }}</option>
+                        </select>
+                        <span style="color:red"  ng-show="form.tenant.tenant_region_id.$error.serverMessage">{{form.tenant.tenant_region_id.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Website</label>
+                        <input type="text" class="form-control" placeholder="Tenant Website" ng-model="tenant.website_url">
+                        <span style="color:red"  ng-show="form.tenant.website_url.$error.serverMessage">{{form.tenant.website_url.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Facebook URL</label>
+                        <input type="text" class="form-control" placeholder="Tenant Facebook URL" ng-model="tenant.facebook_url">
+                        <span style="color:red"  ng-show="form.tenant.facebook_url.$error.serverMessage">{{form.tenant.facebook_url.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Twitter URL</label>
+                        <input type="text" class="form-control" placeholder="Tenant Twitter URL" ng-model="tenant.twitter_url">
+                        <span style="color:red"  ng-show="form.tenant.twitter_url.$error.serverMessage">{{form.tenant.twitter_url.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">LinkedIn URL</label>
+                        <input type="text" class="form-control" placeholder="Tenant LinkedIn URL" ng-model="tenant.linkedin_url">
+                        <span style="color:red"  ng-show="form.tenant.linkedin_url.$error.serverMessage">{{form.tenant.linkedin_url.$error.serverMessage}}</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Redirect URL</label>
+                        <input type="text" class="form-control" placeholder="Tenant Redirect URL" ng-model="tenant.redirect_url">
+                        <span style="color:red"  ng-show="form.tenant.redirect_url.$error.serverMessage">{{form.tenant.redirect_url.$error.serverMessage}}</span>
+                    </div>
+                </div>
+                <input id="lat" type="hidden" name="lat" class="form-control" />
+                <input id="lng" type="hidden" name="lng" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-sm-2 col-md-2 col-lg-2">
+                <div class="form-group inq-form-group">
+                    <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="submitted" ng-click="submitTenantForm(picFile)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>
+<script type="text/javascript">
+    /* location API */
+    var places = new google.maps.places.Autocomplete(document.getElementById('txtPlaces'));
+    google.maps.event.addListener(places, 'place_changed', function () {
+        var place = places.getPlace();
+        var address = place.formatted_address;
+        var latitude = place.geometry.location.k;
+        var longitude = place.geometry.location.D;
+        var lat = place.geometry.location.lat(),
+                lng = place.geometry.location.lng();
+        var mesg = "Address: " + address;
+        mesg += "\nLatitude: " + latitude;
+        mesg += "\nLongitude: " + longitude;
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
+        document.getElementById('txtPlaces').value = address;
+    });
+    var pacContainerInitialized = false;
+    $('#txtPlaces').keypress(function() {
+        if (!pacContainerInitialized) {
+            $('.pac-container').css('z-index', '9999');
+            pacContainerInitialized = true;
+        }
+    });
+</script>

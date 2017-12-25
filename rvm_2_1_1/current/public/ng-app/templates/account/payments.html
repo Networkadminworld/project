@@ -1,0 +1,102 @@
+<div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+            <div class="container-fluid P0M0">
+
+              <div class="col-sm-8 col-md-8 col-lg-8">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar" ng-show="tracks.length > 0">
+                    <div class="row">
+                      <div class="col-md-10 col-md-10 col-lg-10">
+                        <div class="inq-panel-title fnt-sm">PAYMENT HISTORY</div>
+                      </div>
+                      <div class="col-md-2 col-md-2 col-lg-2">
+                        <!--<div class="inq-panel-title fnt-sm">-->
+                          <!--<a href="#">Download</a>-->
+                        <!--</div>-->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inq-panel-container">
+                    <div class="container-fluid P0M0">
+                        <div class="msg-content" ng-show="loaded && tracks.length == 0">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="msg-wrapper">
+                                        <i class="fa fa-chain-broken icon-style"></i>
+                                        <br>You don't have a payment history.
+                                        <br> Please <a href="mailto:help@inquirly.com">contact us</a> if u have made payment and its not showing here.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <table class="table inq-table fnt-sm" ng-show="tracks.length > 0">
+                        <thead>
+                          <tr>
+                            <th>TRANSACTION ID</th>
+                            <th>DATE</th>
+                            <th>ITEM</th>
+                            <th>AMOUNT</th>
+                            <th>STATUS</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat='track in tracks'>
+                          <td><a href="javascript:void(0);">{{ track.transaction_id }}</a></td>
+                          <td> {{ track.created_at }}</td>
+                          <td>{{ track.item }}</td>
+                          <td><i class="fa fa-inr"></i>{{ track.amount }}</td>
+                          <td ng-class="{'red': track.status == 'Aborted', 'orange': track.status == 'Incomplete'}" >{{ track.status }}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                      <nav>
+                          <pagination ng-show="tracks.length > 0" boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" ng-change="pageChanged()" items-per-page="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                      </nav>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">PLAN STATUS</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="inq-panel-container">
+                    <div class="container-fluid" style="padding-bottom:20px;">
+                      <div class="row">
+                        <div class="inq-upload-img col-md-12 col-md-12 col-lg-12">
+                          <div class="fnt-sm">Your current plan is: </div>
+                          <div class="fnt-lg"> {{ current_plan_name }}</div>
+                        </div>
+                        <div class="inq-upload-img col-md-12 col-md-12 col-lg-12">
+                          <div class="fnt-sm">Your plan is valid till: </div>
+                          <div class="fnt-lg">{{ plan_expiry_date }}</div>
+                        </div>
+                      </div>
+                      <div class="row inq-hr"></div>
+                      <div class="row">
+                        <div class="inq-upload-img col-md-12 col-md-12 col-lg-12">
+                          <button type="button" class="btn btn-inq fnt-sm">Upgrade Account</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>

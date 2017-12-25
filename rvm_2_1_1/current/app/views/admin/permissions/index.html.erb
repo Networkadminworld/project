@@ -1,0 +1,37 @@
+<div class="row" style="float:right;margin-bottom: 6px;">
+  <div class="col-sm-5 col-lg-5 col-md-5">
+    <div class="btn-wrap text-right btn-update-info" style="margin-top: 5px;">
+      <a href="/admin/permissions/new" class="btn btn-primary">+ Add Role</a>
+    </div>
+  </div>
+</div>
+<div class= "table-responsive" style="margin-top:15px;">
+  <table class= "table user-table">
+    <thead>
+    <tr>
+      <th class="align-cen">Name</th>
+      <th class="align-cen">Profile</th>
+      <th class="align-cen">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @roles.each do |role| %>
+        <tr>
+          <td class="align-cen"><%= role.name %></td>
+          <td class="align-cen"><%= role.profile %></td>
+          <td class="align-cen">
+            <div class="action-items">
+                <a href="/admin/permissions/<%= role.id %>/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+            </div>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="row">
+  <div class="pull-right">
+    <%= will_paginate @roles, renderer: BootstrapPagination::Rails %>
+  </div>
+</div>

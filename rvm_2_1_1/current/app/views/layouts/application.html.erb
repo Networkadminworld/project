@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if gt IE 9]> <html> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+
+  <title>Inquirly : <%= yield(:title).size > 1 ? yield(:title) : "Engage customer feedback" %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <!--IE Support-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="discription" content="">
+	<meta name="keywords" content="">
+	<!-- rails4_image_tag_impact -->
+	<%= favicon_link_tag 'responsive/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon'%>
+	 <%= favicon_link_tag 'responsive/favicon.ico', rel: 'icon', type: 'image/x-icon'%>
+	<!-- <link rel="shortcut icon" href="/assets/responsive/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/assets/responsive/favicon.ico" type="image/x-icon">-->
+  <script type="text/javascript">window.history.forward();function noBack()   {window.history.forward();}</script>
+  <!-- Bootstrap -->
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= yield :email_preview_styles %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= yield :page_specific_head_content %>
+  <%= csrf_meta_tag %>
+
+  <!--// start typekit font include -->
+  <script type="text/javascript" src="//use.typekit.net/ltc1ytn.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <!--// end typekit font include -->
+
+</head>
+<script>
+        /// IE function.bind polyfill
+        if (!Function.prototype.bind) {
+          Function.prototype.bind = function (oThis) {
+            if (typeof this !== "function") {
+                    // closest thing possible to the ECMAScript 5 internal IsCallable function
+                    throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+                  }
+
+                  var aArgs = Array.prototype.slice.call(arguments, 1),
+                  fToBind = this,
+                  fNOP = function () {},
+                  fBound = function () {
+                    return fToBind.apply(this instanceof fNOP && oThis ? this : oThis,
+                      aArgs.concat(Array.prototype.slice.call(arguments)));
+                  };
+
+                  fNOP.prototype = this.prototype;
+                  fBound.prototype = new fNOP();
+
+                  return fBound;
+                };
+              }
+            </script>
+            <body  onpageshow="if (event.persisted) noBack();" onunload="" <% if controller.controller_name == "dashboard" && controller.action_name=="index" %> onload="noBack();wordcloud_data_load('dashboard');" class="flash-on" <%else%>class="flash-off"<%end%><% if controller.controller_name == "home" && controller.action_name=="index" %> onload="noBack();" class="home flash-off"<%end%>>
+             <div class="top-header navbar-fixed-top">
+               <div class="header navbar navbar-inverse bs-docs-nav">
+                 <% benchmark '##Render header in application' do %>
+                 <%= render "shared/header" %>
+                 <% end %>
+               </div>
+               <div class="flash-msg-wrapper">
+                 <div class="container" id="flash-message">
+                  <%= render :partial => "shared/flash_message"%>
+                 </div>
+               </div>
+             </div>
+             <% if controller.controller_name == "manage_roles"%>
+              <%= render "manage_roles/tenant_admin"%>
+             <%else%>
+               <%= yield %>
+             <%end%>
+
+            <div class="footer">
+             <% benchmark '##Render footer in application' do %>
+             <%= render "shared/footer" %>
+             <% end %>
+           </div>
+           <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+              <![endif]-->
+              <div class="loading">
+                <div class="loader"></div>
+                <div class="loading-overlay"></div>
+              </div>
+              <p id="back-top">
+                <a href="#top"><span></span></a>
+              </p>
+
+            <div class="modal fade" id="listener_request" aria-hidden="true" tabindex='-1'>
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &nbsp;
+                      </button>
+                      <h4 class="modal-title">Listener</h4>
+                    </div>
+                    <div class="modal-body" id="activate_listener_message">
+                    </div>
+                   <div class="modal-footer">
+                    <div class="text-center">
+                      <a href="/" id="btnYes" class="button medium orange">Ok</a>
+                    </div>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <script>
+              // To test the @id toggling on password inputs in browsers that donâ€™t support changing an inputâ€™s @type dynamically (e.g. Firefox 3.6 or IE), uncomment this:
+              // $.fn.hide = function() { return this; }
+              // Then uncomment the last rule in the <style> element (in the <head>).
+              $(function() {
+                // Invoke the plugin
+                $('input, textarea').placeholder();
+                // Thatâ€™s it, really.
+              });
+              // jQuery(document).ready(function(){
+              //   jQuery(".loading").hide();
+              // });
+              jQuery(document).ready(function(){
+               jQuery(".loading").css('display','none');
+               jQuery(".loading").ajaxStart(function() {
+                console.log("Spinner is started");
+                jQuery(".loading").css('display','block');
+              });
+               jQuery(".loading").ajaxStop(function() {
+                console.log("Spinner is ended");
+                jQuery(".loading").css('display','none');
+              });
+              });
+            </script>
+    </body>
+    </html>

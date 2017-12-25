@@ -1,0 +1,57 @@
+<div class="row" style="float:right;margin-bottom: 6px;">
+  <div class="col-sm-5 col-lg-5 col-md-5">
+    <div class="btn-wrap text-right btn-update-info" style="margin-top: 5px;">
+      <a href="/admin/pricing_plans/new" class="btn btn-primary">+ Add Plan</a>
+    </div>
+  </div>
+</div>
+<div class= "table-responsive" style="margin-top:15px;">
+  <table class="table user-table">
+    <thead>
+    <tr>
+      <th class="align-cen">Plan name</th>
+      <th class="align-cen">Email Count</th>
+      <th class="align-cen">SMS Count</th>
+      <th class="align-cen">Campaigns Count</th>
+      <th class="align-cen">Customer records count</th>
+      <th class="align-cen">FB boost budget</th>
+      <th class="align-cen">Total Reach</th>
+      <th class="align-cen">Country</th>
+      <th class="align-cen">Amount</th>
+      <th class="align-cen">Default Plan</th>
+      <th class="align-cen" colspan="3">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @pricing_plans.each do |pricing_plan| %>
+        <tr>
+          <td class="align-cen"><%= pricing_plan.name %></td>
+          <td class="align-cen"><%= pricing_plan.email_count %></td>
+          <td class="align-cen"><%= pricing_plan.sms_count %></td>
+          <td class="align-cen"><%= pricing_plan.campaigns_count %></td>
+          <td class="align-cen"><%= pricing_plan.customer_records_count %></td>
+          <td class="align-cen"><%= pricing_plan.fb_boost_budget %></td>
+          <td class="align-cen"><%= pricing_plan.total_reach %></td>
+          <td class="align-cen"><%= country_name(pricing_plan.country) %></td>
+          <td class="align-cen"><%= pricing_plan.amount %></td>
+          <td class="align-cen">
+            <div class="<%= pricing_plan.is_default ? 'client-active' : 'client-deactive' %>">
+                <%= pricing_plan.is_default ? 'YES' : 'NO' %>
+            </div>
+          </td>
+          <td class="align-cen">
+            <div class="action-items">
+              <a href="/admin/pricing_plans/<%= pricing_plan.id %>/edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+            </div>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="row">
+  <div class="pull-right">
+    <%= will_paginate @pricing_plans, renderer: BootstrapPagination::Rails %>
+  </div>
+</div>

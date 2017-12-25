@@ -1,0 +1,23 @@
+    <div class="modal-header fnt-lg align-cen">Create QrCode
+        <div class="x-close fa fa-times" ng-click="cancel();"></div>
+    </div>
+    <div class="modal-body">
+      <form class="inq-from" name="form.qrcode" novalidate>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Name</label>
+          <input type="text" class="form-control" placeholder="Input friendly name" name="name" ng-model="qrcode.name" required>
+              <span style="color:red" class="help-block" ng-show="form.qrcode.name.$error.serverMessage">{{form.qrcode.name.$error.serverMessage}}</span>
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">URL</label>
+          <input type="text" class="form-control" placeholder="Input url" name="name" ng-model="qrcode.url" required>
+          <span style="color:red" class="help-block" ng-show="form.qrcode.url.$error.serverMessage">{{form.qrcode.url.$error.serverMessage}}</span>
+        </div>
+        <div class="form-actions row">
+          <button type="submit" class="col-sm-4 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 btn btn-warning btn-lg" ng-click="submitQrCodeForm()" ng-disabled="isSubmitted">Save</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer ng-scope">
+      <a href="javascript:void(0);" class="fnt-md" ng-click="cancel()">Close this window</a>
+    </div>

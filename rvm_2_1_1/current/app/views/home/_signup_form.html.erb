@@ -1,0 +1,122 @@
+<div id="landing-content">
+<div class="singup-content">
+  <div class="inq-panel">
+    <div class="inq-panel-container">
+      <div class="container-fluid">
+        <form class="inq-from" id="sign-up-form">
+          <div class="alert alert-success fade in" id="sign-up-alert" style="display: none">
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <label class="fnt-lg">Signup</label>
+                <input type="text" class="form-control fnt-sm" name="user[email]" placeholder="Enter email">
+                <span class="error help-inline" id="error_email" style="color: red;"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <input type="password" class="form-control fnt-sm" name="user[password]" placeholder="Enter password">
+                <span class="error help-inline" id="error_password" style="color: red;"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <input type="password" class="form-control fnt-sm" name="user[password_confirmation]" placeholder="Renter password">
+                <span class="error help-inline" id="error_password_confirmation" style="color: red;"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <select class="form-control fnt-sm" name="user[industry]" id="industry">
+                  <option value="">Choose Industry</option>
+                  <% @industry.each do |iny| %>
+                  <option value="<%= iny['id'] %>"><%= iny['industry']%></option>
+                  <% end %>
+                </select>
+                <span class="error help-inline" id="error_industry" style="color: red;"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <button type="submit" class="btn btn-block btn-lt-orng" id="signup-submit">SIGNUP</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="inq-panel-footer-bar">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group inq-form-group">
+            <a href="javascript:void(0);" onClick="render_sign_in_form();" class="fnt-sm">Login to an existing account?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="inq-panel-footer-logo">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+        <a href="<%= ENV['BUSINESS_APP']%>" target="_blank">
+          <img src="/ng-app/Images/google-play.png" style="height:35px;">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="inq-panel-footer-logo">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+        <a href="javascript:void(0);">
+          <img src="/ng-app/Images/powered_by_logo.png" style="width:100px;">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script>
+    jQuery("#signup-submit").click(function(){
+        var sign_up_params = $('#sign-up-form').serialize();
+        var industryId = $("#industry");
+        var signUpButton = $(this);
+        signUpButton.prop('disabled', true);
+        signUpButton.html("<i class='fa fa-spinner fa-spin'></i> SIGNUP");
+
+        jQuery.ajax({
+            beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            type: "POST",
+            url: "/users",
+            data:   sign_up_params,
+            dataType: "json",
+            success: function(data){
+                if(data.header.status == 200){
+                    signUpButton.prop('disabled', false);
+                    signUpButton.html("SIGNUP");
+                    $(".error").hide();
+                    $('#sign-up-form').each(function(){ this.reset(); });
+                    $("#sign-up-alert").html('<a href="javascript:void(0);" onclick="closeAlert();" class="close">×</a>' + "A message with a confirmation link has been sent to your email address.").show();
+                }else{
+		            signUpButton.prop('disabled', false);
+                    signUpButton.html("SIGNUP");
+                    var errors = data.body.resource;
+                    if(industryId.val() == ''){ errors["industry"] = ["Please choose an industry"] }
+                    $(".error").hide();
+                    for (x in errors)
+                        $('#error_'+x).html(errors[x][0]).show();
+                }
+            }
+        });
+        return false;
+    });
+</script>

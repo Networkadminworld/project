@@ -1,0 +1,25 @@
+                                          <%= form_for(@role, :url => {:action => "create"},:html => { :method => "post"} ,:remote=>true) do |f| %>
+
+                  <div class="tab-wrapper">
+                    <div class="row">
+                      <div class="col-lg-4 col-sm-6 col-md-12 col-xs-12">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <label>Name</label>
+                                <div class="form-group">
+                                  <label class="sr-only" for="InputName">Name</label>
+                                  <%= f.text_field :name, :class => "text_field rc_5 form-control input-medium" ,:id => "InputName" , :placeholder => "Name" , :tabindex => 1 %>
+                                  <p><span class="error" style="width:190px;" id="error_role_name"><%=@role.errors[:name][0] %></span></p>
+                                </div>
+                              </div>
+                            </div>
+                            <!--//. recent activity -->
+                            </div>
+                            </div>
+                            </div>
+                            <div class="btn-wrap text-center btn-update-info">
+                                  <%= f.submit "Create", :class => "button medium orange", :tabindex => 11  %>
+                                  <a href="/manage_roles" class="article" id="back_to_users">Back</a>
+
+                                </div>
+                        <% end %>

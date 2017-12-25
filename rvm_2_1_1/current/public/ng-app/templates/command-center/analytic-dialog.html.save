@@ -1,0 +1,11 @@
+
+
+<div class="modal-header fnt-md align-cen">Analytics Dashboard
+    <div class="x-close fa fa-times" ng-click="$dismiss()"></div>
+</div>
+<div class="modal-body">
+    <iframe id = "iframeID" src="{{piwik_url}}" style="width: 100%;height: 500px;"></iframe>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

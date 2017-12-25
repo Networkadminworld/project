@@ -1,0 +1,327 @@
+<div class="row M0">
+     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" data-ng-animate="'fade'">{{alert.msg}}</alert>
+          <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container">
+            <div class="container-fluid P0M0">
+
+              <div class="col-sm-8 col-md-8 col-lg-8">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                        <div class="col-sm-5 col-md-5 col-lg-5 Pr0">
+                          <div class="inq-panel-title fnt-sm" style="display:inline">CONTACTS & CUSTOMERS
+                          <span class="filter-wrapper" any-other-click="hideFilter()">
+                              <span class="dropdown-toggle customer-csv-filter" data-ng-click="openFilter()">
+                                <i class="fa fa-filter history-filter-icon"></i>
+                                <span style="padding-left:5px;padding-right:5px;">{{ filterText }}</span>
+                                <i class="fa fa-angle-down"></i>
+                              </span>
+                              <div class="filter-card active" style="width: 460px;" data-ng-show="showFilter">
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">Age</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[0].operator = 'eq'" ng-model="filter[0].operator">
+                                              <option value="eq">Is equal to</option>
+                                              <option value="neq">Is not equal to</option>
+                                              <option value="gt">Is greater than</option>
+                                              <option value="gte">Is greater than or equal to</option>
+                                              <option value="lt">Is less than</option>
+                                              <option value="lte">Is less than or equal to</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <input type="text" class="form-control" placeholder="Enter age" is-number ng-model="filter[0].value">
+                                      </div>
+                                  </div>
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">Gender</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[1].operator = 'equals'" ng-model="filter[1].operator">
+                                              <option value="equals">Equals to </option>
+                                              <option value="neq">Not equals to</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <select class="form-control" ng-model="filter[1].value">
+                                              <option value="male">Male</option>
+                                              <option value="female">Female</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">Country</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[2].operator = 'contains'" ng-model="filter[2].operator">
+                                              <option value="contains">Contains</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <select class="form-control" ng-model="filter[2].value" ng-change="countryStates(filter[2].value)">
+                                              <option ng-repeat="country in countries" value="{{country[0]}}">{{country[0]}}</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">State</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[3].operator = 'contains'" ng-model="filter[3].operator">
+                                              <option value="contains">Contains</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <select class="form-control" ng-model="filter[3].value">
+                                            <option ng-selected="{{ state[0] == customer.state }}" ng-repeat="state in states" value="{{state[0]}}">{{state[0]}}</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">City</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[4].operator = 'contains'" ng-model="filter[4].operator">
+                                              <option value="contains">Contains</option>
+                                              <option value="equals">Equals to</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <input type="text" class="form-control" placeholder="Enter city" ng-model="filter[4].value">
+                                      </div>
+                                  </div>
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">Area</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[5].operator = 'contains'" ng-model="filter[5].operator">
+                                              <option value="contains">Contains</option>
+                                              <option value="equals">Equals to</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <input type="text" class="form-control" placeholder="Enter area" ng-model="filter[5].value">
+                                      </div>
+                                  </div>
+                                  <div class="row filter-grp">
+                                      <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                                          <div class="filter-detail">Custom Field</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                          <select class="form-control" ng-init="filter[6].operator = 'contains'" ng-model="filter[6].operator">
+                                              <option value="contains">Contains</option>
+                                              <option value="equals">Equals to</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <input type="text" class="form-control" placeholder="Enter custom field" ng-model="filter[6].value">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                          <button type="button" class="btn btn-inq fnt-sm" data-ng-click="filterData()">Filter</button>
+                                          <span style="padding-left:15px;cursor: pointer" data-ng-click="removeFilter()">Cancel</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </span>
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                            <div class="inq-panel-title">
+                              <span class="" style="display:inline-block">
+                                <input type="text" class="form-control fnt-sm search-input" style="width:90%" ng-model="searchText" placeholder="SEARCH CUSTOMERS">
+                              </span>
+                                <span style="cursor: pointer" data-ng-click="searchCustomer()"><i class="fa fa-search"></i></span>
+                                <span class="reset-search" data-ng-show="resetBtn" data-ng-click="resetSearch()"> reset</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                            <div class="inq-panel-title fnt-md">
+                                <a href="javascript:void(0);" data-ng-click="uploadCsvFile();" title="Upload CSV"><i class="fa fa-upload"></i></a>
+                                <span id="loader-csv" ng-show="onUpload"><img src="/ng-app/Images/ajax-loader.gif"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 Pr0">
+                            <div class="inq-panel-title fnt-md">
+                                <a href="/imports/csv_template.csv" title="Download Template"><i class="fa fa-download"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 Pr0">
+                            <div class="inq-panel-title fnt-md">
+                                <a href="javascript:void(0);" data-ng-click="addOrEditCustomer('new');" title="Add record"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="inq-panel-container" style="min-height:250px;">
+                    <div class="container-fluid P0M0">
+                      <div class="img-suggest-gallery loading" ng-show="!loaded">
+                        <span style="font-size:34px;">Loading</span><img src="/ng-app/Images/loader.gif">
+                      </div>
+                      <div class="msg-content fnt-sm" ng-show="loaded && customers.length == 0 && !filtered">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="msg-wrapper">
+                                        <i class="fa fa-chain-broken icon-style"></i>
+                                        <br>Engage with customers on their mobiles via SMS & email
+                                        <br><a href="javascript:void(0);" ng-click="addOrEditCustomer('new')">Add a customer</a> or <a href="javascript:void(0);" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ngf-select="" ng-model="customerFile"  ngf-change="csvUpload(customerFile)">upload from a file</a>.
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                      <div class="msg-content fnt-sm" ng-show="loaded && customers.length == 0 && filtered">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="msg-wrapper">
+                                        <i class="fa fa-users icon-style"></i>
+                                        <br>No records found.
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                      <div class="inq-content-wrapper">
+                      <table class="table inq-table fnt-sm customer-data" ng-show="customers.length > 0">
+                        <thead>
+                          <tr>
+                            <th><span ng-class="isSelectAll()" ng-click="setSelectedAll(state)"></span></th>
+                            <th>OPINIFY</th>
+                            <th>EMAIL</th>
+                            <th>NAME</th>
+                            <th>MOBILE</th>
+                            <th>STATE</th>
+                            <th>CUSTOM FIELD</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat='customer in customers'>
+                          <td><span ng-class="isSelected(customer.id)" ng-click="setSelectedCustomer(customer.id)"></span></td>
+                          <td>
+                              <div ng-if="customer.consumer_id && customer.is_active_consumer" class="socl-icn-wrapper-sm opinify-chnl-mobile">
+                              </div>
+                              <div ng-if="customer.consumer_id && !customer.is_active_consumer" class="socl-icn-wrapper-sm inactive-opinify-chnl-mobile">
+                              </div>
+                          </td>
+                          <td style="word-wrap: break-word; word-break: break-all;">{{ customer.email }}</td>
+                          <td style="word-wrap: break-word; word-break: break-all;">{{ customer.customer_name }}</td>
+                          <td style="word-wrap: break-word; word-break: break-all;">{{ customer.mobile }}</td>
+                          <td style="word-wrap: break-word; word-break: break-all;">{{ customer.state }}</td>
+                          <td style="word-wrap: break-word; word-break: break-all;">{{ customer.custom_field }}</td>
+                          <td>
+                            <div>
+                                <span class="inq-table-action fnt-sm"><i class="fa fa-ban" ng-click="removeCustomer(customer)"></i></span>
+                                <span class="inq-table-action fnt-sm"><i class="fa fa-edit" ng-click="editCustomer(customer)"></i></span>
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="col-sm-8 col-md-8 col-lg-8" style="margin-top: 18px;">
+                          <nav ng-show="customers.length > 0">
+                              <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" ng-change="pageChanged()" items-per-page="20" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                          </nav>
+                      </div>
+                      <div class="col-sm-4 col-md-4 col-lg-4" ng-show="customers.length > 0">
+                          <span class="total-cus-span"> {{ startValue }} - {{ endValue }} of {{ totalItems }} customers</span>
+                          <button type="button" class="btn btn-lt-orng fnt-sm add-group" ng-show="loaded" ng-disabled="selectedCustomer.length == 0" data-ng-click="addToGroup()">+ Add selection to a Group</button>
+                      </div>
+                      <div class="overlay-animate-wrapper" ng-show="syncInit">
+                          <div class="overlay-animate"></div>
+                          <div class="loading-icon">
+                              <i class="fa fa-circle-o-notch fa-spin"></i>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">SETTINGS</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="inq-panel-container">
+                      <form class="inq-from" name="form.config">
+                      <div class="container-fluid" style="padding-bottom:20px;">
+                      <div class="row">
+                        <div class="form-group inq-form-group">
+                      <label class="fnt-sm">'Reply-to' email</label>
+                      <input type="email" ng-model="config.reply_email"  name="reply_email"  class="form-control" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" placeholder="" required>
+                      <span style="color:red" ng-show="form.config.reply_email.$error.email">Invalid email address.</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                      <label class="fnt-sm">'From' email</label>
+                      <input type="text" ng-model="config.from_email" name="from_email"  class="form-control" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" placeholder="" required>
+                      <span style="color:red" ng-show="form.config.from_email.$error['pattern']">Invalid email address.</span>
+                    </div>
+                    <div class="form-group inq-form-group">
+                      <label class="fnt-sm">'From' Email Name</label>
+                      <input type="text" ng-model="config.from_name" name="from_name"  class="form-control" placeholder="" required>
+                    </div>
+                      </div>
+                    </div>
+                      <div class="form-actions row M0">
+                          <div class="container-fluid P0M0">
+                              <div class="col-sm-2 col-md-2 col-lg-2">
+                                  <button type="button" ng-click="saveConfig()" class="btn btn-lt-orng fnt-sm" style="margin-bottom: 10px;" ng-disabled="form.config.reply_email.$dirty && form.config.reply_email.$invalid || form.config.from_email.$error['pattern']">{{buttonText}}</button>
+                              </div>
+                          </div>
+                      </div>
+                     </form>
+                  </div>
+                </div>
+                  <div class="inq-panel">
+                      <div class="inq-panel-title-bar">
+                          <div class="row">
+                              <div class="col-md-12 col-md-12 col-lg-12">
+                                  <div class="inq-panel-title fnt-sm">GROUPS</div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="inq-panel-container">
+                          <div class="container-fluid" style="padding-bottom:20px;">
+                              <li class="group-list-right">
+                                  <span class="fa fa-plus group-add-icon"></span>
+                                    <span class="group-input-span">
+                                        <input class="form-control group-input" placeholder="Type to add a Group" ng-model="groupName" type="text">
+                                        <hr class="group-hr">
+                                    </span>
+                                  <span style="color:red" class="help-block" ng-show="duplicateGroup">Duplicate Group names not allowed </span>
+                              </li>
+                              <li ng-repeat="group in groups" ng-if="group.name != 'All Customers'" class="group-list">
+                                  <span ng-click="showGroupContacts(group)" class="group-name">{{ group.name }}  ({{ group.contacts}})</span>
+                                    <span class="group-actions">
+                                        <!--<i class="fa fa-ban group-ban" data-ng-click="removeGroup(group)"></i>-->
+                                        <i class="fa fa-edit" data-ng-click="editGroupName(group)"></i>
+                                    </span>
+                              </li>
+                              <div class="group-submit-right">
+                                  <button class="btn btn-lt-orng group-btn" ng-click="!isEdit ? createGroup() : updateGroup()" ng-disabled="groupName == '' || isSubmitted">Save</button>
+                                  <span class="group-edit-cancel" ng-show="isEdit" data-ng-click="cancelEdit()">CANCEL</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,103 @@
+<div class="modal-header">
+
+    <h3 class="modal-title" ng-if="funnel_type=='SALES-PIPELINE'">Order Details</h3>
+    <h3 class="modal-title" ng-if="funnel_type=='MARKETING-PIPELINE'">Lead Details</h3>
+    <div class="x-close">
+    <a class="fa fa-times" href="javascript:void(0);" ng-click="cancel()" ></a>
+    </div>
+
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <table class="table table-hover">
+            <thead>
+            </thead>
+            <tbody>
+            <tr ng-if="funnel_type == 'SALES-PIPELINE'">
+                <th class="order-title" scope="row">Order Id</th>
+                <td> {{item.item_funnel_id}}</td>
+            </tr>
+
+            <tr>
+                <th class="order-title" scope="row">Item Name</th>
+                <td>{{item.item_name}}</td>
+            </tr>
+            <tr ng-if="funnel_type == 'SALES-PIPELINE'">
+                <th class="order-title" scope="row">Sku Id</th>
+                <td>{{item.item_sku_id}}</td>
+            </tr>
+            <tr>
+                <th class="order-title" scope="row">Customer Name</th>
+                <td>{{item.customer.first_name}} {{item.customer.last_name}}</td>
+            </tr>
+            <tr>
+                <th class="order-title" scope="row">Customer Mobile</th>
+                <td>{{item.customer.mobile}}</td>
+            </tr>
+            <tr>
+                <th class="order-title" scope="row">Customer Address</th>
+                <td>{{item.item_delivery_location}}</td>
+            </tr>
+             <tr>
+                <th class="order-title" scope="row">Customer Country</th>
+                <td>{{item.country}}</td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2">
+                    <div class="order-title" scope="row" style="font-weight:bold;" ng-if="funnel_type == 'SALES-PIPELINE'">Items</div>
+                    <div class="order-title" scope="row" style="font-weight:bold;" ng-if="funnel_type == 'MARKETING-PIPELINE'">Lead Details</div>
+
+
+                    <table class="table table-bordered">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row" ng-repeat="key in keys">
+                                {{ key }}
+                            </th>
+
+                        </tr>
+                        <tr >
+                            <td ng-repeat="val in values"> {{val}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr ng-if="funnel_type == 'MARKETING-PIPELINE'">
+                 <th>Last Status </th>
+                 <td>
+                    <div style="background-color:#FFFFCC;font-size:11px;padding:5px;">"{{item.item_status}}"
+                    </div>
+                 </td>
+            </tr>
+            <tr>
+                <th class="order-title" scope="row" ng-if="funnel_type=='MARKETING-PIPELINE'">Created On</th>
+                <th class="order-title" scope="row" ng-if="funnel_type=='SALES-PIPELINE'">Ordered On</th>
+                <td> {{item.item_date | date:"MM/dd/yyyy H:mm"}}</td>
+            </tr>
+            <th class="order-title" scope="row" >Updated On</th>
+                <td> {{item.updated_date | date:"MM/dd/yyyy H:mm"}}</td>
+</tr>
+            </tbody>
+        </table>
+
+         <div class="row">
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-4" ng-if="isDeletable">
+                        <button class="btn btn-danger" ng-click="deleteLead()"> Delete Lead </button>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-4" ng-if="isReassignable">
+                        <button class="btn btn-success" ng-click="reassignLead()"> Reassign </button>
+                    </div>
+         </div>
+    </div>
+
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-md" ng-click="cancel()">Close this window</a>
+</div>
+

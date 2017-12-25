@@ -1,0 +1,46 @@
+<div class="modal-header fnt-lg align-cen">{{ groupNameUpper }} CONTACTS
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<hr style="margin: 0">
+<div class="modal-body">
+  <table class="table inq-table fnt-sm customer-data" ng-show="groupCustomers.length > 0">
+	<thead>
+	  <tr>
+	    <th>EMAIL</th>
+	    <th>NAME</th>
+	    <th>MOBILE</th>
+	    <th>STATE</th>
+	    <th>CUSTOM FIELD</th>
+        <th></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat='groupCustomer in groupCustomers'>
+	  <td>{{ groupCustomer.email }}</td>
+	  <td>{{ groupCustomer.customer_name }}</td>
+	  <td>{{ groupCustomer.mobile }}</td>
+	  <td>{{ groupCustomer.state }}</td>
+	  <td>{{ groupCustomer.custom_field }}</td>
+	  <td>
+	    <div>
+		<span class="inq-table-action fnt-sm"><i class="fa fa-ban" ng-click="removeGroupCustomer(group,groupCustomer)"></i></span>
+	    </div>
+	  </td>
+	</tr>
+	</tbody>
+  </table>
+  <div class="col-sm-8 col-md-8 col-lg-8">
+	  <nav ng-show="groupCustomer.length > 0">
+	      <pagination boundary-links="true" total-items="totalGroupContacts" ng-model="page" class="pagination-sm" ng-change="groupPageChanged()" items-per-page="20" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+	  </nav>
+  </div>
+  <div class="overlay-animate-wrapper" ng-show="syncGroup">
+	  <div class="overlay-animate"></div>
+	  <div class="loading-icon">
+	      <i class="fa fa-circle-o-notch fa-spin"></i>
+	  </div>
+  </div>
+  </div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

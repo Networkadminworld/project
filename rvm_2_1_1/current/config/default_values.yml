@@ -1,0 +1,11 @@
+email_status: <%= ["hard-bounce", "unsub", "spam", "soft-bounce", "invalid"]%>
+adm_group: <%= ["amar@inquirly.com", "danish@inquirly.com", "kumaresan@inquirly.com"]%>
+support_emails: <%= ["danish@inquirly.com", "help@inquirly.com"]%>
+default_alert_events: <%= ["SCHEDULED_CAMPAIGN", "SCHEDULED_CAMPAIGN_SHARED", "NEW_SALES_ORDER", "NEW_MARKETING_LEAD", "REMINDER_APPOINTMENT", "MARKETING_LEAD_STATE_CHANGE", "MARKETING_LEAD_ASSIGNED", "SALES_ORDER_ACCEPT", "SALES_ORDER_ASSIGNED", "SALES_ORDER_DELIVERED", "SALES_ORDER_REJECT", "CAMPAIGN_WAITING_FOR_APPROVAL", "CAMPAIGN_APPROVED", "CAMPAIGN_REJECTED", "SHARE_API_EXCEPTION", "LINKEDIN_ACCOUNT_EXPIRY"] %>
+max_expiry_months: 6
+payment_action: <%= ["Change Plan"]%>
+internal_emails: <%= ["inq-analyst@inquirly.com", "inq-admin@inquirly.com", "admin@inquirly.com"]%>
+csv_gender_values: <%= ["male", "female", "m", "f", "boy", "girl"]%>
+internal_roles: <%= ["Individual", "Inquirly-Admin", "Inquirly-Analyst"]%>
+tenant_roles: <%= ["Super-Admin", "Executive"]%>
+social_providers: <%=['facebook','twitter','linkedin','google_oauth2']%>

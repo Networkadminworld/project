@@ -1,0 +1,10 @@
+<p>Dear <%= @resource.first_name %>,</p>
+
+<p>Your account has been locked due to maximum number of unsuccessful sign in attempts.</p>
+
+<p>Please click the link below to unlock your account:</p>
+
+<p><%= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @resource.unlock_token) %></p>
+
+Regards,<br>
+Inquirly Admin<br>

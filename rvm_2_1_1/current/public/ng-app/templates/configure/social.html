@@ -1,0 +1,113 @@
+<div class="row M0">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout='3000' class="fade-in-out">{{alert.msg}}</alert>
+  <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm" style="min-height: 700px;">
+    <div class="container-fluid P0M0">
+      <div class="col-sm-8 col-md-8 col-lg-8">
+        <div class="inq-panel" ng-show="socials.length == 0">
+          <div class="inq-panel-container">
+            <div class="container-fluid P0M0">
+              <div class="msg-content">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="msg-wrapper">
+                      <i class="fa fa-chain-broken icon-style"></i>
+                      <br> Connect your social media accounts to engage with your fans & followers.
+                      <br> Choose any account from the right.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="inq-panel" ng-show="socials.length > 0">
+          <div class="inq-panel-title-bar">
+            <div class="row">
+              <div class="col-md-12 col-md-12 col-lg-12">
+                <div class="inq-panel-title fnt-sm">CONNECTED ACCOUNTS</div>
+              </div>
+            </div>
+          </div>
+          <div class="inq-panel-container">
+            <div class="container-fluid">
+              <div class="row social-accounts" ng-repeat='social in socials'>
+                <div class="col-md-2 col-md-2 col-lg-2">
+                  <div class="socl-chnl" back-img='{{ social.profile_image }}'>
+                    <div class="icn-wrapper-social" ng-class="{'fb-chnl': social.channel == 'facebook','linkin-chnl': social.channel == 'linkedin', 'twt-chnl': social.channel == 'twitter','gplus-chnl': social.channel == 'google_oauth2'}">
+                      <i class="fa icon-position-social" ng-class="{'fa-facebook': social.channel == 'facebook','fa-linkedin': social.channel == 'linkedin', 'fa-twitter': social.channel == 'twitter','fa-google-plus': social.channel == 'google_oauth2'}"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7 col-md-7 col-lg-7">
+                  <div class="social-account-info fnt-sm">
+                    Connected as <a target="_blank" style="cursor: pointer;text-decoration: none;" ng-href="{{  social | linkAccount }}">{{ social.name}}</a>
+                    <div data-ng-show="social.channel == 'linkedin'" style="display: inline-block;float: right;"> valid till <span style="color:red">
+                      {{ social.expiry_in > 0 ? social.expiry_in +'days' : (social.expiry_in == 0 ? 'today' : 'expired') }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-md-3 col-lg-3">
+                  <div class="social-account-actions">
+                    <a class="danger" ng-click="remove(social)">Disconnect</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+        <div class="inq-panel">
+          <div class="inq-panel-title-bar">
+            <div class="row">
+              <div class="col-md-12 col-md-12 col-lg-12">
+                <div class="inq-panel-title fnt-sm">ADD AN ACCOUNT</div>
+              </div>
+            </div>
+          </div>
+          <div class="inq-panel-container">
+            <div class="container-fluid" style="padding-bottom:20px;">
+              <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12">
+                  <a href="/users/auth/facebook">
+                    <div class="social-plugin fb-bg-color">
+                      Facebook 
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12">
+                  <a href="/users/auth/twitter">
+                    <div class="social-plugin twitter-bg-color">
+                      Twitter
+                    </div> 
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12">
+                  <a href="/users/auth/linkedin"> 
+                    <div class="social-plugin linkedin-bg-color">LinkedIn
+                    </div> 
+                  </a>
+                </div>
+              </div>
+<!--
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <a href="users/auth/google_oauth2">
+                    <div class="social-plugin" style="background-color: #D74633;">
+                      Google+
+                    </div>
+                  </a>
+                </div>  
+              </div>
+-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

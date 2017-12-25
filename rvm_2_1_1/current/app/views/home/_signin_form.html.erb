@@ -1,0 +1,75 @@
+<div id="landing-content">
+<div class="signin-content">
+  <div class="inq-panel">
+    <div class="inq-panel-container">
+      <div class="container-fluid">
+        <form class="inq-from">
+          <div class="alert alert-danger fade in" style="display: none">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Error!</strong>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <label class="fnt-lg">Login</label>
+                <input type="text" class="form-control fnt-sm" id="email" placeholder="Enter email" value="<%= @email.present? ? @email : ''%>">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <input type="password" class="form-control fnt-sm" id="password" placeholder="Enter password" value ="<%= @pass.present? ? @pass : ''%>">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <i class="fa fa-square-o login-check-box" id="remember-checkbox" onClick="selectRemember();"></i>
+            <input type="hidden" class="form-control fnt-sm" id="remember-me" value="<%= @remember_me.present? ? @remember_me : ''%>">
+            <span class="login-span" onClick="selectRemember();">Remember me</span>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group inq-form-group">
+                <button type="submit" class="btn btn-block btn-lt-orng" id="login-submit">LOGIN</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="align-cen">
+                <a href="javascript:void(0);" onClick="render_forgot_password_form();" class="fnt-sm">Trouble Logging In?</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="inq-panel-footer-bar">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group inq-form-group fnt-sm">
+            Don't have an account? <a href="javascript:void(0);" onClick="render_sign_up_form();" class="fnt-sm"> Sign up for Inquirly</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="inq-panel-footer-logo">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+        <a href="<%= ENV['BUSINESS_APP']%>" target="_blank">
+          <img src="/ng-app/Images/google-play.png" style="height:35px;">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="inq-panel-footer-logo">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+        <a href="javascript:void(0);">
+          <img src="/ng-app/Images/powered_by_logo.png" style="width:100px;">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

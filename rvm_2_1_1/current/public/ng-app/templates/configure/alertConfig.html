@@ -1,0 +1,156 @@
+<div class="modal-header fnt-lg align-cen" style="padding-bottom: 0;">Alert Configuration
+    <div class="x-close fa fa-times" ng-click="cancel();">
+    </div>
+</div>
+<div class="modal-body">
+  <div class="container-fluid P0M0">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="tertiary-nav">
+          <div class="col-sm-2 col-md-2 col-lg-2 P0">
+            <div class="fnt-sm tab-head" ng-click="showTab('email')" ng-class="{'active':state=='email'}"> EMAIL </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2">
+            <div class="fnt-sm tab-head" ng-click="showTab('sms')"  ng-class="{'active':state=='sms'}"> SMS </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2" ng-if="singleEvent.is_business_event">
+            <div class="fnt-sm tab-head" ng-click="showTab('business_app')"  ng-class="{'active':state=='business_app'}"> BUSINESS APP </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2" ng-if="!singleEvent.is_business_event" >
+                <div class="fnt-sm tab-head" ng-click="showTab('consumer_app')"  ng-class="{'active':state=='consumer_app'}"> INQUIRLY APP </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12" ng-if="state=='email'">
+
+        <div class="inq-chnl-container" style="padding-left: 15px;">
+          <div class="tenant-region-container">
+              <form class="inq-from" name="form.region" novalidate>
+                  <div class="col-sm-9 col-md-9 col-lg-9">
+                      <div class="form-group inq-form-group" ng-if="singleEvent.is_business_event">
+                          <label class="fnt-sm">Email Recipients (Max: 5)</label>
+                          <tags-input ng-model="email.recipients" class="fnt-sm" placeholder="Email Recipients" add-on-space="true" allowed-tags-pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" max-tags="5"></tags-input>
+                      </div>
+                      <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Subject</label>
+                          <input type="text" class="form-control fnt-sm" placeholder="Subject" name="subject" ng-model="email.subject" required>
+                      </div>
+                      <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Message</label>
+                          <div ng-if="!singleEvent.is_business_event">
+                              <label data-ng-repeat="choice in emailMessages" style="margin-left: 20px;">
+                                  <input type="radio" style="height: 13px;margin-left: 20px;" name="response" data-ng-model="choice.isHtmlEmail" ng-checked="choice.checked" data-ng-click='selectedOpt(choice)'/>
+                                  <span style="font-size: 12px;margin-left: 4px;">{{choice.text}}</span>
+                              </label>
+                              <span data-ng-show="email.message && showHtml" data-ng-click="showContent()" style="float: right;font-size: 12px;color: #82C7CA; cursor: pointer;">{{ previewLink }}</span>
+                          </div>
+                          <textarea ng-model="email.message" name="Email Message" class="form-control fnt-sm" data-ng-show="!showHtml"> </textarea>
+                          <div ui-codemirror ui-codemirror-opts="uiCodeConfig" data-ng-show="previewLink=='Show Preview' && showHtml" data-ng-model="email.message"></div>
+                          <div data-ng-show="previewLink=='Edit HTML'" style="border: 1px solid #9b9b9b;padding: 10px;border-radius: 5px;" data-ng-bind-html="email.message"></div>
+                      </div>
+                      <div class="col-sm-2 col-md-2 col-lg-2">
+                          <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="isEmailExceed || isSubmitted" ng-click="saveEventForm(email,'email', showHtml)"><div style="margin-left: -5px;" ng-bind-html="parseContent(btnTitle)"></div></button>
+                      </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group inq-form-group" data-ng-repeat="emailPlaceholder in email.placeholders">
+                          <label class="fnt-sm">{{ emailPlaceholder.label }}</label>
+                          <span class="alert-config-placeholder" data-ng-repeat="placeholder in emailPlaceholder.placeholders" title="{{ placeholder.title }}">{{ placeholder.name }}</span><br/>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12" ng-if="state=='sms'">
+          <div class="inq-chnl-container" style="padding-left: 15px;">
+            <div class="tenant-region-container">
+                <form class="inq-from" name="form.type" novalidate>
+                    <div class="col-sm-9 col-md-9 col-lg-9">
+                        <div class="form-group inq-form-group" ng-if="singleEvent.is_business_event">
+                            <label class="fnt-sm">SMS Recipients (Max: 5)</label>
+                            <tags-input ng-model="sms.recipients" class="fnt-sm" placeholder="SMS Recipients *(Add mobile number with country code)" add-on-space="true" allowed-tags-pattern="^[0-9]{8,15}$" max-tags="5"></tags-input>
+                        </div>
+                        <div class="form-group inq-form-group">
+                            <label class="fnt-sm">Message</label>
+                            <textarea ng-model="sms.message" name="SMS Message"  class="form-control fnt-sm" data-ng-class="{'sms-message-focused': charCount < 0 }"> </textarea>
+                        </div>
+                        <span class="alert-count-span"  ng-show="sms.message && sms.message.length > 0" ng-class="{ red: charCount < 0 }">{{ charCount }}</span>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="isSmsExceed || isSubmitted || charCount < 0" ng-click="saveEventForm(sms, 'sms', showHtml)"><div style="margin-left: -5px;" ng-bind-html="parseContent(btnTitle)"></div></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group inq-form-group" data-ng-repeat="smsPlaceholder in sms.placeholders">
+                            <label class="fnt-sm"> {{ smsPlaceholder.label }}</label>
+                            <span class="alert-config-placeholder" data-ng-repeat="placeholder in smsPlaceholder.placeholders" title="{{ placeholder.title }}">{{ placeholder.name }}</span><br/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12" ng-if="state=='business_app'">
+              <div class="inq-chnl-container" style="padding-left: 15px;">
+                  <div class="tenant-region-container">
+                      <form class="inq-from" name="form.type" novalidate>
+                          <div class="col-sm-9 col-md-9 col-lg-9">
+                              <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Message</label>
+                                  <textarea ng-model="business_app.message" name="Message"  class="form-control fnt-sm" data-ng-class="{'sms-message-focused': postCharCount < 0 }"> </textarea>
+                              </div>
+                              <span class="alert-count-span"  ng-show="business_app.message && business_app.message.length > 0" ng-class="{ red: postCharCount < 0 }">{{ postCharCount }}</span>
+                              <div class="col-sm-2 col-md-2 col-lg-2">
+                                  <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="isSubmitted || postCharCount < 0" ng-click="saveEventForm(business_app, 'business_app',showHtml)"><div style="margin-left: -5px;" ng-bind-html="parseContent(btnTitle)"></div></button>
+                              </div>
+                          </div>
+                          <div class="col-sm-3 col-md-3 col-lg-3">
+                              <div class="form-group inq-form-group" data-ng-repeat="appPlaceholder in business_app.placeholders">
+                                  <label class="fnt-sm">{{ appPlaceholder.label }}</label>
+                                  <span class="alert-config-placeholder" data-ng-repeat="placeholder in appPlaceholder.placeholders" title="{{ placeholder.title }}">{{ placeholder.name }}</span><br/>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12" ng-if="state=='consumer_app'">
+              <div class="inq-chnl-container" style="padding-left: 15px;">
+                  <div class="tenant-region-container">
+                      <form class="inq-from" name="form.type" novalidate>
+                          <div class="col-sm-9 col-md-9 col-lg-9">
+                              <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Message</label>
+                                  <textarea ng-model="consumer_app.message" name="Message"  class="form-control fnt-sm" data-ng-class="{'sms-message-focused': postCharCount < 0 }"> </textarea>
+                              </div>
+                              <span class="alert-count-span"  ng-show="consumer_app.message && consumer_app.message.length > 0" ng-class="{ red: postCharCount < 0 }">{{ postCharCount }}</span>
+                              <div class="col-sm-2 col-md-2 col-lg-2">
+                                  <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="isSubmitted || postCharCount < 0" ng-click="saveEventForm(consumer_app, 'consumer_app',showHtml)"><div style="margin-left: -5px;" ng-bind-html="parseContent(btnTitle)"></div></button>
+                              </div>
+                          </div>
+                          <div class="col-sm-3 col-md-3 col-lg-3">
+                              <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Message Placeholders</label>
+                                  <span class="alert-config-placeholder" data-ng-repeat="placeholder in consumer_app.placeholders" title="{{ placeholder.title }}">{{ placeholder.name }}</span><br/>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+        </div><!--end of modal body container fluid-->
+      </div><!--end of modal body--> 
+
+      <div class="modal-footer ng-scope">
+        <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+      </div>

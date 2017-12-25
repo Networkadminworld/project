@@ -1,0 +1,82 @@
+<div class="modal-header fnt-lg align-cen">
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<div class="modal-body social">
+    <div class="inq-panel">
+        <div class="inq-panel-title-bar" data-ng-show="linkedin_accounts.length > 0">
+            <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12">
+                    <div class="inq-panel-title fnt-sm">LINKEDIN ACCOUNT</div>
+                </div>
+            </div>
+        </div>
+        <div class="inq-panel-container" data-ng-show="linkedin_accounts.length > 0">
+            <div class="container-fluid">
+                <div class="row social-accounts" ng-repeat='social in linkedin_accounts' data-ng-class="{'remove-border': linkedin_accounts.length == 1}">
+                    <div class="col-md-2 col-md-2 col-lg-2">
+                        <div class="socl-chnl" back-img='{{ social.profile_image }}'>
+                            <div class="icn-wrapper-social" ng-class="{'fb-chnl': social.channel == 'facebook','linkin-chnl': social.channel == 'linkedin', 'twt-chnl': social.channel == 'twitter'}">
+                                <i class="fa icon-position-social" ng-class="{'fa-facebook': social.channel == 'facebook','fa-linkedin': social.channel == 'linkedin', 'fa-twitter': social.channel == 'twitter'}"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-6 col-lg-6">
+                        <div class="social-account-info fnt-sm">
+                            Connect as <a target="_blank" style="cursor: pointer;text-decoration: none;" ng-href="{{  social | linkAccount }}">{{ social.name}}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-4 col-lg-4">
+                        <div class="social-account-actions">
+                            <span ng-class="isAccountSelected(social.social_id)" ng-click="setAccountSelected(social.social_id)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inq-panel-title-bar">
+            <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12">
+                    <div class="inq-panel-title fnt-sm">LINKEDIN COMPANY PAGES</div>
+                </div>
+            </div>
+        </div>
+        <div class="inq-panel-container" style="overflow-y: auto;height: 405px;" data-ng-class="{'height-auto': linkedin_page.length <= 3}">
+            <div class="container-fluid">
+                <div class="row social-accounts" ng-repeat='social in linkedin_page' data-ng-class="{'remove-border': linkedin_page.length == 1}">
+                    <div class="col-md-2 col-md-2 col-lg-2">
+                        <div class="socl-chnl" back-img='{{ social.profile_image }}'>
+                            <div class="icn-wrapper-social" ng-class="{'fb-chnl': social.channel == 'facebook','linkin-chnl': social.channel == 'linkedin', 'twt-chnl': social.channel == 'twitter'}">
+                                <i class="fa icon-position-social" ng-class="{'fa-facebook': social.channel == 'facebook','fa-linkedin': social.channel == 'linkedin', 'fa-twitter': social.channel == 'twitter'}"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-6 col-lg-6">
+                        <div class="social-account-info fnt-sm">
+                            Connect as <a target="_blank" style="cursor: pointer;text-decoration: none;" ng-href="{{  social | linkAccount }}">{{ social.name}}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-4 col-lg-4">
+                        <div class="social-account-actions">
+                            <span ng-class="isSelected(social.company_id)" ng-click="setSelected(social.company_id)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-4 col-md-offset-4 col-sm-2 col-md-2 col-lg-2 Pr0">
+            <div class="form-group social-connect">
+                <button type="button" class="btn btn-inq btn-block fnt-sm" data-ng-click="connectLinkedinPages()" ng-disabled="lnSelectedPage.length == 0 && lnSelectedAccount.length == 0">CONNECT</button>
+            </div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 P0">
+            <div class="social-cancel">
+                <span type="button" data-ng-click="cancelConnect()">CANCEL</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

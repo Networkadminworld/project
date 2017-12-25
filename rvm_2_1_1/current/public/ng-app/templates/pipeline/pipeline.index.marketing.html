@@ -1,0 +1,400 @@
+<!-- marketing headers -->
+<div class="row M0">
+  <div class="tertiary-nav fnt-sm">
+    <div class="sub-action-bar">
+      <div class="col-sm-3 col-md-3 col-lg-3 listen-cat fnt-sm">
+      <div class="fnt-sm">
+          <div class="margin2 fnt-sm M0"class="fnt-sm">ASSIGNED</div>
+      </div>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3  listen-cat fnt-sm">
+      <div class="fnt-sm">
+        <div class="fnt-sm">
+          <p class="margin2 fnt-sm M0">CUSTOMER CONTACTED</p>
+        </div>
+      </div>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 listen-cat fnt-sm">
+      <div class="fnt-sm">
+        <div class="fnt-sm">
+          <p class="margin2 fnt-sm M0">IN NEGOTIATION</p>
+        </div>
+        </div>
+      </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 listen-cat fnt-sm">
+      <div class="fnt-sm">
+        <div class="fnt-sm">
+          <p class="margin2 fnt-sm M0">CLOSED</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="row M0">
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 fnt-sm panel-container">
+      <div class="container-fluid P0M0">
+        <div class="col-sm-3 col-md-3 col-lg-3 listen-cat-col-container" ng-drop="true" ng-drop-success="onDropNew($data,$event)">
+            <div class="container-fluid listen-cat-col">
+                <div class="row order-card" ng-repeat="item in newFunnelItems" data-allow-transform="true" ng-drag="true" ng-drag-data="item" ng-class="{'is-new': item.is_new}">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+                                <div class="item-name">
+                                 <i class="fa fa-rocket" style="color:#82C7CA;font-size:18px;margin-left:-8px;" ng-if="item.item_source == 'Campaigns'"></i>&nbsp;
+                                           <i class="fa fa-dot-circle-o" style="color:#82C7CA;font-size:18px;margin-left:-8px;" ng-if="item.item_source == 'Leads'"></i>&nbsp;{{item.item_name}}</div>
+                                <div class="item-name-border"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div  class="col-sm-1 col-md-1 col-lg-1  P0M0"></div>
+                            <div  class="col-sm-11 col-md-11 col-lg-11  P0M0">
+                                <div class="order-container" data-toggle="tooltip" data-placement="top" title="{{item.item_status}}">
+                                    <div class="col-sm-9 col-md-9 col-lg-9 P0M0">
+                                        <div class="ordered-item-info">
+                                            <div class="row item-info-list">
+                                                <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                    <div><span style="color:#828282"><i class="fa fa-user"></i></span></div>
+                                                </div>
+                                                <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                    <div class="ordered-item-name-mark"><span>{{item.customer.first_name|uppercase}} {{item.customer.last_name|uppercase}}</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row item-info-list">
+                                                <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                    <div><span style="color:#828282"><i class="fa fa-envelope"></i></span></div>
+                                                </div>
+                                                <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                    <div class="ordered-item-person-mark"><span>{{item.customer.email}}</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row item-info-list">
+                                                <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                    <span style="color:#828282"><i class="fa fa-phone"></i></span>
+                                                </div>
+                                                <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                    <div class="ordered-item-location"><span>{{item.customer.mobile}}</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="row item-info-list">
+                                                <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                    <div><span style="color:#EA0000"><i class="fa fa-clock-o"></i></span></div>
+                                                </div>
+                                                <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                    <div class="ordered-item-pref"><span>{{item.item_date |  date:"MM/dd/yyyy H:mm"}}</span></div>
+                                                </div>
+                                            </div>
+                                             <div class="row item-info-list" ng-if="item.item_channel != ''">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                        <div class="pln-chnl-container" ng-class="getChannelCss(item.item_channel)">
+                                                            <i class="fa" ng-class="getChannelIcon(item.item_channel)"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                        <div class="ordered-item-pref" style="color:grey;">via {{getChannelText(item.item_channel)}}</div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <div class="container-fluid P0M0" >
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="info-circle-mark" ng-click="viewItemDetails(item)">
+                                                        <span class="fa fa-info"> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                                    <button class="btn btn-block item-action-btn-orange-mark" ng-click="takeAction(item)">ACTION</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <!-- customer contacted -->
+        <div class="col-sm-3 col-md-3 col-lg-3 listen-cat-col-container" ng-drop="true" ng-drop-success="onDropCustomerContacted($data,$event)">
+           <div class="container-fluid listen-cat-col">
+            <div class="row order-card" ng-repeat="item in confirmedFunnelItems" data-allow-transform="true" ng-drag="true" ng-drag-data="item" >
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+                    <div class="item-name">
+                     <i class="fa fa-rocket" style="color:#82C7CA;font-size:18px;margin-left:-8px;" ng-if="item.item_source == 'Campaigns'"></i>&nbsp;
+                                           <i class="fa fa-dot-circle-o" style="color:#82C7CA;font-size:18px;margin-left:-8px;" ng-if="item.item_source == 'Leads'"></i>&nbsp;{{item.item_name}}</div>
+                    <div class="item-name-border"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div  class="col-sm-1 col-md-1 col-lg-1  P0M0"></div>
+                  <div  class="col-sm-11 col-md-11 col-lg-11  P0M0">
+                    <div class="order-container" data-toggle="tooltip" data-placement="top" title="{{item.item_status}}">
+                      <div class="col-sm-9 col-md-9 col-lg-9 P0M0">
+                        <div class="ordered-item-info">
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#828282"><i class="fa fa-user"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-name-mark"><span>{{item.customer.first_name|uppercase}} {{item.customer.last_name|uppercase}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#828282"><i class="fa fa-envelope"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-person-mark"><span>{{item.customer.email}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <span style="color:#828282"><i class="fa fa-phone"></i></span>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-location"><span>{{item.customer.mobile}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#EA0000"><i class="fa fa-clock-o"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-pref"><span>{{item.item_date |  date:"MM/dd/yyyy H:mm"}}</span></div>
+                            </div>
+                          </div>
+
+                           <div class="row item-info-list" ng-if="item.item_channel != ''">
+                              <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                  <div class="pln-chnl-container" ng-class="getChannelCss(item.item_channel)">
+                                      <i class="fa" ng-class="getChannelIcon(item.item_channel)"></i>
+                                  </div>
+                              </div>
+                              <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                  <div class="ordered-item-pref" style="color:grey;">via {{getChannelText(item.item_channel)}}</div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 col-md-3 col-lg-3">
+                          <div class="container-fluid P0M0" >
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="info-circle-mark" ng-click="viewItemDetails(item)">
+                                          <span class="fa fa-info"> </span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                      <button class="btn btn-block item-action-btn-orange-mark" ng-click="takeAction(item)">ACTION</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- negotiation items -->
+        <div class="col-sm-3 col-md-3 col-lg-3 listen-cat-col-container" ng-drop="true" ng-drop-success="onDropNegotiation($data,$event)">
+          <div class="container-fluid listen-cat-col">
+            <div class="row order-card" ng-repeat="item in assignedFunnelItems" data-allow-transform="true" ng-drag="true" ng-drag-data="item" >
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+                    <div class="item-name">
+                     <i class="fa fa-rocket" style="color:#82C7CA;font-size:18px;margin-left:-8px;" ng-if="item.item_source == 'Campaigns'"></i>&nbsp;
+                                           <i class="fa fa-dot-circle-o" style="color:#82C7CA;font-size:18px;margin-left:-8px;" ng-if="item.item_source == 'Leads'"></i>&nbsp;{{item.item_name}}</div>
+                    <div class="item-name-border"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div  class="col-sm-1 col-md-1 col-lg-1  P0M0"></div>
+                  <div  class="col-sm-11 col-md-11 col-lg-11  P0M0">
+                    <div class="order-container" data-toggle="tooltip" data-placement="top" title="{{item.item_status}}">
+                      <div class="col-sm-9 col-md-9 col-lg-9 P0M0">
+                        <div class="ordered-item-info">
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#828282"><i class="fa fa-user"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-name-mark"><span>{{item.customer.first_name|uppercase}} {{item.customer.last_name|uppercase}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#828282"><i class="fa fa-envelope"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-person-mark"><span>{{item.customer.email}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <span style="color:#828282"><i class="fa fa-phone"></i></span>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-location"><span>{{item.customer.mobile}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#EA0000"><i class="fa fa-clock-o"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-pref"><span>{{item.item_date |  date:"MM/dd/yyyy H:mm"}}</span></div>
+                            </div>
+                          </div>
+                           <div class="row item-info-list" ng-if="item.item_channel != ''">
+                              <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                  <div class="pln-chnl-container" ng-class="getChannelCss(item.item_channel)">
+                                      <i class="fa" ng-class="getChannelIcon(item.item_channel)"></i>
+                                  </div>
+                              </div>
+                              <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                  <div class="ordered-item-pref" style="color:grey;">via {{getChannelText(item.item_channel)}}</div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 col-md-3 col-lg-3">
+                          <div class="container-fluid P0M0" >
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="info-circle-mark" ng-click="viewItemDetails(item)">
+                                          <span class="fa fa-info"> </span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                      <button class="btn btn-block item-action-btn-orange-mark" ng-click="takeAction(item)">ACTION</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-3 col-md-3 col-lg-3 listen-cat-col-container" ng-drop="true" ng-drop-success="onDropClosed($data,$event)">
+              <div class="container-fluid listen-cat-col">
+                  <div class="row order-card" ng-repeat="item in deliveredFunnelItems" data-allow-transform="true" ng-drag="true" ng-drag-data="item" >
+                      <div class="container-fluid">
+                          <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+                                  <div class="item-name"><i class="fa fa-rocket" style="color:#82C7CA;font-size:18px;margin-left:-5px;"></i>&nbsp;{{item.item_name}}</div>
+                                  <div class="item-name-border"></div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div  class="col-sm-1 col-md-1 col-lg-1  P0M0"></div>
+                              <div  class="col-sm-11 col-md-11 col-lg-11  P0M0">
+                                  <div class="order-container" data-toggle="tooltip" data-placement="top" title="{{item.item_status}}">
+                                      <div class="col-sm-9 col-md-9 col-lg-9 P0M0">
+                                          <div class="ordered-item-info">
+                                              <div class="row item-info-list">
+                                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                      <div><span style="color:#828282"><i class="fa fa-user"></i></span></div>
+                                                  </div>
+                                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                      <div class="ordered-item-name-mark"><span>{{item.customer.first_name|uppercase}} {{item.customer.last_name|uppercase}}</span></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row item-info-list" style="margin-top:10px;" ng-if="item.item_result == ''">
+                                                   <div class="col-sm-12 col-md-12 col-lg-12 Pl2">
+                                                      <div class="row">
+                                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                                            <button class="btn btn-default" ng-click="onResult(item,'WON')" style="background-color:#82C7CA;color:white;width:100px;">
+                                                                <i class="fa fa-check"></i>&nbsp;WON
+                                                            </button>
+                                                         </div>
+                                                          <div class="col-sm-6 col-md-6 col-lg-6">
+                                                             <button class="btn btn-default" ng-click="onResult(item,'LOST')" style="background-color:#EA0000;color:white;width:100px;">
+                                                                <i class="fa fa-close"></i>&nbsp;LOST
+                                                            </button>
+                                                          </div>
+                                                      </div>
+                                                      
+                                                  </div>
+                                              </div>
+                                              <div class="row item-info-list" ng-if="item.item_result != ''">
+                                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                      <div><span style="color:#828282"><i class="fa fa-envelope"></i></span></div>
+                                                  </div>
+                                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                      <div class="ordered-item-person-mark"><span>{{item.customer.email}}</span></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row item-info-list" ng-if="item.item_result != ''">
+                                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                      <span style="color:#828282"><i class="fa fa-phone"></i></span>
+                                                  </div>
+                                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                      <div class="ordered-item-location"><span>{{item.customer.mobile}}</span></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row item-info-list" ng-if="item.item_result != ''">
+                                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                      
+                                                  </div>
+                                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                      <div class="ordered-item-pref"><span>{{item.item_date |  date:"MM/dd/yyyy H:mm"}}</span></div>
+                                                  </div>
+                                              </div>
+                                               <div class="row item-info-list" ng-if="item.item_channel != ''">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                                        <div class="pln-chnl-container" ng-class="getChannelCss(item.item_channel)">
+                                                            <i class="fa" ng-class="getChannelIcon(item.item_channel)"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                                        <div class="ordered-item-pref" style="color:grey;">via {{getChannelText(item.item_channel)}}</div>
+                                                    </div>
+                                                </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-3 col-md-3 col-lg-3">
+                                          <div class="container-fluid P0M0">
+                                              <div class="row">
+                                                  <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                                      <div class="row" ng-if="item.item_result != ''">
+                                                          <div class="col-sm-5 col-md-5 col-lg-5">
+                                                              <i class="fa fa-circle" style="color:#82C7CA;font-size: 23px" ng-if="item.item_result=='WON'"></i>
+                                                              <i class="fa fa-circle" style="color:#D0021B;font-size: 23px" ng-if="item.item_result=='LOST'"></i>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+
+      </div>
+    </div>
+</div>

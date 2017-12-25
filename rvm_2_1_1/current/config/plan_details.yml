@@ -1,0 +1,40 @@
+Trial:
+ customer_records_count: 1000000
+ campaigns_count: 5
+ sms_count: 500
+ email_count: 1000
+ total_reach: 0
+ fb_boost_budget: 0
+ channels: <%= ["facebook", "twitter", "email", "sms"]%>
+Loud:
+ customer_records_count: 1000000
+ campaigns_count: 12
+ sms_count: 5000
+ email_count: 5000
+ total_reach: 15000
+ fb_boost_budget: 0
+ channels: <%= ["facebook", "twitter", "email", "sms", "qrcode"]%>
+Louder:
+ customer_records_count: 1000000
+ campaigns_count: 15
+ sms_count: 10000
+ email_count: 10000
+ total_reach: 30000
+ fb_boost_budget: 0
+ channels: <%= ["facebook", "twitter", "linkedin", "email", "sms", "qrcode", "beacon"]%>
+Loudest:
+ customer_records_count: 1000000
+ campaigns_count: 22
+ sms_count: 20000
+ email_count: 20000
+ total_reach: 60000
+ fb_boost_budget: 0
+ channels: <%= ["facebook", "twitter", "linkedin", "email", "sms", "qrcode", "beacon", "tablet", "inquirly"]%>
+Enterprise:
+ customer_records_count: 1000000
+ campaigns_count: 60
+ sms_count: 30000
+ email_count: 60000
+ total_reach: 0
+ fb_boost_budget: 0
+ channels: <%= ["facebook", "twitter", "linkedin", "email", "sms", "qrcode", "beacon", "tablet", "inquirly"]%>

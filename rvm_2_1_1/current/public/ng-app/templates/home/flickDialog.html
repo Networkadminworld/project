@@ -1,0 +1,75 @@
+<div class="modal-header fnt-lg align-cen">Images
+    <div class="x-close fa fa-times" ng-click="cancel();">
+    </div>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                <div class="container-fluid P0M0">
+                    <div class="inq-form-group flick-form-group">
+                        <div class="col-sm-10 col-md-10 col-lg-10 Pr0">
+                            <tags-input  ng-model="tags"></tags-input>
+                        </div>
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <button type="button" ng-click="search()" class="btn btn-inq btn-block fnt-sm" ng-class="{'disabled':isLoading || tags.length == 0}">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="img-suggest-gallery" ng-if="!isLoading && !hasError  && photos.length!=0">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="container-fluid P0M0">
+                        <div class="gallery-wrapper">
+
+                            <div deckgrid class="deckgrid clearfix" source="photos">
+                                <div class="photo ng-scope">
+                                    <div class="photo-wrapper">
+                                        <img data-ng-src="{{ card.url }}" class="animation-fade animation-faded">
+                                    </div>
+
+                                    <div class="overlay-animate" ng-click="mother.showFlickrPreview(card.large_image);">
+                                        <button type="button" ng-click="mother.selectImage(card.large_image); $event.stopPropagation();" class="btn btn-inq fnt-sm">Select Image
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row M0">
+                <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                    <div class="container-fluid P0M0">
+                        <ul class="pager">
+                            <li class="previous" ng-class="{'disabled':page_num==1}" ng-click="prev()"><a href="#"><span aria-hidden="true">&larr;</span>Prev</a></li>
+                            <li ><span>{{page_size*(page_num-1) + 1}}-{{ Math.min(page_size*page_num, total)}}/{{total}}</span></li>
+                            <li class="next" ng-class="{'disabled':page_num*page_size>=total}" ng-click="next()"><a href="#">Next<span aria-hidden="true">&rarr;</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="img-suggest-gallery loading" ng-if="!isLoading && !hasError && photos.length==0">
+            <span style="font-size:34px;">No result found</span>
+        </div>
+
+        <div class="img-suggest-gallery loading" ng-if="isLoading">
+            <span style="font-size:34px;">Searching</span><img src="/ng-app/Images/loading.gif">
+        </div>
+
+        <div class="img-suggest-gallery error" ng-if="!isLoading && hasError">
+            <div class="inq-form-group">
+                <label class="fnt-sm">{{errMessage}}</label>
+            </div>
+        </div>
+    </div><!--end of modal body container fluid-->
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

@@ -1,0 +1,481 @@
+<div class="container-fluid P0M0">
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout='5000' class="fade-in-out">{{alert.msg}}</alert>
+
+ <!-- Start of User Header -->
+
+ <div class="nav-menu" ui-scrollpoint>
+    <div class="row M0" data-ng-show="!isServiceUser">
+      <div class="secondary-nav">
+        <div class="col-sm-8 col-md-8 col-lg-8">
+          <div class="secondary-nav-title" style="font-size:14px;"> EVERY THING IS IN PLACE HERE  </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+              <profile-status profile-data="myData"></profile-status>
+        </div>
+      </div>
+    </div>
+    <div class="row M0" data-ng-show="isServiceUser && clientId">
+      <div class="secondary-nav">
+          <div class="col-sm-1 col-md-1 col-lg-1">
+              <div class="command-center-logo" back-img='{{ companyLogo }}'></div>
+          </div>
+          <div class ="col-sm-1 col-lg-1 col-md-1 P0 fnt-sm">
+              <div style="color:#5F5F5F;position: absolute;left:-23px;padding-top: 22px;">
+                  {{ companyName | uppercase }}
+              </div>
+          </div>
+          <div class ="col-sm-1 col-lg-1 col-md-1 fnt-sm P0">
+              <div class ="fnt-blue" style="cursor:pointer;padding-top: 22px;">
+                  <option data-ng-disabled="disableDialog" data-ng-click="loadBusinessDialog()"> change </option>
+              </div>
+          </div>
+          <div class ="col-sm-1 col-lg-1 col-md-1 fnt-sm P0" style="top: 22px;">
+              ({{ clientEmail }})
+          </div>
+      </div>
+    </div>
+ </div>
+
+ <!-- End of User Header -->
+
+  <div class="row M0">
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+      <div class="container-fluid P0M0">
+
+        <div class="col-sm-8 col-md-8 col-lg-8 Pr0">
+          <div class="inq-panel"style="border-bottom-left-radius:0;border-bottom-right-radius:0;">
+            <div class="inq-panel-title-bar">
+              <div class="inq-panel-title fnt-sm" style="line-height:55px;">
+                <div class="row M0">
+                  <div class="col-sm-4 col-md-4 col-lg-4">
+                    ENGAGEMENT OVER TIME
+                  </div>
+                  <div class ="col-sm-3 col-md-3 col-lg-3">
+                    <select class="form-control"  ng-init="campaignFilter = 'all'" ng-model='campaignFilter' style="margin-top: 12px; padding-right:0;" ng-change="fetchUserEngagedChart(clientId)">
+                      <option value="all"> All campaigns</option>
+                      <option ng-selected="campaign.id == campaignFilter" ng-repeat="campaign in campaigns" value="{{campaign.id}}">{{campaign.label}}</option>
+                    </select>
+                  </div>
+                  <div class ="col-sm-3 col-md-3 col-lg-3">
+                    <select class="form-control" ng-init="filterBy = 'by_month'" style="margin-top: 12px; padding-right:0px;" ng-model='filterBy' ng-change="fetchUserEngagedChart(clientId)">
+                      <option value="by_month"> By Months</option>
+                      <option value="by_week"> By Weeks</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-1 col-md-1 col-lg-1" style="top: 5px;color: #9CD2D5;cursor: pointer;" ng-controller="listenCtrl">
+                      <i class="fa fa-download" style="font-size: 20px;" data-ng-click="statsReport()" title="Download stats report"></i>
+                  </div>
+                  <div class="col-sm-1 col-md-1 col-lg-1">
+                    <span class="fa-stack fa-lg" style="color: #9CD2D5;font-size: 10px;cursor: pointer;" data-ng-click="loadAnalayticDialog()">
+                      <i class="fa fa-line-chart fa-stack-2x"></i>
+                      <i class="fa fa-search fa-stack-1x" style="left:12px; top: 2px"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row M0">
+            <div class=" col-sm-12 col-lg-12 col-md-12 fnt-sm" style="margin-bottom:9px;font-size:12px;margin-left: 15px;" data-ng-show="channels.length > 0">
+              <span class ="post-review-tab" data-ng-repeat="channel in channels" data-ng-click="changeChannelFilter(channel);" ng-model="channelFilter" data-ng-class="{'active': channel == channelFilter }">
+                {{ channel | uppercase }}
+                <span style="paddin-left:11px;" data-ng-show="channels.length > 1">|</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="inq-panel" style="border-top-left-radius: 0;border-top-right-radius: 0;">
+                <div class="inq-panel-title-bar fnt-sm">
+                </div>
+                <div class="inq-panel-container">
+                  <div class="container-fluid">
+                    <div class="form-group">
+                      <div style="color:#989899;font-size:12px;padding:15px 0px 0px 15px;">
+                        USERS ENGAGED
+                      </div>
+                      <div class="fnt-orng" style="padding-left:15px;">
+                       {{chartData.total_user_engaged || 0}}
+                      </div>
+                      <area-chart chart-data='chartData.chart_data'></area-chart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="overlay-wrap" data-ng-show="isChartLoading">
+                 <div class="command-center-overlay">
+                     <i class="fa fa-spinner fa-spin" style="font-size: 30px;"></i>
+                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="inq-panel">
+
+                  <div class="inq-panel-container">
+                      <div class="">
+                          <div class="row" style="margin-bottom: 48px;">
+                              <div class="col-sm-4 col-lg-4 col-md-4 Pr0 fnt-sm">
+                                  <div class="inq-panel-title fnt-sm" style="border-bottom: 1px solid #ECECF0;">PLANNER</div>
+                                  <div class="planner-list">SCHEDULED POSTS</div>
+                                  <div class="planner-detail" style="color: #82C7CA" data-ng-click="plannerRoutes('scheduled_post')">{{ scheduledCount }}</div>
+                                  <div class="planner-list"> PENDING REVIEWS </div>
+                                  <div class="planner-detail" style="color: #E95C4D" data-ng-click="plannerRoutes('review')"> {{ reviewCount }} </div>
+                                  <div class="planner-list" style="padding-top: 2px;" data-ng-show="isServiceUser"> REVISIONS</div>
+                                  <div class="planner-detail" style="color: #F5A623" data-ng-show="isServiceUser" data-ng-click="plannerRoutes('revision')"> {{ revisionCount }}</div>
+                              </div>
+                              <div class="col-sm-8 col-lg-8 col-md-8 Pl0">
+                                  <div id="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="visitCal"></div>
+                              </div>
+                          </div>
+                          <div id="overlay-wrap" style="width: 94%;height: 76%;top: 60px;" data-ng-show="isPlannerLoading">
+                              <div class="command-center-overlay">
+                                  <i class="fa fa-spinner fa-spin" style="font-size: 30px;"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+   <!--         <div class="col-sm-5 col-md-5 col-lg-5 Pl0">
+              <div class="inq-panel">
+                <div class="inq-panel-title-bar">
+                 <div class="inq-panel-title fnt-sm">
+                    <div class="row M0">
+                      <div class="col-sm-6 col-md-6 col-lg-6 fnt-sm">
+                        PIPELINES
+                      </div>
+                      <div class="col-sm-6 col-lg-6 col-md-6 fnt-sm">
+                          <select class ="form-control" ng-init="pipelineFilterVal= 'marketing'" style="margin-top: 12px;padding-right:0px;" ng-model="pipelineFilterVal" ng-change="pipelineFilter()">
+                              <option value="sales"> Sales</option>
+                              <option value="marketing"> Marketing</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="inq-panel-container">
+                  <div class="container-fluid">
+                      <bar-graph graph-data="pipeLineGraphData"></bar-graph>
+                  </div>
+                </div>
+                  <div id="overlay-wrap" style="width: 96%;height:82%;top: 60px;" data-ng-show="pipelineDetailLoading">
+                      <div class="command-center-overlay">
+                          <i class="fa fa-spinner fa-spin" style="font-size: 30px;"></i>
+                      </div>
+                  </div>
+              </div>
+            </div>
+-->
+          </div>
+          <div class="row M0" style="border-bottom: 1px solid #BBBCBC;margin-bottom: 10px;">
+            <div class="col-sm-3 col-md-3" data-ng-class="{'col-lg-6': !isServiceUser, 'col-lg-3': isServiceUser}" style="margin-bottom:9px;font-size:14px;margin-right: -10px;" data-ng-click="changeReviewTab('POST')">
+                <span class="post-review-tab" data-ng-class="{'active': reviewSelection == 'POST'}"> {{ isServiceUser ? "PENDING" : "POST" }} REVIEWS </span>
+                <span style="padding-left:11px;" data-ng-show="isServiceUser">|</span>
+            </div>
+            <div class="col-sm-3 col-lg-3 col-md-3" data-ng-show="isServiceUser" style="margin-bottom:9px;font-size:14px;padding-left: 0;" data-ng-click="changeReviewTab('REVISION')">
+                <span class="post-review-tab" data-ng-class="{'active': reviewSelection == 'REVISION'}"> PENDING REVISIONS</span>
+            </div>
+            <div class ="col-sm-6 col-lg-6 col-md-6" style="text-align: right;">
+                <span class="post-review-tab" style="padding-right:11px;" data-ng-click="filterReviewPosts('ALL')" data-ng-class="{'active': reviewFilter == 'ALL'}"> ALL POST </span>
+                <span>|</span>
+                <span class="post-review-tab" data-ng-click="filterReviewPosts('WEEK')" data-ng-class="{'active': reviewFilter == 'WEEK'}"> THIS WEEK </span>
+                <span>|</span>
+                <span class="post-review-tab" data-ng-click="filterReviewPosts('MONTH')" data-ng-class="{'active': reviewFilter == 'MONTH'}"> THIS MONTH </span>
+            </div>
+          </div>
+          <div class ="row M0" style="padding-bottom:7px;" data-ng-show="reviewCampaigns.length == 0 && reviewSelection == 'POST'">
+            <div class="col-sm-12 col-lg-12 col-md-12">
+             <div class ="post-review-tab"> No posts here</div>
+            </div>
+          </div>
+          <div class ="row M0" style="padding-bottom:7px;" data-ng-show="revisionCampaigns.length == 0 && reviewSelection == 'REVISION'">
+              <div class="col-sm-12 col-lg-12 col-md-12">
+                  <div class ="post-review-tab"> No revisions here</div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12" data-ng-show="reviewCampaigns.length > 0 && reviewSelection =='POST'">
+              <div class="inq-panel">
+                <div class="inq-panel-container">
+                  <div class="container-fluid P0">
+                    <div class="content-wrapper" data-ng-repeat="reviewCampaign in reviewCampaigns track by $index">
+                      <div class="socl-chnl-container">
+                        <div class="row">
+                          <div class="col-sm-12 md-12 col-lg-12">
+                            <div class="time-detail">
+                               Scheduled for {{ reviewCampaign["scheduled_on"] | date:'medium' }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                              <div class="socl-chnl" back-img='{{ mobileAccount.profile_image || getInitials(mobileAccount.profile_name[0]) }}' ng-repeat="mobileAccount in reviewCampaign['mobile_accounts']"  title="{{ mobileAccount.profile_name }}" style="cursor: pointer;">
+                                  <div class="icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms','opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+                                      <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+                                  </div>
+                              </div>
+                              <div class="socl-chnl" back-img='{{ socialAccount.profile_image }}' ng-repeat="socialAccount in reviewCampaign['social_accounts']"  title="{{ socialAccount.name }}" style="cursor: pointer;">
+                                  <div class="icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+                                      <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+                                  </div>
+                              </div>
+                              <div class="socl-chnl" back-img='{{ locationAccount.profile_image || getInitials(locationAccount.profile_name[0]) }}' ng-repeat="locationAccount in reviewCampaign['location_accounts']"  title="{{ locationAccount.profile_name }}" style="cursor: pointer;">
+                                  <div class="icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon','qr-code-chnl': locationAccount.channel == 'qrcode'}">
+                                      <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon','fa-qrcode': locationAccount.channel == 'qrcode'}"></i>
+                                  </div>
+                              </div>
+                          </div>
+                          <div data-ng-show="!isServiceUser">
+                              <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                <div class ="command-center-campaign-wrapper" data-ng-show="reviewCampaign['is_two_way']">
+                                  <div style="top: 11px;position: relative;left: 4px">
+                                     2 way
+                                   </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-2 col-md-2 col-lg-2 Pl0" style="padding-top:6px;">
+                                <button type="button" class="btn  btn-lt-green btn-block fnt-sm" data-ng-click="redirectCampaigns(reviewCampaign['campaign_uuid'])" data-ng-show="!isServiceUser">
+                                 Approve
+                                </button>
+                              </div>
+                              <div class="col-sm-2 col-md-2 col-lg-2 Pl0" style="padding-top:6px;">
+                                  <button type="button" class="btn btn-inq-blue btn-block fnt-sm " data-ng-click="redirectCampaigns(reviewCampaign['campaign_uuid'])">
+                                      preview
+                                  </button>
+                              </div>
+                          </div>
+                          <div data-ng-show="isServiceUser">
+                              <div class="col-sm-2 col-md-2 col-lg-2 Pl0" style="padding-top:6px;">
+                              </div>
+                              <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                  <div class ="command-center-campaign-wrapper" data-ng-show="reviewCampaign['is_two_way']">
+                                      <div style="top: 11px;position: relative;left: 4px">
+                                          2 way
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-sm-2 col-md-2 col-lg-2 Pl0" style="padding-top:6px;">
+                                <button type="button" class="btn btn-inq-blue btn-block fnt-sm " data-ng-click="redirectCampaigns(reviewCampaign['campaign_uuid'])">
+                                   preview
+                                </button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+
+                     <!-- Content Start here -->
+                        <div class="row">
+                            <div class="col-sm-12 md-12 col-lg-12 Pl0">
+                                <div class="inq-form-group">
+                                    <label ng-bind-html="reviewCampaign['campaign_data']['share_content'] | parseUrlFilter:'_blank'"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="reviewCampaign['campaign_data']['campaign_media_url']">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <div class="inq-from">
+                                    <img ng-src="{{reviewCampaign['campaign_data']['campaign_media_url']}}" style="width:100%;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="reviewCampaign['campaign_data']['og_meta_data']">
+                            <div class="url-preview">
+                                <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+                                    <div class="url-img" back-img="{{ reviewCampaign['campaign_data']['og_meta_data']['image'] }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                    <div class="url-title">
+                                        {{ reviewCampaign['campaign_data']['og_meta_data']['title'] }} | {{ reviewCampaign['campaign_data']['og_meta_data']['site_name'] }}
+                                    </div>
+                                    <div class="url">
+                                        <a ng-href="{{ reviewCampaign['campaign_data']['og_meta_data']['url'] }}" target="_blank"> {{ reviewCampaign['campaign_data']['og_meta_data']['url'] }}</a>
+                                    </div>
+                                    <div class="url-detail">
+                                        {{ reviewCampaign['campaign_data']['og_meta_data']['description'] }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     <!-- End of content -->
+                    </div>
+                      <div id="overlay-wrap" style="width: 97%;height: 97%;top: 0;" data-ng-show="isPostReviewLoading">
+                          <div class="command-center-overlay">
+                              <i class="fa fa-spinner fa-spin" style="font-size: 30px;"></i>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- Revision Content Starts here -->
+              <div class="col-sm-12 col-md-12 col-lg-12" data-ng-show="revisionCampaigns.length > 0 && reviewSelection =='REVISION'">
+                  <div class="inq-panel">
+                      <div class="inq-panel-container">
+                          <div class="container-fluid P0">
+                              <div class="content-wrapper" data-ng-repeat="revisionCampaign in revisionCampaigns track by $index">
+                                  <div class="socl-chnl-container">
+                                      <div class="row">
+                                          <div class="col-sm-12 md-12 col-lg-12">
+                                              <div class="time-detail">
+                                                  Scheduled for {{ revisionCampaign["scheduled_on"] | date:'medium' }}
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                              <div class="socl-chnl" back-img='{{ mobileAccount.profile_image || getInitials(mobileAccount.profile_name[0]) }}' ng-repeat="mobileAccount in revisionCampaign['mobile_accounts']"  title="{{ mobileAccount.profile_name }}" style="cursor: pointer;">
+                                                  <div class="icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms','opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+                                                      <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+                                                  </div>
+                                              </div>
+                                              <div class="socl-chnl" back-img='{{ socialAccount.profile_image }}' ng-repeat="socialAccount in revisionCampaign['social_accounts']"  title="{{ socialAccount.name }}" style="cursor: pointer;">
+                                                  <div class="icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+                                                      <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+                                                  </div>
+                                              </div>
+                                              <div class="socl-chnl" back-img='{{ locationAccount.profile_image || getInitials(locationAccount.profile_name[0]) }}' ng-repeat="locationAccount in revisionCampaign['location_accounts']"  title="{{ locationAccount.profile_name }}" style="cursor: pointer;">
+                                                  <div class="icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon','qr-code-chnl': locationAccount.channel == 'qrcode'}">
+                                                      <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon','fa-qrcode': locationAccount.channel == 'qrcode'}"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                              <div class ="command-center-campaign-wrapper" data-ng-show="revisionCampaign['is_two_way']">
+                                                  <div style="top: 11px;position: relative;left: 4px">
+                                                      2 way
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-2 col-md-2 col-lg-2 Pl0" style="padding-top:6px;">
+                                              <button type="button" class="btn  btn-lt-green btn-block fnt-sm" data-ng-click="checkRevision(revisionCampaign['campaign_id'])">
+                                                  View Revision
+                                              </button>
+                                          </div>
+                                          <div class="col-sm-2 col-md-2 col-lg-2 Pl0" style="padding-top:6px;">
+                                              <button type="button" class="btn btn-inq-blue btn-block fnt-sm " data-ng-click="redirectCampaigns(revisionCampaign['campaign_uuid'])">
+                                                  Edit
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <!-- Content Start here -->
+                                  <div class="row">
+                                      <div class="col-sm-12 md-12 col-lg-12 Pl0">
+                                          <div class="inq-form-group">
+                                              <label ng-bind-html="revisionCampaign['campaign_data']['share_content'] | parseUrlFilter:'_blank'"></label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row" ng-show="revisionCampaign['campaign_data']['campaign_media_url']">
+                                      <div class="col-sm-5 col-md-5 col-lg-5">
+                                          <div class="inq-from">
+                                              <img ng-src="{{revisionCampaign['campaign_data']['campaign_media_url']}}" style="width:100%;">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row" ng-show="revisionCampaign['campaign_data']['og_meta_data']">
+                                      <div class="url-preview">
+                                          <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+                                              <div class="url-img" back-img="{{ revisionCampaign['campaign_data']['og_meta_data']['image'] }}">
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                              <div class="url-title">
+                                                  {{ revisionCampaign['campaign_data']['og_meta_data']['title'] }} | {{ revisionCampaign['campaign_data']['og_meta_data']['site_name'] }}
+                                              </div>
+                                              <div class="url">
+                                                  <a ng-href="{{ revisionCampaign['campaign_data']['og_meta_data']['url'] }}" target="_blank"> {{ revisionCampaign['campaign_data']['og_meta_data']['url'] }}</a>
+                                              </div>
+                                              <div class="url-detail">
+                                                  {{ revisionCampaign['campaign_data']['og_meta_data']['description'] }}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <!-- End of content -->
+                              </div>
+                              <div id="overlay-wrap" style="width: 97%;height: 97%;top: 0;" data-ng-show="isPostRevisionLoading">
+                                  <div class="command-center-overlay">
+                                      <i class="fa fa-spinner fa-spin" style="font-size: 30px;"></i>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+             <!-- Revision End Here -->
+          </div>
+
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+          <div class="inq-panel" infinite-scroll='alertDetails()' infinite-scroll-disabled='isABusy' infinite-scroll-distance='1'>
+            <div class="inq-collapse-panel" style="min-height: 740px;">
+              <div class="collapse-container">
+                <div class="inq-body-panel" style="max-height:900px;">
+                  <div class="row M0">
+                  <div class="inq-alert-title-bar fnt-sm">
+                      <div class="row M0">
+                          <div class="col-sm-8 col-md-8 col-lg-8 P0">
+                              <div class="inq-panel-title">
+                                  <span class="fa fa-filter" style="color: #82C7CA;font-size: 16px;"></span>
+                                  <select class="form-control alert-select-box" ng-init="filterOption = 'all'" ng-model="filterOption" ng-change="filterAlerts()">
+                                      <option value="all">All Alerts</option>
+                                      <!!--<option value="pipeline">Pipeline</option>-->
+                                      <option value="campaigns">Campaigns</option>
+                                      <option value="system">System</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="col-sm-4 col-md-4 col-lg-4">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                      <div class="command-center-separator" data-ng-show="alertFeeds.length > 0" data-ng-repeat="alertPost in alertFeeds" data-ng-class="{'active': !alertPost.is_viewed}">
+                          <div class="row">
+                              <div class="col-sm-2 col-md-2 col-lg-2 Pr0">
+                                  <div class="command-center-icon-wrapper">
+                                      <span class="fa command-center-icon" data-ng-class="{'fa-rocket': alertPost.alert_type == 'campaigns', 'fa-list-ul': alertPost.alert_type == 'pipeline', 'fa-bolt': alertPost.alert_type == 'system'}"></span>
+                                  </div>
+                              </div>
+                              <div class="col-sm-10 col-md-10 col-lg-10">
+                                  <div class="alert-msg fnt-sm" compile="alertPost.event_message"></div>
+                                  <div class="alert-detail">
+                                      {{ alertPost.alert_sent_on | timeAgo }}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="command-center-separator" data-ng-show="alertFeeds.length == 0">
+                          <div class="row">
+                              <div class="col-sm-10 col-md-10 col-lg-10">
+                                  <div class="alert-msg fnt-sm">No notifications yet.</div>
+                              </div>
+                          </div>
+                      </div>
+                   </div>
+                   <div id="overlay-wrap" style="width: 96%;height: 92%;top: 50px;" data-ng-show="loadAlert">
+                          <div class="command-center-overlay">
+                              <i class="fa fa-spinner fa-spin" style="font-size: 30px;"></i>
+                          </div>
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

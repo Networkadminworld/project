@@ -1,0 +1,29 @@
+FROM ubuntu
+MAINTAINER rajkishore "rajkishore@risecorp.com"
+ENV MYSQL_ROOT_PASSWORD root
+
+RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
+RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+
+RUN apt-get update && apt-get install wget  inetutils-ping -y 
+RUN apt-get update && \
+	apt-get -y install mysql-server && \
+	mkdir -p /var/lib/mysql && \
+	mkdir -p /var/run/mysqld && \
+	mkdir -p /var/log/mysql && \
+	chown -R mysql:mysql /var/lib/mysql && \
+	chown -R mysql:mysql /var/run/mysqld && \
+	chown -R mysql:mysql /var/log/mysql
+
+# Download mysql database from s3 
+# UTF-8 and bind-address
+RUN sed -i -e "$ a [client]\n\n[mysql]\n\n[mysqld]"  /etc/mysql/my.cnf && \
+	sed -i -e "s/\(\[client\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
+	sed -i -e "s/\(\[mysql\]\)/\1\ndefault-character-set = utf8/g" /etc/mysql/my.cnf && \
+	sed -i -e "s/\(\[mysqld\]\)/\1\ninit_connect='SET NAMES utf8'\ncharacter-set-server = utf8\ncollation-server=utf8_unicode_ci\nbind-address = 0.0.0.0/g" /etc/mysql/my.cnf
+
+VOLUME /var/lib/mysql
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
+EXPOSE 3306
+CMD /run.sh

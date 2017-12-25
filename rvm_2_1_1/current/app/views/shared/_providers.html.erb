@@ -1,0 +1,221 @@
+ <div class="col-md-8">
+      <div class="white-box-wrapper">
+        <div class="box-head clearfix">
+          <h3><span class="glyphicon glyphicon-question-sign"></span>Share Details</h3>
+        </div>
+        <div class="white-box">
+          <div class="share-icons box-fixed">
+            <div class="row share-ic-box">
+            <%if @show_social%>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                <div class="social-share">
+                  <h5>Facebook</h5>
+		  <%=image_tag("responsive/icon-fb.png", alt: "Facebook")%>
+                  <!--<img alt="Facebook" src="/assets/responsive/icon-fb.png">-->
+                  <div class="shared-counts">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><%= views["fb_count"]? views["fb_count"] : 0 %></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><%= responses["fb_count"]? responses["fb_count"] : 0 %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                <div class="social-share">
+                  <h5>Twitter</h5>
+		  <%=image_tag("responsive/icon-twitter.png", alt: "Twitter")%>
+                  <!--<img alt="Twitter" src="/assets/responsive/icon-twitter.png">-->
+                  <div class="shared-counts">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><%= views["tw_count"]? views["tw_count"] :0 %></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><%= responses["tw_count"]? responses["tw_count"] :0 %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                <div class="social-share">
+                  <h5>Linkedin</h5>
+		  <%=image_tag("responsive/icon-linkedin.png", alt: "Linkedin")%>
+                  <div class="shared-counts">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><%= views["lk_count"]? views["lk_count"] : 0 %></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><%= responses["lk_count"]? responses["lk_count"] : 0 %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%end%>
+              <%if @show_email%>
+              <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                <div class="social-share">
+                  <h5>Email</h5>
+                  <% id = @question.present? ? "?slug=#{@question.slug}" : "" %>
+                  <% if !id.blank? %>
+                      <% if (@total_clicks_count != "NA" || @total_opens_count != "NA") %>
+                        <a href="javascript:void(0);"  id="question_email_track" title="Email" data-toggle="tooltip" class="email_tracks"><%=image_tag("responsive/icon-email.png", alt: "Email")%></a>
+                      <% else %>
+                       <%=image_tag("responsive/icon-email.png", alt: "Email")%>
+                      <% end %>
+                  <% else %>
+                     <%=image_tag("responsive/icon-email.png", alt: "Email")%>
+                   <% end %>
+                  <div class="shared-counts">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><%= views["mail_count"]? views["mail_count"] : 0 %></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><%= responses["mail_count"]? responses["mail_count"] : 0 %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%end%>
+                    <% if @show_sms%>
+                <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                  <div class="social-share">
+                    <h5>SMS</h5>
+		    <%=image_tag("responsive/icon-sms.png", alt: "sms")%>
+                    <div class="shared-counts">
+                      <div class="shared-views">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="share-ct"><%= views["sms_count"]? views["sms_count"] : 0 %></span>
+                      </div>
+                      <div class="shared-response">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span class="share-ct"><%= responses["sms_count"]? responses["sms_count"] : 0 %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <%end%>
+                     <%if @show_qr%>
+
+                <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                  <div class="social-share">
+                    <h5>QR Code</h5>
+		    <%=image_tag("responsive/icon-qrcode.png", alt: "QR Code")%>
+                    <div class="shared-counts">
+                      <div class="shared-views">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="share-ct"><%= views["qr_count"]? views["qr_count"] : 0 %></span>
+                      </div>
+                      <div class="shared-response">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span class="share-ct"><%= responses["qr_count"]? responses["qr_count"] : 0 %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                              <%end%>
+
+               <%if @show_embed%>
+                <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                  <div class="social-share">
+                    <h5>Embed Code</h5>
+		    <%= image_tag("responsive/icon-embed.png",alt: "Embed")%>
+                    <!--<img alt="Embed" src="/assets/responsive/icon-embed.png">-->
+                    <div class="shared-counts">
+                      <div class="shared-views">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="share-ct"><%= views["embed_count"]? views["embed_count"] : 0 %></span>
+                      </div>
+                      <div class="shared-response">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span class="share-ct"><%= responses["embed_count"]? responses["embed_count"] : 0 %></span>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+                  <%end%>
+             <%if @show_call%>
+                <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
+                  <div class="social-share">
+                    <h5>Make a Call</h5>
+		    <%= image_tag("responsive/icon-call.png",alt: "Call")%>
+                   <!-- <img alt="Call" src="/assets/responsive/icon-call.png">-->
+                    <div class="shared-counts">
+                      <div class="shared-views">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="share-ct"><%= views["call_count"]? views["call_count"] : 0 %></span>
+                      </div>
+                      <div class="shared-response">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span class="share-ct"><%= responses["call_count"]? responses["call_count"] : 0 %></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <%end%>
+            </div><!--sharebox-->
+          </div>
+        </div>
+      </div>
+      <!--//. recent activity -->
+    </div>
+
+ <div class="modal fade" id="email_analytics" style="display:none;padding-top:100px;">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+           &nbsp;
+         </button>
+         <h4 class="modal-title text-center">Opens&Clicks</h4>
+       </div>
+       <div class="modal-body">
+         <div class="text-center">
+           <% unless id.blank? %>
+               <div class="views-response-wrap" style="margin: 15px 0px 0px 67px;!important">
+                 <div class="row">
+                   <% open_link = @total_opens_count == "NA" ? "javascript:void(0);" : "/email_opens/email_activities#{id}" %>
+                   <a href="<%= open_link %>" <% if open_link != "javascript:void(0);" %>onclick="jQuery('.loading').show();" <% end %> style="text-decoration:none;">
+                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="width: 46%">
+                       <div class="box-display views-display">
+                         <span class="glyphicon glyphicon-folder-open"></span>
+                         <span class="views-count"><%=@total_opens_count%></span>
+                         <a style="text-decoration:none;">Opens</a>
+                       </div>
+                     </div></a>
+                   <% click_link = @total_clicks_count == "NA" ? "javascript:void(0);" : "/email_clicks/email_activities#{id}" %>
+                   <a href="<%= click_link %>" <% if click_link != "javascript:void(0);" %>onclick="jQuery('.loading').show();" <% end %> style="text-decoration:none;">
+                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="width: 46%">
+                       <div class="box-display response-display">
+                         <span class="glyphicon glyphicon-check"></span>
+                         <span class="views-count"><%=@total_clicks_count%></span>
+                         <a style="text-decoration:none;">Clicks</a>
+                       </div>
+                     </div>
+                   </a>
+                 </div>
+               </div>
+           <% end %>
+         </div>
+         <br />
+       </div>
+     </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+ <script type="text/javascript">
+     $(document).ready(function(){
+       $('#question_email_track').click(function(){
+           $('#email_analytics').modal('show');
+           return false;
+       });
+   })
+ </script>

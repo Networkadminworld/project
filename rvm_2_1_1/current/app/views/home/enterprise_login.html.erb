@@ -1,0 +1,75 @@
+<div class="sign-page">
+  <div class="container login-wrap">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="sign-form-wrap">
+        <div class="login-title"> SIGN IN</div>
+          <div class="form-group error-field">
+            <div class="error" id="error-message" style="display: none;"></div>
+          </div>
+            <div class="form-group">
+              <input name="user[user_name]" type="text" class="form-control" id="exampleInputEmail2" placeholder="User name">
+            </div>
+            <input type="hidden" name="user[token]" />
+            <div class="form-group">
+              <input name="user[password]" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+            </div>
+            <div class="chech-remember clearfix">
+              <div class="che-box"><input name="user[remember_me]" type="checkbox" class="redio-sp" id = "user_remember_me" checked = checked>Remember me</div>
+            </div>
+            <div class="pwd-wrap">
+              <div class="pwd-btn"><button type="submit" id="login_btn" class="btn btn-default login-btn signin_submit">Login</button></div>
+              <div class="forgot-pwd"><a style="cursor: pointer;" onClick="render_forgot_password_form();">Forgot password ?</a></div>
+            </div>
+      </div>
+    </div>
+   </div>
+ </div>
+<script>
+    // Sign in submit action
+    jQuery("#login_btn").click(function(){
+        jQuery(".loading").show();
+        var sub_domain = '<%= @subdomain %>';
+        var user_name = jQuery("#exampleInputEmail2").val();
+        var password = jQuery("#exampleInputPassword2").val();
+        var remember_me;
+        if(jQuery("#user_remember_me").is(":checked")){remember_me = 1}else{remember_me = 0}
+        jQuery.ajax({
+            type: "POST",
+            url: "/users/validate_user",
+            data: { username: user_name, password: password,subdomain: sub_domain, remember_me: remember_me},
+            success: function(data){
+                jQuery(".loading").css('display','block');
+                if (data.access_token)
+                {
+                    var parameters = { user: {client_email: "inquirly6@gmail.com", email: data.email, password: data.password, access_token: data.access_token, first_name: data.firstname, last_name: data.lastname, tenant_name: data.centrekey, tenant_address: data.centre, is_sso: true } }
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/users/login",
+                        data: parameters,
+                        success: function(data){
+                            if (data.header.status == 200)
+                            {
+                                jQuery("#error-message").hide();
+                                window.location.href = "<%= ENV['CUSTOM_URL']%>dashboard";
+                            }else{
+                                if (data.body.errors != ''){ data.error = "Invalid Credentials" }
+                                error_response(data)
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    error_response(data)
+                }
+            }
+        });
+        return false;
+    });
+
+    function error_response(data){
+        jQuery(".loading").css('display','none');
+        jQuery("#exampleInputEmail2").focus();
+        jQuery("#error-message").html(data.error).show();
+    }
+</script>

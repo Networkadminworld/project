@@ -1,0 +1,26 @@
+<div class="modal-header fnt-lg align-cen">ADD SCHEDULE
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<hr style="margin: 0">
+<div class="modal-body">
+ <form class="form-horizontal" name="form.schedules" novalidate>
+     <div class="form-group inq-form-group">
+        <label class="fnt-sm">Name</label>
+        <input class="form-control" placeholder="Enter name" ng-model="scheduleName" type="text">
+         <span style="color:red"  ng-show="form.schedules.name.$error.serverMessage">{{form.schedules.name.$error.serverMessage}}</span>
+     </div>
+ </form>
+	<div class="form-group inq-form-group">
+	<label class="fnt-sm">Choose Active Days</label>
+	<li ng-repeat="weekDay in weekDays" class="group-list">
+		<span data-ng-class="isActive(weekDay)" data-ng-click="setActive(weekDay)"></span>
+		<span data-ng-click="setActive(weekDay)" class="group-name">{{ weekDay.name }}</span>
+	</li>
+	</div>
+    <div class="group-submit">
+        <button class="btn btn-lt-orng group-btn" ng-click="saveSchedule()" ng-disabled="isSubmitted" style="margin-left: 130px;">SAVE</button>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

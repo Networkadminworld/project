@@ -1,0 +1,281 @@
+<div class="modal-header fnt-lg align-cen">Preview Your Post
+    <div class="x-close fa fa-times" ng-click="cancel();">
+    </div>
+</div>
+<div class="modal-body">
+  <div class="container-fluid P0M0">
+    <div class="row M0">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="tertiary-nav">
+          <div class="col-sm-2 col-md-2 col-lg-2 P0" ng-show="facebookList.length > 0">
+            <div class="fnt-sm tab-head" ng-click="showPreview('facebook')" ng-class="{'active':state=='facebook'}"> FACEBOOK </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2" ng-show="twitterList.length > 0">
+            <div class="fnt-sm tab-head" ng-click="showPreview('twitter')"  ng-class="{'active':state=='twitter'}"> TWITTER </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2 P0" ng-show="linkedinList.length > 0">
+            <div class="fnt-sm tab-head" ng-click="showPreview('LinkedIn')" ng-class="{'active':state=='LinkedIn'}"> LINKEDIN </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2 P0" ng-show="smsList.length > 0">
+            <div class="fnt-sm tab-head" ng-click="showPreview('sms')"  ng-class="{'active':state=='sms'}"> SMS </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2 P0" ng-show="emailList.length > 0">
+            <div class="fnt-sm tab-head" ng-click="showPreview('email')" ng-class="{'active':state=='email'}"> EMAIL </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2 P0" ng-show="qrcodesList.length > 0">
+            <div class="fnt-sm tab-head" ng-click="showPreview('qrcode')" ng-class="{'active':state=='qrcode'}"> QRCODE </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12" ng-show="facebookList.length > 0" ng-if="state=='facebook'">
+
+        <div class="inq-chnl-container">
+          <div class="fb-camp-cntnr">
+
+            <div class="row"> 
+              <div class="col-sm-1 col-md-1 col-lg-1">
+                <div class="preview-logo" back-img='{{ facebookProfile }}'></div>
+              </div>
+              <div class="col-sm-11 col-md-11 col-lg-11">        
+                <div class="title-container">
+                  <span class="profile-name">{{ facebookName }}</span> <br>
+                  <span class="tm-stamp">12 mins ago <i class="fa fa-globe"></i><span>
+                  </span></span></div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12">
+                  <div class="profile-content">
+                    {{ previewContent }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12" ng-show="ogmetaData.image">
+                  <div class="preview-img" back-img='{{ ogmetaData.image }}'></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-md-12 col-lg-12" ng-show="metaData">
+                  <div class="img-content">
+                    <div class="img-title">{{ ogmetaData.title }}</div>
+                    <div class="img-detail">{{ ogmetaData.description }}</div>
+                    <div class="url-detail">{{ ogmetaData.domain }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">             
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <div class="lik-cmt-shar">
+                    <span>Like . Comment . Share</span>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12" ng-show="twitterList.length > 0" ng-if="state=='twitter'">
+          <div class="inq-chnl-container">
+            <div class="twt-camp-cntnr">
+
+              <div class="row"> 
+                <div class="col-sm-1 col-md-1 col-lg-1">                        
+                  <div class="preview-logo" back-img='{{ twitterProfile }}'></div>
+                </div>
+                <div class="col-sm-11 col-md-11 col-lg-11">
+                  <div class="twt-content">
+                    <div class="title-container">
+                      <span class="profile-name">{{ twitterName }}</span>
+                      <span class="screen-name">@{{ twitterName }}<span>
+                        <span class="tm-stamp">{{ date | date:'MMM dd' }}<span>
+                        </span></span></span></span>
+                      </div>
+                      <div class="profile-content">
+                         {{ previewContent }}
+                      </div>
+                      <div class="preview-img"  ng-show="tmetaData.image" back-img='{{ tmetaData.image }}'>
+                      </div>
+                      <div class="action-container">
+                        <i class="fa fa-reply"></i>         
+                        <i class="fa fa-retweet"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-ellipsis-h"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12" ng-show="linkedinList.length > 0" ng-if="state=='LinkedIn'">
+            <div class="inq-chnl-container">
+              <div class="linkin-camp-cntnr">
+                <div class="row">             
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                   <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="preview-logo" profile-img='{{ linkedinProfile }}'></div>
+                    </div>
+                   <div class="col-sm-9 col-md-9 col-lg-9">
+                    <div class="profile-content"> 
+                      <span class="profile-name">{{ linkedinName }}</span>
+                      <span class="profile-msg">
+                        {{ previewContent }}
+                      </span>
+                    </div>
+                   </div>
+                  </div>  
+                </div>
+                <div class="row ln-pad" >
+                  <div class="col-sm-6 col-md-6 col-lg-6" ng-show="ogmetaData.image">
+                    <div class="preview-img" back-img='{{ ogmetaData.image }}'></div>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6 Pl0" ng-show="metaData">
+                    <div class="que-content">
+                        {{ ogmetaData.title }}
+                    </div>
+                     <div class="que-content" style="font-weight: normal;">{{ ogmetaData.description }}</div>
+                    <div class="que-src">
+                      <span class="src-nam">{{ ogmetaData.domain | lowercase }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">             
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="lik-cmt-shar ln-pad">
+                      <span>Like . Comment . Share . 21 days ago</span>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12" ng-show="smsList.length > 0" ng-if="state=='sms'">
+            <div class="inq-chnl-container">
+              <div class="sms-chnl-container">
+                <!--<div class="row">-->
+                   <!--<div class="col-sm-2 col-md-2 col-lg-2 sub-container" style="padding-left: 0;">-->
+                    <!--<span class="sub-title" style="font-size: 12px;color: #9b9b9b;">Text</span></div>-->
+                    <!--<div class="col-sm-10 col-md-10 col-lg-10">-->
+                       <!--<textarea class="form-control" name="content" placeholder="What do you want to share?" ng-keydown="changeContent($event)" ng-model="power.content" ng-required="true" required="required"  style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 85px;"> </textarea>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="row">
+                  <!--<div class="col-sm-2 col-md-2 col-lg-2 sub-container" style="top: 96px;padding-left: 0;">-->
+                  <!--<span class="sub-title" style="font-size: 12px;color: #9b9b9b;">Preview</span></div>-->
+                  <div class="col-sm-8 col-md-8 col-lg-8">
+                    <div class="preview-img" style="top: 4px;height: 280px;width: 85%;">
+                      <div class="sms-container">
+                        <div class="row"> 
+                          <div class="col-sm-3 col-md-3 col-lg-3 Pr0">
+                            <div class="profile-logo">
+                            </div>
+                          </div>
+                          <div class="col-sm-9 col-md-9 col-lg-9">
+                            <div class="sms-content" ng-repeat="smsContent in smsContents">
+                             {{ smsContent }}
+                            </div>
+                          </div>                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12" ng-show="emailList.length > 0" ng-if="state=='email'">
+
+            <div class="inq-chnl-container">
+
+              <div class="email-camp-cntnr fnt-sm">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                      <div class="sub-container" style="border-bottom: 0;">
+                          <span class="sub-title">Sender  </span>
+                          <span class="sub-content"><input type="text" name="email_sender" class="form-control subject-content" ng-model="power.emailSender" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required/></span>
+                      </div>
+                  </div>
+                </div>
+                <div class="row"> 
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="sub-container" style="border-bottom: 0;">
+                      <span class="sub-title">Subject  </span>
+                      <span class="sub-content"><input type="text" name="email_subject" class="form-control subject-content" ng-model="power.emailSubject" maxlength="80"/></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 col-md-12 col-lg-12">
+                    <div class="sub-container" style="border-bottom: 0;"><span class="sub-title" style="margin-left: 13px;">Body  </span></div>
+                    <div class="profile-content" style="margin-left: 35px;">
+                      {{ previewContent }}
+                    </div>
+                  </div>
+                </div>
+                <div class="row" ng-show="ogmetaData['image']">
+                  <div class="col-md-12 col-md-12 col-lg-12">     
+                    <div class="preview-img" back-img='{{ ogmetaData.image }}'></div>
+                  </div>
+                </div>
+
+                <div class="row" ng-show="ogmetaData['title']">
+                  <div class="col-md-12 col-md-12 col-lg-12">
+                    <div class="img-content" ng-show="metaData">
+                      <div class="row">
+                        <div class="col-md-12 col-md-12 col-lg-12">
+                          <div class="img-title">{{ ogmetaData.title }}</div>
+                          <div class="img-detail">{{ ogmetaData.description }}</div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-5 col-md-5 col-lg-5">
+                            <button type="button" class="btn btn-merun btn-block" style="font-size: 0.7em;" ng-bind-html="previewContent | addUrlFilter:'_blank'">READ COMPLETE ARTICLE</button>
+                          </div>
+                        </div>     
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12" ng-show="qrcodesList.length > 0" ng-if="state=='qrcode'">
+              <div class="inq-chnl-container">
+                <div class="sms-chnl-container">
+                  <div class="row">
+                    <div class="col-sm-offset-3 col-md-offset-3 col-lg-offset-3 col-sm-6 col-md-6 col-lg-6">
+                      <div class="profile-wrapper">
+                        <div class="row M0">
+                          <div class="col-sm-5 col-md-5 col-lg-5 qr-container">
+                            <div class="profile-img" back-img-width="250px" back-img-height="250px" user-img='{{ qrCodeImage }}'></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!--end of modal body container fluid-->
+      </div><!--end of modal body--> 
+
+      <div class="modal-footer ng-scope">
+        <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+      </div>

@@ -1,0 +1,389 @@
+<div class="nav-menu" ui-scrollpoint>
+<div class="row M0">
+            <div class="secondary-nav">
+              <div class="col-sm-4 col-md-4 col-lg-4 ">
+                <div class="secondary-nav-div fnt-sm">
+                  <a ui-sref="home.index">&lt; Back to PowerShare</a>
+                  <div class="fnt-lg secondary-nav-title secondary-nav-style"> Posting History
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 col-md-2 col-lg-2 history-select">
+                  <span class="history-filter-icon fnt-sm" ng-show="total > 0">
+                      <i class="fa fa-filter"></i>
+                  </span>
+                  <span class="dropdown" dropdown>
+                      <span class="dropdown-toggle" dropdown-toggle>
+                        <div class="history-filter" data-ng-class="isFiltered()">
+                            <div class="history-filter-label fnt-xs"> {{ filterTxt }} </div>
+                            <div class="profile-more fnt-sm"><i class="fa fa-angle-down"></i></div>
+                        </div>
+                      </span>
+                      <ul class="dropdown-menu history-dropdown overflow-fix" dropdown-menu>
+                          <span class="pull-right account-clear"><a data-ng-click="clearAll()">Clear</a></span>
+                          <hr>
+                          <li ng-repeat="mobileAccount in mobileAccounts">
+                              <div class="history-channels icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms', 'opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+                                  <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+                              </div>
+                              <span class="history-channel-accounts" ng-click="setSelectedMobileChannel(mobileAccount)">{{ mobileAccount.name }}</span>
+                              <span ng-class="isMobileChecked(mobileAccount.id)"></span>
+                          </li>
+                          <li ng-repeat="socialAccount in socialAccounts">
+                              <div class="history-channels icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+                                  <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+                              </div>
+                              <span class="history-channel-accounts" ng-click="setSelectedChannel(socialAccount)">{{ socialAccount.name }}</span>
+                              <span ng-class="isChecked(socialAccount.id)"></span>
+                          </li>
+                          <li ng-repeat="locationAccount in locationAccounts">
+                              <div class="history-channels icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon','qr-code-chnl': locationAccount.channel == 'qrcode'}">
+                                  <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon', 'fa-qrcode': locationAccount.channel == 'qrcode'}"></i>
+                              </div>
+                              <span class="history-channel-accounts" ng-click="setSelectedLocationChannel(locationAccount)">{{ locationAccount.name }}</span>
+                              <span ng-class="isLocationChecked(locationAccount.id)"></span>
+                          </li>
+                      </ul>
+                  </span>
+              </div>
+
+              <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                    <div class="secondary-nav-title fnt-blue fnt-sm tab-head" ng-click="showPost('history')" ng-class="{'active':currentState=='history'}">
+                        HISTORY
+                    </div>
+                </div>
+                <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                    <div class="secondary-nav-title fnt-blue fnt-sm tab-head" ng-click="showPost('archived')" ng-class="{'active': currentState == 'archived'}">
+                        ARCHIVED
+                    </div>
+              </div>
+              <div class="col-sm-3 col-md-3 col-lg-3">
+                    <profile-status profile-data="myData"></profile-status>
+              </div>
+            </div>
+          </div>
+</div>
+<div class="row M0">
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm history-list" ng-if="currentState =='history'" infinite-scroll='loadMoreHistory()' infinite-scroll-disabled='isBusy' infinite-scroll-distance='1'>
+      <div class="container-fluid P0M0">
+      <div class="row M0" ng-show="!isLoading && total == 0">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="inq-panel">
+                  <div class="inq-panel-container">
+                      <div class="container-fluid P0">
+                          <div class="msg-content">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="msg-wrapper">
+                                          <i class="fa fa-ellipsis-h icon-style"></i>
+                                          <br>You haven't share anything yet.
+                                          <br><a ui-sref="home.index">PowerShare something now!</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row M0" ng-repeat="historyCampaign in historyCampaigns" ng-show="total > 0">
+        <div class="col-sm-8 col-md-8 col-lg-8 Pr0">
+          <div class="inq-panel">
+            <div class="inq-panel-container">
+              <div class="container-fluid P0">
+                <div class="content-wrapper" id="post_{{ historyCampaign['campaign_id']}}">
+                  <div class="socl-chnl-container">
+                    <div class="row">
+                      <div class="col-sm-12 md-12 col-lg-12">
+                        <div class="time-detail">
+                          PowerShared on {{ historyCampaign["scheduled_on"] | date:'medium' }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-9 col-md-9 col-lg-9 P0">
+                          <div class="socl-chnl" back-img='{{ mobileAccount.profile_image || getInitials(mobileAccount.profile_name[0]) }}' ng-repeat="mobileAccount in historyCampaign['mobile_accounts']" title="{{ mobileAccount.profile_name }}" style="cursor: pointer;">
+                              <div class="icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms','opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+                                  <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+                              </div>
+                          </div>
+                          <div class="socl-chnl" back-img='{{ socialAccount.profile_image }}' ng-repeat="socialAccount in historyCampaign['social_accounts']"  title="{{ socialAccount.name }}" style="cursor: pointer;">
+                              <div class="icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+                                  <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+                              </div>
+                          </div>
+                          <div class="socl-chnl" back-img='{{ locationAccount.profile_image || getInitials(locationAccount.profile_name[0]) }}' ng-repeat="locationAccount in historyCampaign['location_accounts']" title="{{ locationAccount.profile_name }}" style="cursor: pointer;">
+                              <div class="icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon','qr-code-chnl': locationAccount.channel == 'qrcode'}">
+                                  <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon','fa-qrcode': locationAccount.channel == 'qrcode'}"></i>
+                              </div>
+                          </div>
+                      </div>
+                      <div class=" col-sm-3 col-md-3 col-lg-3" data-ng-show="checkOnlyBeaconShared(historyCampaign['location_accounts']).length == 0">
+                        <div class="lnk-container"><a ng-click="previewOnHistory(historyCampaign['campaign_data'],historyCampaign['mobile_accounts'],historyCampaign['social_accounts'],historyCampaign['location_accounts'])">Preview Your Post</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 md-12 col-lg-12 Pl0">
+                      <div class="socl-chnl-container">
+                        <div class="inq-form-group">
+                            <label ng-bind-html="historyCampaign['campaign_data']['share_content'] | parseUrlFilter:'_blank'"></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row" ng-show="historyCampaign['campaign_data']['campaign_media_url']">
+                        <div class="col-sm-5 col-md-5 col-lg-5">
+                            <div class="inq-from">
+                                <img ng-src="{{historyCampaign['campaign_data']['campaign_media_url']}}" style="width:100%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="historyCampaign['campaign_data']['og_meta_data']">
+                        <div class="url-preview">
+                            <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+                                <div class="url-img" back-img="{{ historyCampaign['campaign_data']['og_meta_data']['image'] }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                <div class="url-title">
+                                    {{ historyCampaign['campaign_data']['og_meta_data']['title'] }} | {{ historyCampaign['campaign_data']['og_meta_data']['site_name'] }}
+                                </div>
+                                <div class="url">
+                                    <a ng-href="{{ historyCampaign['campaign_data']['og_meta_data']['url'] }}" target="_blank"> {{ historyCampaign['campaign_data']['og_meta_data']['url'] }}</a>
+                                </div>
+                                <div class="url-detail">
+                                    {{ historyCampaign['campaign_data']['og_meta_data']['description'] }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <div class="inq-panel">
+            <div class="inq-panel-container">
+              <div class="container-fluid P0M0">
+                <div class="inq-count">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <i class="fa fa-bullseye icn-style"></i>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4 Pl0">  <div>{{ historyCampaign['reach'] || 0 }}</div>
+                      <div class="msg-detail">Reach</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                     <i class="fa fa-eye icn-style"></i>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4 Pl0">  <div>{{ historyCampaign['views'] || 0 }}</div>
+                     <div class="msg-detail">Visibility</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="history-details-cont" data-ng-show="historyCampaign['views'] > 0 || historyCampaign['reach'] > 0">
+                  <div class="row">
+                      <div class="col-xs-5">
+                          <hr align="left" class="hr-2">
+                      </div>
+                      <div class="col-xs-2">
+                          <div class="fnt-sm tab-head history-details"> <a ng-click="showDetails(historyCampaign)">Details</a> </div>
+                      </div>
+                      <div class="col-xs-5">
+                          <hr align="right" class="hr-2">
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mr-3">
+            <div class="col-md-8 col-md-8 col-lg-8 pr10">
+               <div class="history-actions re-post-btn-color" ng-click="rePost(historyCampaign)">Repost</div>
+            </div>
+            <div class="col-md-4 col-md-4 col-lg-4 Pl0">
+               <div class="history-actions archive-btn-color" ng-click="archive(historyCampaign,true)">Archive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    <!-- if server does not has more records to load then following div will inform the user that it is end of records -->
+    <div ng-show="!isBusy && (historyCampaigns.length == total) && total != 0" class="msg-content">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="msg-detail">
+                        <br>That's all, folks!<br> Nothing there in your history.
+                    </div>
+                </div>
+            </div>
+     </div>
+    <div class="img-suggest-gallery loading" ng-show="isLoading">
+        <span style="font-size:34px;">Loading</span><img src="/ng-app/Images/loader.gif">
+    </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm history-list" ng-if="currentState =='archived'" infinite-scroll='loadMoreArchive()' infinite-scroll-disabled='isABusy' infinite-scroll-distance='1'>
+        <div class="container-fluid P0M0">
+            <div class="row M0" ng-show="!isALoading && archiveTotal == 0">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="inq-panel">
+                        <div class="inq-panel-container">
+                            <div class="container-fluid P0">
+                                <div class="msg-content">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="msg-wrapper">
+                                                <i class="fa fa-ellipsis-h icon-style"></i>
+                                                <br>You haven't archived anything yet.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row M0" ng-repeat="archiveCampaign in archiveCampaigns" ng-show="archiveTotal > 0">
+                <div class="col-sm-8 col-md-8 col-lg-8 Pr0">
+                    <div class="inq-panel">
+                        <div class="inq-panel-container">
+                            <div class="container-fluid P0">
+                                <div class="content-wrapper">
+                                    <div class="socl-chnl-container">
+                                        <div class="row">
+                                            <div class="col-sm-12 md-12 col-lg-12">
+                                                <div class="time-detail">
+                                                    PowerShared on {{ archiveCampaign["scheduled_on"] | date:'medium' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9 col-md-9 col-lg-9 P0">
+                                                <div class="socl-chnl" back-img='{{ mobileAccount.profile_image || getInitials(mobileAccount.profile_name[0]) }}' ng-repeat="mobileAccount in archiveCampaign['mobile_accounts']" style="cursor: pointer;">
+                                                    <div class="icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms','opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+                                                        <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="socl-chnl" back-img='{{ socialAccount.profile_image }}' ng-repeat="socialAccount in archiveCampaign['social_accounts']"  style="cursor: pointer;">
+                                                    <div class="icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+                                                        <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="socl-chnl" back-img='{{ locationAccount.profile_image || getInitials(locationAccount.profile_name[0]) }}' ng-repeat="locationAccount in archiveCampaign['location_accounts']" title="{{ locationAccount.profile_name }}" style="cursor: pointer;">
+                                                    <div class="icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon','qr-code-chnl': locationAccount.channel == 'qrcode'}">
+                                                        <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon','fa-qrcode': locationAccount.channel == 'qrcode'}"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" col-sm-3 col-md-3 col-lg-3">
+                                                <div class="lnk-container"><a ng-click="previewOnQueue(archiveCampaign['campaign_data'],archiveCampaign['mobile_accounts'],archiveCampaign['social_accounts'])">Preview Your Post</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 md-12 col-lg-12 Pl0">
+                                            <div class="socl-chnl-container">
+                                                <div class="inq-form-group">
+                                                    <label ng-bind-html="archiveCampaign['campaign_data']['share_content'] | parseUrlFilter:'_blank'"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="archiveCampaign['campaign_data']['campaign_media_url']">
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+                                            <div class="inq-from">
+                                                <img ng-src="{{archiveCampaign['campaign_data']['campaign_media_url']}}" style="width:100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="archiveCampaign['campaign_data']['og_meta_data']">
+                                        <div class="url-preview">
+                                            <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+                                                <div class="url-img" back-img="{{ archiveCampaign['campaign_data']['og_meta_data']['image'] }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                                <div class="url-title">
+                                                    {{ archiveCampaign['campaign_data']['og_meta_data']['title'] }} | {{ archiveCampaign['campaign_data']['og_meta_data']['site_name'] }}
+                                                </div>
+                                                <div class="url">
+                                                    <a ng-href="{{ archiveCampaign['campaign_data']['og_meta_data']['url'] }}" target="_blank"> {{ archiveCampaign['campaign_data']['og_meta_data']['url'] }}</a>
+                                                </div>
+                                                <div class="url-detail">
+                                                    {{ archiveCampaign['campaign_data']['og_meta_data']['description'] }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="inq-panel">
+                        <div class="inq-panel-container">
+                            <div class="container-fluid P0M0">
+                                <div class="inq-count">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <i class="fa fa-bullseye icn-style"></i>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4 Pl0">  <div>{{ archiveCampaign['reach'] || 0 }}</div>
+                                            <div class="msg-detail">Reach</div>
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <i class="fa fa-eye icn-style"></i>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4 Pl0">  <div>{{ archiveCampaign['views'] || 0 }}</div>
+                                            <div class="msg-detail">Visibility</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="history-details-cont">
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <hr align="left" class="hr-2">
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <div class="fnt-sm tab-head history-details"> <a ng-click="showDetails(archiveCampaign)">Details</a> </div>
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <hr align="right" class="hr-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mr-3 ml-0">
+                        <div class="col-md-12 col-md-12 col-lg-12 Pl0">
+                            <div class="history-actions archive-btn-color" ng-click="archive(archiveCampaign,false)">MOVE TO HISTORY</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- if server does not has more records to load then following div will inform the user that it is end of records -->
+        <div ng-show="!isABusy && (archiveCampaigns.length == archiveTotal) && archiveTotal != 0" class="msg-content">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="msg-detail">
+                        <br>That's all, folks!<br><a ui-sref="home.index">PowerShare something now!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="img-suggest-gallery loading" ng-show="isALoading">
+            <span style="font-size:34px;">Loading</span><img src="/ng-app/Images/loader.gif">
+        </div>
+    </div>
+  </div>

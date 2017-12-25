@@ -1,0 +1,45 @@
+<div class="row" style="float:right;margin-bottom: 6px;">
+  <div class="col-sm-5 col-lg-5 col-md-5">
+    <div class="btn-wrap text-right btn-update-info" style="margin-top: 5px;">
+      <a href="/admin/action_lists/new" class="btn btn-primary" data-toggle="modal">+ Add Action List</a>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+<table class="table user-table">
+  <thead>
+  <tr>
+    <th>Action Name</th>
+    <th>Weight</th>
+    <th>URL</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @action_lists.each do |action_list| %>
+      <tr>
+        <td><%= action_list.action %></td>
+        <td><%= action_list.weight %></td>
+        <td><%= action_list.url %></td>
+        <td>
+        <div class="action-items">
+          <%= link_to "/admin/action_lists/#{action_list.id}/edit" do %>
+              <i class="fa fa-edit" aria-hidden="true"></i>
+          <% end %>
+          <%= link_to "/admin/action_lists/#{action_list.id}", data: { confirm: "Are you sure?" }, :method => :delete do %>
+              <i class="fa fa-remove" aria-hidden="true"></i>
+          <% end %>
+        </div>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+
+</table>
+</div>
+<div class="row">
+  <div class="pull-right">
+    <%= will_paginate @action_lists, renderer: BootstrapPagination::Rails %>
+  </div>
+</div>

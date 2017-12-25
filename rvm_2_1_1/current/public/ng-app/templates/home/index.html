@@ -1,0 +1,894 @@
+<tour step="currentStep" post-step="postStepCallback()" tour-complete="tourComplete()">
+<div class="nav-menu" ui-scrollpoint>
+<div class="row M0">
+            <div class="secondary-nav">
+              <div class=" col-sm-8 col-md-8 col-lg-8">
+                <div class="fnt-lg secondary-nav-title"> Home
+                </div>
+              </div>
+              <div class=" col-sm-1 col-md-1 col-lg-1 P0">
+                <div class="secondary-nav-div align-rt fnt-sm" ng-click="loadHistory()"> <a ui-sref="home.history">Posting History</a></div>
+              </div>
+              <div class="col-sm-3 col-md-3 col-lg-3">
+                    <profile-status profile-data="myData"></profile-status>
+              </div>
+            </div>
+          </div>
+</div>
+	<div class="row M0">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout='5000' class="fade-in-out">{{alert.msg}}</alert>
+            <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+               <div class="row M0" data-ng-show="!isPermitted">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="inq-panel">
+                            <div class="inq-panel-container">
+                                <div class="container-fluid P0">
+                                    <div class="msg-content">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="msg-wrapper">
+                                                    <i class="fa fa-ellipsis-h icon-style"></i>
+                                                    <br> This feature is restricted by the admin. Please contact <a href="mailto:help@inquirly.com">help@inquirly.com</a> to get access.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <div class="container-fluid P0M0" data-ng-show="isPermitted">
+                <div class="col-sm-8 col-md-8 col-lg-8 Pr0">
+                  <div class="inq-panel">
+                    <div class="inq-panel-title-bar">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                          <div class="inq-panel-title fnt-sm">POWER SHARE
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="inq-panel-container">
+                      <div class="container-fluid P0">
+                       <form class="inq-from" name="form.shareForm" novalidate>
+                        <div class="content-wrapper">
+                          <div class="socl-chnl-container">
+                            <div class="row">
+                              <div class="col-sm-9 col-md-9 col-lg-9 P0">
+                                <!-- Begin New Design -->
+                                <div class="socl-chnl-wrapper" any-other-click="hideOpinify()">
+                                    <div class="socl-icn-wrapper-lg opinify-chnl-mobile active socl-selected" ng-click="setOpinifyActive(opinifyOpened, $event)">
+                                        <i class="fa fa-envelope-oo icon-position"></i>
+                                        <div class="tooltip-card" ng-show="opinifyList.length > 0">
+                                            <div class="row" data-ng-repeat="opinifyGroupName in opinifyGroupNames">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    {{ opinifyGroupName.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="socl-count" ng-show="opinifyList.length > 0">{{ opinifyList.length }}</div>
+                                    <div class="socl-card" ng-class="isOpinifySelected()">
+                                        <div class="card-container">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                    <div class="socl-icn-wrapper-lg opinify-chnl-mobile socl-selected" ng-click="setOpinifyActive(opinifyOpened,$event)">
+                                                        <i class="fa fa-envelope-oo icon-position"></i>
+                                                    </div>
+                                                    <div class="socl-count" ng-show="opinifyList.length > 0">{{ opinifyList.length }}</div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                    <div class="action-msg" ng-show="opinifyGroups.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllOpinifyGroup()">ALL</a></div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <div class="action-msg" ng-show="opinifyGroups.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllOpinifyGroup()">NONE</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="isLoading">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="loading">
+                                                        <i class="fa fa-spinner fa-spin"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-repeat="opinifyGroup in opinifyGroups" ng-show="!isLoading">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <div class="socl-icn-wrapper-sm opinify-chnl-mobile socl-selected" ng-click="addAccount(opinifyGroup)">
+                                                        <i class="fa fa-envelope-oo icon-position"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                    <div class="user-detail" ng-click="addAccount(opinifyGroup)">{{ opinifyGroup.name }}</div>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="user-detail"><i ng-class="isOpinifyChecked(opinifyGroup.id)"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="!isLoading && opinifyGroups.length == 0">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                <a ui-sref="configure.mobile">+ Invite Opinify User(s)</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="socl-chnl-wrapper" any-other-click="hideEmail()">
+                                    <div class="socl-icn-wrapper-lg email-chnl" data-ng-class="{'disable': !emailOpened && emailList.length == 0 }" ng-click="setEmailActive(emailOpened, $event)">
+                                        <i class="fa fa-envelope-o icon-position"></i>
+                                        <div class="tooltip-card" ng-show="emailList.length > 0">
+                                            <div class="row" data-ng-repeat="emailGroupName in emailGroupNames">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    {{ emailGroupName.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="socl-count" ng-show="emailList.length > 0">{{ emailList.length }}</div>
+                                    <div class="socl-card" ng-class="isEmailSelected()">
+                                        <div class="card-container">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                    <div class="socl-icn-wrapper-lg email-chnl socl-selected" ng-click="setEmailActive(emailOpened,$event)">
+                                                        <i class="fa fa-envelope-o icon-position"></i>
+                                                    </div>
+                                                    <div class="socl-count" ng-show="emailList.length > 0">{{ emailList.length }}</div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                    <div class="action-msg" ng-show="emailGroups.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllEmailGroup()">ALL</a></div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <div class="action-msg" ng-show="emailGroups.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllEmailGroup()">NONE</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="isLoading">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="loading">
+                                                        <i class="fa fa-spinner fa-spin"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-repeat="emailGroup in emailGroups" ng-show="!isLoading">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <div class="socl-icn-wrapper-sm email-chnl socl-selected" ng-click="addAccount(emailGroup)">
+                                                        <i class="fa fa-envelope-o icon-position"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                    <div class="user-detail" ng-click="addAccount(emailGroup)">{{ emailGroup.name }}</div>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="user-detail"><i ng-class="isEmailChecked(emailGroup.id)"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="emailList.length > 0">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <a data-ng-click="previewShare(power.content)">EDIT EMAIL SUBJECT</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="!isLoading && emailGroups.length == 0">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                <a ui-sref="configure.mobile">+ Add Email Contact(s)</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+
+                                <div class="socl-chnl-wrapper" any-other-click="hideSms()">
+                                    <div class="socl-icn-wrapper-lg sms-chnl" data-ng-class="{'disable': !smsOpened && smsList.length == 0 }" ng-click="setSmsActive(smsOpened, $event)">
+                                        <i class="fa fa-comment-o icon-position"></i>
+                                        <div class="tooltip-card" ng-show="smsList.length > 0">
+                                            <div class="row" data-ng-repeat="smsGroupName in smsGroupNames">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    {{ smsGroupName.name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="socl-count" ng-show="smsList.length > 0">{{ smsList.length }}</div>
+
+                                    <div class="socl-card" ng-class="isSmsSelected()">
+                                        <div class="card-container">
+                                            <div class="row">
+                                                <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                    <div class="socl-icn-wrapper-lg sms-chnl socl-selected" ng-click="setSmsActive(smsOpened, $event)">
+                                                        <i class="fa fa-comment-o icon-position"></i>
+                                                    </div>
+                                                    <div class="socl-count" ng-show="smsList.length > 0">{{ smsList.length }}</div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                    <div class="action-msg" ng-show="smsGroups.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllSmsGroup()">ALL</a></div>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <div class="action-msg" ng-show="smsGroups.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllSmsGroup()">NONE</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="isLoading">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="loading">
+                                                        <i class="fa fa-spinner fa-spin"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class ="card-container" ng-repeat="smsGroup in smsGroups" ng-show="!isLoading">
+                                            <div class="row">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <div class="socl-icn-wrapper-sm sms-chnl socl-selected" ng-click="addAccount(smsGroup)">
+                                                        <i class="fa fa-comment-o icon-position"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                    <div class="user-detail" ng-click="addAccount(smsGroup)">{{ smsGroup.name }}</div>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="user-detail"><i ng-class="isSmsChecked(smsGroup.id)"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-container" ng-show="!isLoading && smsGroups.length == 0">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                <a ui-sref="configure.mobile">+ Add SMS Contact(s)</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                  <div class="socl-chnl-wrapper" any-other-click="hideFacebook()">
+                                      <div class="socl-icn-wrapper-lg fb-chnl" data-ng-class="{'disable': !fbOpened && facebookList.length == 0 }" ng-click="setFbActive(fbOpened, $event)">
+                                          <i class="fa fa-facebook icon-position"></i>
+                                          <div class="tooltip-card" ng-show="facebookList.length > 0">
+                                              <div class="row" data-ng-repeat="fbName in fbNames">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      {{ fbName.name }}
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="socl-count" ng-show="facebookList.length > 0">{{ facebookList.length }}</div>
+                                      <div class="socl-card" ng-class="isFbSelected()">
+                                          <div class="card-container">
+                                              <div class="row">
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                      <div class="socl-icn-wrapper-lg fb-chnl socl-selected" ng-click="setFbActive(fbOpened,$event)">
+                                                          <i class="fa fa-facebook icon-position"></i>
+                                                      </div>
+                                                      <div class="socl-count" ng-show="facebookList.length > 0">{{ facebookList.length }}</div>
+
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                      <div class="action-msg" ng-show="fbAccounts.length > 0"><div class="show-msg"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllFacebook()">ALL</a></div></div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4">
+                                                      <div class="action-msg" ng-show="fbAccounts.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllFacebook()">NONE</a></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      <div class="loading">
+                                                          <i class="fa fa-spinner fa-spin"></i>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-repeat="fbAccount in fbAccounts" ng-show="!isLoading">
+                                                  <div class="row">
+                                                  <div class="col-sm-3 col-md-3 col-lg-3">
+                                                      <div class="socl-icn-wrapper-sm" ng-click="addAccount(fbAccount)" social-img='{{ fbAccount.profile_image }}'></div>
+                                                  </div>
+                                                  <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                      <div class="user-detail" ng-click="addAccount(fbAccount)">{{ fbAccount.name }}</div>
+                                                  </div>
+                                                  <div class="col-sm-2 col-md-2 col-lg-2">
+                                                      <div class="user-detail"><i ng-class="isFBChecked(fbAccount.id)"></i></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="!isLoading && fbAccounts.length == 0">
+                                              <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                  <a ui-sref="configure.social">+ Add Facebook account</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="socl-chnl-wrapper" any-other-click="hideTwitter()">
+                                      <div class="socl-icn-wrapper-lg twt-chnl" data-ng-class="{'disable': !twOpened && twitterList.length == 0 }" ng-click="setTwActive(twOpened, $event)">
+                                          <i class="fa fa-twitter icon-position"></i>
+                                          <div class="tooltip-card" ng-show="twitterList.length > 0">
+                                              <div class="row" data-ng-repeat="twName in twNames">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      {{ twName.name }}
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="socl-count" ng-show="twitterList.length > 0">{{ twitterList.length }}</div>
+
+                                      <div class="socl-card" ng-class="isTwSelected()">
+                                          <div class="card-container">
+                                              <div class="row">
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                      <div class="socl-icn-wrapper-lg twt-chnl socl-selected" ng-click="setTwActive(twOpened,$event)">
+                                                          <i class="fa fa-twitter icon-position"></i>
+                                                      </div>
+                                                      <div class="socl-count" ng-show="twitterList.length > 0">{{ twitterList.length }}</div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                      <div class="action-msg" ng-show="twAccounts.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllTwitter()">ALL</a></div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4">
+                                                      <div class="action-msg" ng-show="twAccounts.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllTwitter()">NONE</a></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      <div class="loading">
+                                                          <i class="fa fa-spinner fa-spin"></i>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class ="card-container" ng-repeat="twAccount in twAccounts" ng-show="!isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-3 col-md-3 col-lg-3">
+                                                      <div class="socl-icn-wrapper-sm" ng-click="addAccount(twAccount)" social-img='{{ twAccount.profile_image }}'></div>
+                                                  </div>
+                                                  <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                      <div class="user-detail" ng-click="addAccount(twAccount)"> {{ twAccount.name }}</div>
+                                                  </div>
+                                                  <div class="col-sm-2 col-md-2 col-lg-2">
+                                                      <div class="user-detail"><i ng-class="isTWChecked(twAccount.id)"></i></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="!isLoading && twAccounts.length == 0">
+                                              <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                  <a ui-sref="configure.social">+ Add Twitter account</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="socl-chnl-wrapper" any-other-click="hideLinkedin()">
+                                      <div class="socl-icn-wrapper-lg linkin-chnl" data-ng-class="{'disable': !lnOpened && linkedinList.length == 0 }" ng-click="setLnActive(lnOpened, $event)">
+                                          <i class="fa fa-linkedin icon-position"></i>
+                                          <div class="tooltip-card" ng-show="linkedinList.length > 0">
+                                              <div class="row" ng-repeat="lnName in lnNames">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      {{ lnName.name }}
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="socl-count" ng-show="linkedinList.length > 0">{{ linkedinList.length }}</div>
+                                      <div class="socl-card" ng-class="isLnSelected()">
+                                          <div class="card-container">
+                                              <div class="row">
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                      <div class="socl-icn-wrapper-lg linkin-chnl socl-selected" ng-click="setLnActive(lnOpened,$event)">
+                                                          <i class="fa fa-linkedin icon-position"></i>
+                                                      </div>
+                                                      <div class="socl-count" ng-show="linkedinList.length > 0">{{ linkedinList.length }}</div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                      <div class="action-msg" ng-show="lnAccounts.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllLinkedIn()">ALL</a></div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4">
+                                                      <div class="action-msg" ng-show="lnAccounts.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllLinkedIn()">NONE</a></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      <div class="loading">
+                                                          <i class="fa fa-spinner fa-spin"></i>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class ="card-container" ng-repeat="lnAccount in lnAccounts" ng-show="!isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-3 col-md-3 col-lg-3">
+                                                      <div class="socl-icn-wrapper-sm" ng-click="addAccount(lnAccount)" social-img='{{ lnAccount.profile_image }}'></div>
+                                                  </div>
+                                                  <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                      <div class="user-detail" ng-click="addAccount(lnAccount)"> {{ lnAccount.name }}</div>
+                                                  </div>
+                                                  <div class="col-sm-2 col-md-2 col-lg-2">
+                                                      <div class="user-detail"><i data-ng-class="isLnChecked(lnAccount.id)"></i></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="!isLoading && lnAccounts.length == 0">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                      <a ui-sref="configure.social"> + Add Linkedin account</a>
+                                                   </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="socl-chnl-wrapper" any-other-click="hideBeacon()">
+                                      <div class="socl-icn-wrapper-lg beacon-chnl" data-ng-class="{'disable': !beaconOpened && beaconsList.length == 0 }" ng-click="setBeaconActive(beaconOpened, $event)">
+                                          <i class="fa fa-thumb-tack icon-position"></i>
+                                          <div class="tooltip-card" ng-show="beaconsList.length > 0">
+                                              <div class="row" ng-repeat="beaconName in beaconNames">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      {{ beaconName.name }}
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="socl-count" ng-show="beaconsList.length > 0">{{ beaconsList.length }}</div>
+                                      <div class="socl-card" ng-class="isBeaconSelected()">
+                                          <div class="card-container">
+                                              <div class="row">
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                      <div class="socl-icn-wrapper-lg beacon-chnl socl-selected" ng-click="setBeaconActive(beaconOpened,$event)">
+                                                          <i class="fa fa-thumb-tack icon-position"></i>
+                                                      </div>
+                                                      <div class="socl-count" ng-show="beaconsList.length > 0">{{ beaconsList.length }}</div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                      <div class="action-msg" ng-show="beacons.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllBeacon()">ALL</a></div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4">
+                                                      <div class="action-msg" ng-show="beacons.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllBeacon()">NONE</a></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      <div class="loading">
+                                                          <i class="fa fa-spinner fa-spin"></i>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class ="card-container" ng-repeat="beacon in beacons" ng-show="!isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-3 col-md-3 col-lg-3">
+                                                      <div class="socl-icn-wrapper-sm beacon-chnl socl-selected" ng-click="addAccount(beacon)">
+                                                          <i class="fa fa-thumb-tack icon-position"></i>
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                      <div class="user-detail" ng-click="addAccount(beacon)"> {{ beacon.name }}</div>
+                                                  </div>
+                                                  <div class="col-sm-2 col-md-2 col-lg-2">
+                                                      <div class="user-detail"><i data-ng-class="isBeaconChecked(beacon.id)"></i></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="!isLoading && beacons.length == 0">
+                                              <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                  <a ui-sref="configure.in-location"> + Add In-Location Channels</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="socl-chnl-wrapper" any-other-click="hideQrCode()">
+                                      <div class="socl-icn-wrapper-lg qr-code-chnl" data-ng-class="{'disable': !qrcodeOpened && qrcodesList.length == 0 }" ng-click="setQrCodeActive(qrcodeOpened, $event)">
+                                          <i class="fa fa-qrcode icon-position"></i>
+                                          <div class="tooltip-card" ng-show="qrcodesList.length > 0">
+                                              <div class="row" ng-repeat="qrcodeName in qrcodeNames">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      {{ qrcodeName.name }}
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="socl-count" ng-show="qrcodesList.length > 0">{{ qrcodesList.length }}</div>
+                                      <div class="socl-card" ng-class="isQrCodeSelected()">
+                                          <div class="card-container">
+                                              <div class="row">
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                                      <div class="socl-icn-wrapper-lg qr-code-chnl socl-selected" ng-click="setQrCodeActive(qrcodeOpened,$event)">
+                                                          <i class="fa fa-qrcode icon-position"></i>
+                                                      </div>
+                                                      <div class="socl-count" ng-show="qrcodesList.length > 0">{{ qrcodesList.length }}</div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4 Pr0">
+                                                      <div class="action-msg" ng-show="qrcodes.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="selectAllQrCode()">ALL</a></div>
+                                                  </div>
+                                                  <div class="col-sm-4 col-md-4 col-lg-4">
+                                                      <div class="action-msg" ng-show="qrcodes.length > 0"><a href="javascript:void(0);" ng-disabled="isLoading" data-ng-click="removeAllQrCode()">NONE</a></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                                      <div class="loading">
+                                                          <i class="fa fa-spinner fa-spin"></i>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class ="card-container" ng-repeat="qrcode in qrcodes" ng-show="!isLoading">
+                                              <div class="row">
+                                                  <div class="col-sm-3 col-md-3 col-lg-3">
+                                                      <div class="socl-icn-wrapper-sm qr-code-chnl socl-selected" ng-click="addAccount(qrcode)">
+                                                          <i class="fa fa-qrcode icon-position"></i>
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-sm-7 col-md-7 col-lg-7 P0">
+                                                      <div class="user-detail" ng-click="addAccount(qrcode)"> {{ qrcode.name }}</div>
+                                                  </div>
+                                                  <div class="col-sm-2 col-md-2 col-lg-2">
+                                                      <div class="user-detail"><i data-ng-class="isQrCodeChecked(qrcode.id)"></i></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="card-container" ng-show="!isLoading && qrcodes.length == 0">
+                                              <div class="col-sm-12 col-md-12 col-lg-12 Pl0">
+                                                  <a ui-sref="configure.in-location"> + Add In-Location Channels</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                <!-- End Design -->
+                                 <span tourtip-next-label="Next" tourtip-placement="bottom" tourtip-step="0" tourtip="Choose where you want to PowerShare." tourtip-offset-vertical="-25"/>
+                              </div>
+                              <div class="col-sm-3 col-md-3 col-lg-3">
+                                <div class="lnk-container" ng-show="!allRemoved && !beaconOnlySelected"><a ng-click="previewShare(power.content)">Preview Your Post</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                            <div class="row">
+                              <div class="col-sm-12 md-12 col-lg-12 P0">
+                                <span style="margin-right: 21px;float:right;" ng-show="metaLoad"><img src="/ng-app/Images/loading.gif"></span>
+                                <div class="form-group inq-form-group">
+                                    <table cellpadding="0" cellpadding="0" class="table-width">
+                                        <tr>
+                                            <td class="table-width">
+                                                <textarea class="form-control msd-elastic" name="content" ng-keypress="change($event)" placeholder="What do you want to share?" ng-model="power.content" ng-required="true" required custom-focus> </textarea>
+                                                <span style="color:red" class="help-block" ng-show="form.shareForm.content.$error.clientMessage">{{form.shareForm.content.$error.clientMessage}}</span>
+                                            </td>
+                                            <td>
+                                                <div class="preview-photo" ng-show="uploadPhoto" back-img="{{ ogmetaData.image }}">
+                                                    <div class="overlay-animate">
+                                                        <a ng-click="removeImage()"> x </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        <tr>
+                                    </table>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row" ng-show="metaData">
+                                <div class="url-preview">
+                                    <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+                                        <div class="url-img" back-img='{{ ogmetaData.image }}'>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                        <div class="url-title">
+                                            {{ ogmetaData.title }} | {{ ogmetaData.site_name }}
+                                        </div>
+                                        <div class="url">
+                                            <a ng-href="{{ ogmetaData.url }}" target="_blank"> {{ ogmetaData.url }}</a>
+                                        </div>
+                                        <div class="url-detail">
+                                            {{ ogmetaData.description }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 col-sm-1 col-lg-1 P0">
+                                        <div class="url-close">
+                                            <a href="javascript:void(0);" ng-click="closeMetaPreview();">x</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-sm-3 col-md-3 col-lg-3">
+                                <div class="inq-panel-title">
+                                    <button type="button" tourtip="Add an image from our library." tourtip-step="1"  tourtip-placement="right" tourtip-offset-horizontal="-10" tourtip-offset-vertical="-30" tourtip-next-label="Next" class="btn btn-lt-orng btn-block fnt-sm" ng-click="inspireMe()">INSPIRE ME!</button>
+                                </div>
+                              </div>
+                              <div class="col-sm-2 col-md-2 col-lg-2 P0">
+                                <div class="lnk-container">
+                                    <a  accept="image/*" ngf-select="" ng-model="picFile" name="file" ngf-change="onFileSelect($files)" ngf-max-size="5000000"> <i class="fa fa-picture-o icn-style"></i>Add Photo</a>
+                                </div>
+                              </div>
+                              <div class="col-sm-3 col-md-3 col-lg-3">
+                                 <div class="lnk-container" ng-click="schedule(0)" tourtip="Schedule the post for later." tourtip-step="3"  tourtip-placement="bottom"  tourtip-offset-top="413" tourtip-offset-vertical="-15" tourtip-next-label="Next" ><a><i class="fa fa-clock-o icn-style"></i>SCHEDULE THIS</a></div>
+                              </div>
+                              <div class="col-sm-1 col-md-1 col-lg-1">
+                                 <div class="count-container"  ng-show="power.content && twitterList.length > 0" ng-class="{ red: charCount < 0 }">{{ charCount }}</div>
+                              </div>
+                              <div class="col-sm-3 col-md-3 col-lg-3 P0">
+                              <button type="submit" class="btn btn-lt-red fnt-sm" ng-click="powerShare(date,true)" ng-disabled="allRemoved || charCount < 0 && twitterList.length > 0 || isProcessing" tourtip="Or just post away" tourtip-next-label="End" tourtip-step="4"  tourtip-placement="bottom" tourtip-offset-vertical="-15">
+                                  <i class="fa fa-bolt icn-style"></i> {{ shareButton }}<span ng-show="onShare"><img src="/ng-app/Images/ajax-loader2.gif"></span>
+                              </button>
+                              </div>
+                            </div>
+                        </div>
+                          </form>
+                      </div>  
+                    </div>
+                  </div>
+                  <div class="inq-panel" infinite-scroll='loadMoreQueue()' infinite-scroll-disabled='isQBusy' infinite-scroll-distance='1'>
+                    <div class="inq-panel-title-bar">
+                      <div class="row tertiary-nav">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                          <div class="inq-panel-title fnt-sm tab-head"  ng-class="{active : powerShareOptionsView == 'queue'}" ng-click="onActivateView('queue')">QUEUE
+                          </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                          <div class="inq-panel-title fnt-sm tab-head" ng-class="{active : powerShareOptionsView == 'recos'}" ng-click="onActivateView('recos')">RECOMMENDED FOR YOU
+                          </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                          <div class="inq-panel-title align-cen" ng-show="scheduledCampaigns.length > 0">
+                            <a ng-click="clearQueue()">Clear Queue</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                     <!-- reccos --> 
+                    <div ng-if="powerShareOptionsView == 'recos'">
+                      <div class="inq-panel-container">
+                           <div class="container-fluid P0">
+                              <div class="row M0">
+                                <div class="col-sm-6 col-md-6 col-lg-6" ng-repeat="content in contents['results']">
+                                  <div class="article-template">
+                                    <div class="row article-title">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        {{content[1]}}
+                                      </div>
+                                    </div>
+                                    <div class="row article-image-desc">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div ng-class="{'article-image' :  content[4] != '', 'article-blank-image': content[4] == ''}" back-img='{{content[4]}}'>
+                                        </div>
+                                      </div> 
+                                      <div class="col-sm-12 col-md-12 col-lg-12 article-desc">
+                                        <div >{{content[3] | limitTo: 200 }}  ...</div>
+                                      </div>
+                                    </div>
+                                    <div class="row article-footer P0M0">
+                                      <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <div class="article-logo" ng-style="{'background-image' : url(content[6])}">
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-8 col-md-8 col-lg-8 article-link">
+                                        <a target="_blank" href="{{content[2]}}">Link to the article.</a>
+                                      </div>
+                                      <div class="col-sm-1 col-md-1 col-lg-1 P0M0">
+                                        <i class="fa fa-clock-o - clock article-powershare-schedule-icon" ></i>
+                                      </div>
+                                      <div class="col-sm-1 col-md-1 col-lg-1 P0M0" ng-click="copyArticleUrl(content[2])">
+                                        <i class="fa fa-bolt - lightning article-powershare-icon" ></i>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                              <ul class="pager" ng-if="total != 0">
+                                <li class="previous disabled" ng-class="{disabled:page_num==1}" ng-click="prev()"><a href="javascript:void(0)"><span aria-hidden="true">←</span>Prev</a></li>
+                                <li><span >{{first}}-{{ last }}/{{total}}</span></li>
+                                <li class="next" ng-class="{'disabled':page_num*page_size >= total}" ng-click="next()"><a href="javascript:void(0)">Next<span aria-hidden="true">→</span></a></li>
+                              </ul>
+                            </div>
+                          </div>
+                          </div>
+                           </div>
+                           </div> 
+
+                    <!-- queue -->
+                    <div class="inq-panel-container"  ng-if="powerShareOptionsView == 'queue'">
+                      <div class="container-fluid P0">
+                          <div class="msg-content" ng-show="loadQueue">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="img-suggest-gallery loading">
+                                          <span style="font-size:34px;">Loading</span><img src="/ng-app/Images/loader.gif">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="msg-content" ng-show="scheduledCampaigns.length == 0 && !loadQueue">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="msg-wrapper">
+                                          <i class="fa fa-ellipsis-h icon-style"></i>
+                                          <br>There's nothing in your queue right now.
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="content-wrapper" ng-repeat="scheduledCampaign in scheduledCampaigns track by $index" ng-show="scheduledCampaigns.length > 0">
+                              <div class="socl-chnl-container">
+                                  <div class="row">
+                                      <div class="col-sm-12 md-12 col-lg-12">
+                                          <div class="time-detail">
+                                              Scheduled for {{ scheduledCampaign["scheduled_on"] | date:'medium' }}
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-9 col-md-9 col-lg-9 P0">
+                                          <div class="socl-chnl" back-img='{{ mobileAccount.profile_image || getInitials(mobileAccount.profile_name[0]) }}' ng-repeat="mobileAccount in scheduledCampaign['mobile_accounts']"  title="{{ mobileAccount.profile_name }}" style="cursor: pointer;">
+                                              <div class="icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms','opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+                                                  <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+                                              </div>
+                                          </div>
+                                          <div class="socl-chnl" back-img='{{ socialAccount.profile_image }}' ng-repeat="socialAccount in scheduledCampaign['social_accounts']"  title="{{ socialAccount.name }}" style="cursor: pointer;">
+                                              <div class="icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+                                                  <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+                                              </div>
+                                          </div>
+                                          <div class="socl-chnl" back-img='{{ locationAccount.profile_image || getInitials(locationAccount.profile_name[0]) }}' ng-repeat="locationAccount in scheduledCampaign['location_accounts']"  title="{{ locationAccount.profile_name }}" style="cursor: pointer;">
+                                              <div class="icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon'}">
+                                                  <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon'}"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class=" col-sm-3 col-md-3 col-lg-3" data-ng-show="checkOnlyBeaconShared(scheduledCampaign['location_accounts']).length == 0">
+                                          <div class="lnk-container"><a ng-click="previewOnQueue(scheduledCampaign['campaign_data'],scheduledCampaign['mobile_accounts'],scheduledCampaign['social_accounts'], scheduledCampaign['location_accounts'])">Preview Your Post</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-12 md-12 col-lg-12 Pl0">
+                                      <div class="inq-form-group">
+                                          <label ng-bind-html="scheduledCampaign['campaign_data']['share_content'] | parseUrlFilter:'_blank'"></label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row" ng-show="scheduledCampaign['campaign_data']['campaign_media_url']">
+                                  <div class="col-sm-5 col-md-5 col-lg-5">
+                                      <div class="inq-from">
+                                          <img ng-src="{{scheduledCampaign['campaign_data']['campaign_media_url']}}" style="width:100%;">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row" ng-show="scheduledCampaign['campaign_data']['og_meta_data']">
+                                  <div class="url-preview">
+                                      <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+                                          <div class="url-img" back-img="{{ scheduledCampaign['campaign_data']['og_meta_data']['image'] }}">
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                          <div class="url-title">
+                                              {{ scheduledCampaign['campaign_data']['og_meta_data']['title'] }} | {{ scheduledCampaign['campaign_data']['og_meta_data']['site_name'] }}
+                                          </div>
+                                          <div class="url">
+                                              <a ng-href="{{ scheduledCampaign['campaign_data']['og_meta_data']['url'] }}" target="_blank"> {{ scheduledCampaign['campaign_data']['og_meta_data']['url'] }}</a>
+                                          </div>
+                                          <div class="url-detail">
+                                              {{ scheduledCampaign['campaign_data']['og_meta_data']['description'] }}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="footer">
+                                  <div class="row">
+                                      <div class="col-sm-3 col-md-3 col-lg-3">
+                                          <div class="lnk-container" data-ng-click="removePost(scheduledCampaign['campaign_id'])"><a><i class="fa fa-remove icn-style"></i>Remove</a></div>
+                                      </div>
+                                      <div class="col-sm-3 col-md-3 col-lg-3">
+                                          <!--<div class="lnk-container" ng-click="editScheduledPost(scheduledCampaign)"><a><i class="fa fa-edit icn-style"></i>Edit</a></div>-->
+                                      </div>
+                                      <div class="col-sm-3 col-md-3 col-lg-3">
+                                          <div class="lnk-container" data-ng-click="schedule(scheduledCampaign['campaign_id'])"><a><i class="fa fa-clock-o icn-style"></i>RESCHEDULE</a></div>
+                                      </div>
+                                      <div class="col-sm-3 col-md-3 col-lg-3">
+                                          <button type="button" class="btn btn-inq btn-block fnt-sm" data-ng-click="reShareNow(scheduledCampaign['campaign_id'],date,true)">
+                                              {{ shareNowBtn }} <i data-ng-class="isQueueShared(scheduledCampaign['campaign_id'])"></i>
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+
+                        <div class="msg-content" ng-show="!isQBusy && (scheduledCampaigns.length == qtotal) && qtotal != 0">
+                          <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                              <div class="msg-detail">
+                                <br>That's all, folks!<br> Nothing there in your queue
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <div class="inq-panel" set-class-when-at-top="fix-to-top">
+                    <div class="inq-panel-title-bar">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                          <div class="inq-panel-title fnt-sm" >YOUR CURRENT REACH
+                          </div>
+                          <span tourtip="See how many people your content will potentially reach." tourtip-step="2"  tourtip-placement="left"  tourtip-offset-top="111" tourtip-offset-vertical="-30" tourtip-next-label="Next"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="inq-panel-container">
+                      <div class="container-fluid P0M0">
+                        <div class="msg-content" ng-show="isEmptyObject(chartData) && allRemoved">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="msg-wrapper right-panel">
+                                          <i class="fa fa-bullseye icon-style"></i>
+                                          <br>See how many people your post will potentially reach by selecting channels to share on.<br>
+                                      </div>
+                                  </div>
+                              </div>
+                        </div>
+                        <div class="msg-content" ng-show="isEmptyObject(chartData) && !allRemoved">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="msg-wrapper right-panel">
+                                          <i class="fa fa-bullseye icon-style"></i>
+                                          <br>We're unable to caluclate<br>your reach right now.<br><br>Please try after a while, or
+                                          <br><a href="mailto:help@inquirly.com">contact us</a> if this issue continues.
+                                      </div>
+                                  </div>
+                              </div>
+                        </div>
+                        <div class="inq-seperator" ng-show="!isEmptyObject(chartData)">
+                              <div class="row">
+                                  <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="container-fluid">
+                                          <div class="chart-container">
+                                              <donut-chart chart-data="chartData"></donut-chart>
+                                              <div class="donut-info"><div class="reach"></div></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                        </div>
+                        <div class="inq-seperator" ng-repeat="reach in reaches" ng-show="totalReach > 0">
+                          <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              <div class="locator" ng-class="{'sms-chnl': reach.channel == 'SMS','email-chnl': reach.channel == 'Email','twt-chnl': reach.channel == 'Twitter','fb-chnl': reach.channel == 'Facebook','linkin-chnl': reach.channel == 'LinkedIn', 'opini-chnl': reach.channel == 'Opinify'}"></div>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8 Pl0">
+                            {{ reach.channel }}
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 Pl0">
+                              <div class="loc-popularity-msg">{{ reach.value }}%
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+</tour>

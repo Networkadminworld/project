@@ -1,0 +1,102 @@
+  <div class="row M0">
+    <div class="secondary-nav">
+       <div class="col-sm-2 col-md-2 col-lg-2 fnt-lg secondary-nav-title">
+         Pipeline
+         <button class="btn inq-btn" style="margin-left:5px;width:80px;font-size:12px;" ng-if="isMarketing" ng-click="onNewDeals()"> Add Lead </button>
+       </div>
+
+
+     <div class="col-sm-2 col-md-2 col-lg-2 secondary-nav-div" ng-if="isMarketing">
+         <span class="dropdown">
+            <div class="dropdown-toggle fnt-blue" style="cursor:pointer;" data-toggle="dropdown">{{selected_source_type}}<i class="fa fa-angle-down"> </i></div>
+            <ul class="dropdown-menu">
+              <li ng-repeat="type in sourceType" ><a ng-click="onSourceTypeSelect(type)">{{type}}</a></li>
+            </ul>
+        </span>
+     </div>  
+
+     <div class="col-sm-2 col-md-2 col-lg-2 secondary-nav-div" ng-if="selected_source_type == 'Campaigns'">
+
+        <span class="dropdown">
+            <div class="dropdown-toggle fnt-blue" style="cursor:pointer;" data-toggle="dropdown">{{selected_campaign_type}} <i class="fa fa-angle-down"> </i></div>
+            <ul class="dropdown-menu">
+              <li ng-repeat="type in pipelineTypes" ><a ng-click="onCampaignTypeSelect(type)">{{type}}</a></li>
+            </ul>
+        </span>
+    </div>
+
+    <div class="col-sm-2 col-md-2 col-lg-2 secondary-nav-div" ng-if="selected_source_type == 'Campaigns'">
+      <span class="dropdown">
+        <div class="dropdown-toggle fnt-blue" style="cursor:pointer;" data-toggle="dropdown">{{selected_campaign_name}}
+          <i class="fa fa-angle-down"></i>
+        </div>
+        <ul class="dropdown-menu overflow-fix">
+          <li ng-repeat="item in campaign_names" data-ng-click="onCampaignSelect(item.cmp_id, item.cmp_name)">
+              <a href="javascript:void(0);">{{item.cmp_name}}</a>
+          </li>
+        </ul>
+      </span>
+    </div>
+
+    <div class="col-sm-1 col-md-1 col-lg-1 secondary-nav-div" ng-show="selected_campaign_type == 'Marketing'">
+      <span class="dropdown">
+        <div class="dropdown-toggle fnt-blue" style="cursor:pointer;" data-toggle="dropdown">{{selectedUser}}
+         <i class="fa fa-angle-down"></i>
+        </div>
+        <ul class="dropdown-menu fnt-sm col-sm-11 col-md-11 col-lg-11" style="min-width:280px !important;" aria-labelledby="simple-dropdown" >
+            <li>
+              <input type="text" id="customSearch" class="form-control" placeholder="Search user or status" ng-model="userSearch" search-input style="padding-top:5px; padding-bottom:5px; padding:10px;">
+            </li>
+         
+            <li class="mkg-filter-header" ng-show="userRole == 'Manager'">USERS</li>
+            <li class="mkg-filter-li" ng-if="userRole == 'Manager'" ng-click="onFilterUserSelection('Everyone')">
+               <div class="row">
+                   <div class="img-filter col-sm-3 col-md-3 col-lg-3"></div>  
+                   <div class="col-sm-9 col-md-9 col-lg-9">Everyone </div>
+               </div>   
+            </li>
+
+          <li class="mkg-filter-li" ng-show="userRole == 'Manager'" ng-repeat="user in marketingUsers|filter:{name:userSearch}" 
+            ng-class="{'mkg-filter-sel':user.checked}" ng-click="onFilterUserSelection(user)" > 
+              <div class="row"> 
+                <div class="img-filter col-sm-1 col-md-1 col-lg-1" user-img="{{user.avatar_url}}"></div>  
+                 <div class="col-sm-8 col-md-8 col-lg-8">{{user.name}}</div>
+                 <div class="col-sm-1 col-md-1 col-lg-1" style="display:inline-block;" ng-if="user.checked"> <span class="fa fa-check" style="color:#fff;font-size:18px;"></span></div>
+              </div>
+            </li>  
+
+           <li class="mkg-filter-header">STATUS</li>
+           <li class="mkg-filter-li" ng-class="{'mkg-filter-sel':obj.checked}" ng-repeat="obj in statusNames|filter:{label:userSearch}" ng-click="onActionSelection(obj)">
+             <div class="row"> 
+                <div class="col-sm-1 col-md-1 col-lg-1"> <i class="fa fa-anchor"> </i></div>  
+                <div class="col-sm-8 col-md-8 col-lg-8">{{obj.label}}</div>
+                 <div class="col-sm-1 col-md-1 col-lg-1" style="display:inline-block;" ng-if="obj.checked"> <span class="fa fa-check" style="color:#fff;font-size:18px;"></span></div>
+             </div>
+            </li>
+        </ul>
+      </span>
+
+    </div>
+
+     <div class="col-sm-1 col-md-1 col-lg-1 secondary-nav-div" ng-show="selected_campaign_type == 'Marketing'">
+      <div style="cursor:pointer" ng-click="onExportClick()" data-toggle="tooltip" title="Export Data"> <i class="fa fa-download" style="color:#82C7CA;font-size: 15px;"></i> 
+     </div>
+     </div>
+
+     
+
+<!--     </div>
+ -->
+
+       <div ng-if="selected_campaign_name != 'All Campaigns' && selected_source_type=='Campaigns'">
+           <div class="col-sm-2 col-md-2 col-lg-2 secondary-nav-div align-cen">
+          <a href="javascript:void(0);" ng-click="onViewPipeline()" data-toggle="tooltip" title="View Pipeline"> <i class="fa fa-list" style="margin-left:-5px;"></i></a>
+               
+          <a href="javascript:void(0);" ng-click="onViewCampaign()" data-toggle="tooltip" title="View Campaign" ><i class="fa fa-rocket" style="margin-left:15px;"></i></a>
+        </div>
+       </div>
+    </div>
+</div>
+
+<!-- child view -->
+<div ui-view></div>

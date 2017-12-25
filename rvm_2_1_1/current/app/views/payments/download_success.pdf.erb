@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style media="screen, print">
+      /* CSS Document */
+
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        background-color: transparent;
+        font-size: 14pt;
+        margin: 0;
+        padding: 0;
+      }
+      h4{
+        margin: 0;
+      }
+      table{
+        table-layout: fixed;
+        border-collapse:collapse;
+      }
+      .header{
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 50px;
+        height: 50px;
+        text-align: center;
+        z-index:-1;
+      }
+      .table{
+        width: 100%;
+      }
+      .midwrapper{
+        padding: 10px;
+      }
+      .table-report th{
+        background-color: #EEEEEE;
+        border: 1px solid #d1d1d1;
+        color: #333333;
+        padding: 6px;
+        font-size: 11px;
+      }
+      .table-report td{
+        font-size: 11px;
+        padding: 6px;
+        border: 1px solid #d1d1d1;
+        text-align: center;
+        word-wrap: break-word;
+      }
+      .rowhead{
+        background-color: #0191A9;
+        color: #ffffff;
+        padding: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        text-transform: uppercase;
+      }
+      .tblrow{
+        background-color: #0191A9;
+        color: #ffffff;
+        padding: 10px;
+        font-size: 10px;
+        font-weight: normal;
+        line-height: 18px;
+        text-transform: uppercase;
+      }
+      .colhead{
+        background-color: #F8F8F8;
+        color: #333333;
+        padding: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 18px;
+        text-transform: uppercase;
+        border: 1px solid #d1d1d1;
+      }
+      .table-report .columnleft{
+        text-align: left;
+      }
+      .row-question td{
+        background-color: #f0f4f8;
+        font-weight: bold;
+      }
+      .row-question td h4{
+        color: #0191A9;
+        font-size: 12px;
+        text-align: left;
+        text-transform: capitalize;
+      }
+      .footer{
+        border-top: 1px solid #d1d1d1;
+        padding: 10px 20px;
+        margin-top: 20px;
+        color: #7a7a7a;
+        font-size: 11px;
+      }
+      .customer-info th{
+        font-size: 10px !important;
+        padding: 6px;
+        border: 1px thin #eeeeee !important;
+        text-align: center;
+        word-wrap: break-word;
+      }
+      .customer-info td{
+        font-size: 10px !important;
+        padding: 6px;
+        border: 1px thin #eeeeee !important;
+        text-align: center;
+        word-wrap: break-word;
+      }
+      .page_break{
+        page-break-after: always;
+      }
+      .footer {
+        padding: 1px;
+        border-top: 1px solid #ccc;
+      }
+      .logo{
+        float: left;
+        width: 22%;
+      }
+      .company_name{
+        float: left;
+        width: 58%;
+        text-align: left;
+        }
+      .company_name h2{
+        margin-top: 20px;
+      }
+      .date{
+        float: left;
+        width: 20%;
+        color: #666;
+      }
+      table, tr, td, th, tbody, thead, tfoot {
+        page-break-inside: avoid;
+        z-index:10;
+      }
+      table tr:before { clear:both; }
+
+  .header{
+    padding: 10px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    height: 75px;
+    text-align: center;
+    background: #373737;
+  }
+  .logo{
+		margin-top: 300px;
+		text-align: center;
+		width: 100%;
+  }
+	.logo img{
+		border: 5px solid #343434;
+		border-radius: 5px;
+		max-width: 400px;
+		max-height: 400px;
+	}
+  .company_name{
+    width: 100%;
+    text-align: center;
+    color: #0191A9;
+  }
+  .company_name h2{
+    margin-top: 5px;
+  }
+  .date{
+    float: left;
+    width: 20%;
+    color: #666;
+  }
+  .default-logo{
+    width: 75px;
+    height: 75px;
+  }
+	.intro-page{
+		height: 800px;
+	}
+	</style>
+  </head>
+  <body>
+	<!--// start intro page -->
+    <div class="">
+      <div class="cancel_head_success" id="qustion_suggestion_list">
+        <% transaction=get_transaction_detail(params[:order_id])%>
+        You have upgraded to the Inquirly <%= get_plan_name(current_user.business_type_id) %> plan,Your new plan is valid <%=current_user.exp_date%><hr class="hor-style"/>
+        <table><tr><th class="header_tab">Transaction Detail</th></tr><tr><td>Status</td><td><%= transaction.payment_status%></td></tr>
+          <tr><td>Purchase Type</td><td>Upgraded to <%= get_plan_name(current_user.business_type_id)%></td></tr>
+          <tr><td>Transaction Id</td><td><%= params[:t_id]%></td></tr>
+          <tr><td>Transaction Amount</td><td><%=transaction.amount%></td></tr>
+          <tr><td>Date & Time</td><td><%= Time.now%></td></tr></table><hr class="hor-style"/>
+          </div>
+        </div>
+	  </body>
+</html>

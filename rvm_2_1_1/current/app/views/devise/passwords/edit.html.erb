@@ -1,0 +1,31 @@
+<div class="sign-page">
+  <div class="container login-wrap">
+    <div class="row" id="home_page_content">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="sign-form-wrap">
+          <div class="login-title"> Reset your password</div>
+          <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put ,:role=>"form"}) do |f| %>
+              <%= f.hidden_field :reset_password_token %>
+              <div class="form-group">
+                <%= f.password_field :password, :class => "form-control",:tabindex=>"1",:placeholder => "New Password" ,:value => params[:user].blank? || params[:user][:password].blank? ? "" : params[:user][:password]%>
+                <span class="error"> <%= resource.errors[:password][0] %> </span>
+              </div>
+              <div class="form-group">
+                <%= f.password_field :password_confirmation,:class=>"form-control",:tabindex=>"2",:placeholder => "Confirm New Password"%>
+                <span class="error"> <%=resource.errors[:password_confirmation][0]%> </span>
+              </div>
+              <div class="pwd-wrap">
+                <div class="pwd-btn">
+                  <button value="Reset your password" type="submit" class="btn btn-default login-btn">Change my password</button>
+                </div>
+                <div class="forgot-pwd"></div>
+              </div>
+          <%end%>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="sign-form-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

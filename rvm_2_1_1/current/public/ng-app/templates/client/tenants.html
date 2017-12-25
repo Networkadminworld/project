@@ -1,0 +1,152 @@
+<div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+            <div class="container-fluid P0M0">
+              <div class="col-sm-8 col-md-8 col-lg-8">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-3 col-md-3 col-lg-3">
+                        <div class="inq-panel-title fnt-sm">TENANTS LIST</div>
+                      </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                            <div class="inq-panel-title">
+                              <span class="" style="display:inline-block">
+                                <input type="text" class="form-control fnt-sm search-input" style="width:90%" ng-model="searchText" placeholder="SEARCH FOR TENANTS">
+                              </span>
+                                <span style="cursor: pointer" data-ng-click="searchTenant()"><i class="fa fa-search"></i></span>
+                                <span class="reset-search" data-ng-show="resetBtn" data-ng-click="resetTenant()"> reset</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-md-2 col-lg-2">
+                            <div class="inq-panel-title fnt-xs">
+                                <button type="button" class="btn btn-inq fnt-sm" ng-click="tenantConfig()">+ Tenant Config</button>
+                            </div>
+                        </div>
+                      <div class="col-md-2 col-md-2 col-lg-2">
+                        <div class="inq-panel-title fnt-xs">
+                          <button type="button" class="btn btn-inq fnt-sm" ng-click="createOrEditTenant('add')">+ New Tenant</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inq-panel-container">
+                    <div class="container-fluid P0M0">
+                       <div class="msg-content" ng-show="!searchText && loaded && tenants.length == 0">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="msg-wrapper">
+                                        <i class="fa fa-sitemap icon-style"></i>
+                                        <br>You haven't added any tenants to your account.
+                                        <br><a href="javascript:void(0);" ng-click="createOrEditTenant('add')">Add a new Tenant</a> to start managing your team.
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                        <div class="msg-content" ng-show="searchText && loaded && tenants.length == 0">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="msg-wrapper">
+                                        <i class="fa fa-sitemap icon-style"></i>
+                                        <br>No tenants found.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <table class="table inq-table fnt-sm" ng-show="tenants.length > 0">
+                        <thead>
+                          <tr>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>ADDRESS</th>
+                            <th>MOBILE</th>
+                            <th>REGION</th>
+                            <th>TYPE</th>
+                            <th>ACTION</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat='tenant in tenants'>
+                          <td> {{ tenant.name }} </td>
+                          <td> {{ tenant.email}}</td>
+                          <td> {{ tenant.address | limitTo:15}}</td>
+                          <td> {{ tenant.phone }}</td>
+                          <td> {{ tenant.region | uppercase }}</td>
+                          <td> {{ tenant.type | uppercase }}</td>
+                          <td>
+                            <div>
+                              <span class="inq-table-action fnt-sm"><switch name="onOff" class="other-switch" ng-model="tenant.is_active" on="ACTIVE" off="INACTIVE" disabled="true" status="true" ng-change="changeStatus(tenant)"></switch></span>
+                              <span class="inq-table-action fnt-sm"><i class="fa fa-edit" ng-click="editTenant(tenant)"></i></span>
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <nav ng-show="tenants.length > 0">
+                          <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" ng-change="pageChanged()" items-per-page="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+                    <div class="inq-panel">
+                        <div class="inq-panel-title-bar">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="inq-panel-title fnt-sm">LOCATIONS</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inq-panel-container">
+                            <div class="container-fluid P0M0">
+                                <div ng-show="tenants.length > 0">
+                                    <div id="map"></div>
+                                </div>
+                                <div class="msg-content" ng-show="loaded && tenants.length == 0">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="msg-wrapper right-panel">
+                                                <i class="fa fa-thumb-tack icon-style"></i>
+                                                <br>Location will start showing once you <a href="javascript:void(0);" ng-click="createOrEditTenant('add')">add your tenants</a>.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div></div></div>
+<script>
+     $.ajax({
+        type: "GET",
+        url: "/tenants/load_geo_details",
+        success: function(data){
+            var locations = data.data;
+            if(!_.isEmpty(locations)){
+                var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                    zoom: 10,
+                    center: new google.maps.LatLng(locations[0][1], locations[0][2]),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                var infowindow = new google.maps.InfoWindow();
+                var marker, i;
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+          }
+        }
+    });
+</script>

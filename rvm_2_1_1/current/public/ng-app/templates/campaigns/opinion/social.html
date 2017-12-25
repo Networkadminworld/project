@@ -1,0 +1,531 @@
+<div class="row M0">
+        <div class="secondary-nav">
+          <div class=" col-sm-2 col-md-2 col-lg-2">
+            <div class="secondary-nav-div"> <a ui-sref="campaigns.index"> &lt; Back to Campaings</a></div>
+          </div>
+          <div class=" col-sm-2 col-md-2 col-lg-2 P0">
+            <div class="fnt-lg secondary-nav-title"> {{ campaign.label }} </div>
+          </div>
+          <div class=" col-sm-2 col-md-2 col-lg-2">
+            <div class="secondary-nav-div has-link"> <a> #{{campaign.hash_tag }} </a> <i class="fa fa-pencil icon-style"></i></div>
+          </div>
+          <div class="col-md-4 P0">
+            <div class="secondary-nav-div">
+              <i class="fa fa-link icon-link-style"></i> <a> {{ campaign.campaign_end_url}} </a>
+            </div>
+          </div>
+          <div class="col-md-2 secondary-nav-div">
+            <button type="button" class="btn btn-inq fnt-xs" ng-click="createCampaign('sales')">+ New Campaign</button>
+          </div>
+        </div>
+      </div>
+      <div class="row M0">
+        <div class="tertiary-nav">
+          <div class="col-sm-2 col-md-2 col-lg-2 P0">
+            <div class="fnt-md tab-head active"> BUILD </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2 P0">
+            <div class="fnt-md tab-head"> STATS </div>
+          </div>
+          <div class="col-sm-2 col-md-2 col-lg-2 P0">
+            <div class="fnt-md tab-head"> FEEDBACK <span class="badge badge-style">5</span> </div>
+          </div>
+        </div>
+      </div>
+      <div class="row M0">
+        <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container">
+          <div class="row M0">
+            <div class="col-sm-12 col-md-12 col-lg-12 P0">
+              <div class="container-fluid P0M0"> 
+                <div class="col-sm-8 col-md-8 col-lg-8"> 
+                  <div class="inq-panel"> 
+                    <div class="inq-panel-title-bar">
+
+                      <div class="row">
+                        <div class="col-sm-5 col-md-5 col-lg-5">
+                          <div class="inq-panel-title fnt-sm">SELECT CHANNELS</div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                          <div class="inq-panel-title">                       
+                            <label><input type="checkbox" ng-model="checked">This is a 2-way campaign</label></div>
+                          </div>
+                          <div class="col-sm-3 col-md-3 col-lg-3 P0">                       
+                            <div class="inq-panel-title align-cen">			
+                              <a href="#">What's This?</a>
+                            </div>
+                          </div>		      
+                        </div>
+
+                      </div>
+                      <div class="inq-panel-container">
+                        <div class="container-fluid">
+                          <div class="inq-from">
+
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Where do you want to share this order?</label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                  <div class="socl-chnl" back-img='{{ social.user_profile_image }}' ng-repeat="social in socials">
+                                      <div class="icn-wrapper" ng-class="{'fb-chnl': social.provider == 'facebook','linkin-chnl': social.provider == 'linkedin', 'twt-chnl': social.provider == 'twitter'}">
+                                          <i class="fa icon-position" ng-class="{'fa-facebook': social.provider == 'facebook','fa-linkedin': social.provider == 'linkedin', 'fa-twitter': social.provider == 'twitter'}"></i>
+                                      </div>
+                                  </div>
+                              </div>
+
+                            </div>
+                          </div>  
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="inq-panel"> 
+                      <div class="inq-panel-title-bar">
+
+                        <div class="row">
+                          <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="inq-panel-title fnt-sm">DESCRIBE YOUR ITEM</div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="inq-panel-container">
+                        <div class="container-fluid">
+                          <form class="inq-from">
+
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Enter headline</label>
+                                  <textarea class="form-control" ng-model="campaign.custom_message" ng-trim="false" maxlength="140"> </textarea>
+                                  <span class="head-line-badge">{{500 - campaign.custom_message.length}} </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Add an image or video <a href="#" class="hint">Inspire Me!</a></label>
+                                  <div class="col-sm-5 col-md-5 col-lg-5 P0">
+                                    <div class="img-container">
+                                        <img src="/ng-app/Images/thumbnail-default.jpg" style="width:100%;">
+                                        <img style="max-width:300px" ngf-src="picFile[0]" ng-show="picFile[0].type.indexOf('image') > -1" ngf-accept="'image/*'">
+                                        <video controls ngf-src="picFile[0]" ng-show="picFile[0].type.indexOf('video') > -1" ngf-accept="'video/*'"></video>
+                                      <div class="actions-container">
+                                          <span class="action"><a href="javascript:void(0);" accept="image/*,video/*" ngf-select="" ng-model="picFile" name="file" ngf-change="generateThumb(picFile[0], $files)">Change</a></span>
+                                          <span class="action-seperator">|</span>
+                                          <span class="action"> <a ng-model="removePic" ng-click="removeImage(settings)">Delete</a></span>
+                                      </div>
+                                    </div>
+                                  </div>        
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Specify your call to link<a href="#" class="hint">What's This?</a></label>
+                                  <input type="text" class="form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group inq-form-group">
+                                  <label class="fnt-sm">Define a footer 
+                                    <span class="fnt-gry hint">Footer is not shown on twitter</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="" ng-model="campaign.footer">
+                                </div>
+                              </div>
+                            </div>
+
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+                    <div class="inq-panel">
+                      <div class="inq-panel-title-bar">
+
+                        <div class="row">		      
+                          <div class="col-sm-8 col-md-8 col-lg-8">
+                            <div class="inq-panel-title fnt-sm">CAMPAIGN PREVIEW</div>
+                          </div>
+                          <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                            <div class="inq-panel-title"><a href="#">Customise</a></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="inq-panel-container">
+                        <div class="container-fluid">
+                          <div class="socl-camp-cntnr">
+                            <div class="fb-camp-cntnr">
+
+                              <div class="row"> 
+                                <div class="col-sm-2 col-md-2 col-lg-2">       							    
+                                  <div class="preview-logo" back-img='{{ default_fb_logo }}'></div>
+                                </div>
+                                <div class="col-sm-10 col-md-10 col-lg-10 P0">       	
+                                  <div class="title-container">
+                                    <span class="profile-name">{{ default_fb_name }} </span> <br>
+                                    <span class="tm-stamp">12 mins ago <i class="fa fa-globe"></i><span>
+                                      </span></span></div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-12 col-md-12 col-lg-12">
+                                      <div class="profile-content">
+                                        {{ campaign.custom_message }}
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-12 col-md-12 col-lg-12">			
+                                      <div class="preview-img"></div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-md-12 col-md-12 col-lg-12">
+                                      <div class="img-content">
+                                        <div class="img-title">4 Best practice for retial brand to improve social campaign</div>
+                                        <div class="img-detail">Retail customers on social media are posting about their experience.....</div>
+                                        <div class="url-detail">{{ campaign.footer }}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">            	
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                      <div class="lik-cmt-shar">
+                                        <span>Like . Comment . Share</span>
+                                      </div>
+                                    </div>
+                                  </div> 
+                                </div>
+                              </div>
+                              <div class="socl-camp-cntnr" ng-style="campaign.custom_message.length > 90 ? {'opacity': 0.2} : {'opacity': 1}">
+                                <div class="twt-camp-cntnr">
+
+                                  <div class="row"> 
+                                    <div class="col-sm-2 col-md-2 col-lg-2">       							    
+                                      <div class="preview-logo" back-img='{{ default_tw_logo }}'></div>
+                                    </div>
+                                    <div class="col-sm-10 col-md-10 col-lg-10 Pl0">       	
+                                      <div class="title-container">
+                                        <span class="profile-name">{{ default_tw_name }}</span>
+                                        <span class="screen-name">@{{ default_tw_name }}<span>
+                                            <span class="tm-stamp">{{ date | date:'MMM dd' }}<span>
+                                              </span></span></span></span></div>
+                                              <div class="profile-content">
+                                                  {{ campaign.custom_message | limitTo:90 }}
+                                              </div>
+                                              <div class="preview-img"></div>
+                                              <div class="action-container">
+                                                <i class="fa fa-reply"></i>		      
+                                                <i class="fa fa-retweet"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-ellipsis-h"></i>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div> 
+				                 <div class="socl-camp-cntnr">
+                                      <div class="linkin-camp-cntnr"> 
+                                        <div class="row">            	
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="profile-content"> 
+                                              <span class="profile-name">{{ default_ln_name }}</span>
+                                              <span class="profile-msg">
+                                                {{ campaign.custom_message }}
+                                              </span>
+                                            </div>
+                                          </div>  
+                                        </div>
+
+                                        <div class="row"> 
+                                          <div class="col-sm-6 col-md-6 col-lg-6">       							    
+                                            <div class="preview-img"></div>
+                                          </div>
+                                          <div class="col-sm-6 col-md-6 col-lg-6 Pl0">       	
+                                            <div class="que-content">
+                                              Want to learn how to create effective parent teacher relationship?
+                                            </div>
+                                            <div class="que-src">
+                                              <span class="src-url">Inquir.ly</span>
+                                              <span class="src-nam">Inquirly</span>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">            	
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="lik-cmt-shar">
+                                              <span>Like . Comment . Share . 21 days ago</span>
+                                            </div>
+                                          </div>
+                                        </div> 
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
+                        <div class="row M0">
+                          <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                            <div class="container-fluid P0M0">
+                              <div class="col-sm-8 col-md-8 col-lg-8"> 
+                                <div class="inq-panel"> 
+                                  <div class="inq-panel-title-bar">
+
+                                    <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="inq-panel-title fnt-sm">CAPTURE YOUR FEEDBACK</div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="inq-panel-container">
+                                    <div class="container-fluid">
+                                      <form class="inq-from">
+
+                                        <div class=" row">
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group inq-form-group">
+                                              <label class="fnt-sm">Enter feedback text</label>
+                                              <input type="text" class="form-control" placeholder="">
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                              <div class="checkbox">
+                                                <label class="fnt-sm"><input type="checkbox">Ask for name</label> 
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                              <div class="checkbox">
+                                                <label class="fnt-sm"><input type="checkbox">Ask for phone number</label> 
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                              <div class="checkbox">
+                                                <label class="fnt-sm"><input type="checkbox">Ask for email</label> 
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                              <div class="checkbox">
+                                                <label class="fnt-sm"><input type="checkbox">Ask for rating</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                              <div class="checkbox chkbx-disabled">
+                                                <label class="fnt-sm"><input type="checkbox" disabled="">Ask for review</label>
+                                              </div>
+                                            </div>
+                                          </div> 
+                                        </div>
+
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+                                <div class="inq-panel">
+                                  <div class="inq-panel-title-bar">
+
+                                    <div class="row">
+                                      <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <div class="inq-panel-title fnt-sm">CAMPAIGN PREVIEW</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4 P0">
+                                        <div class="inq-panel-title"><a href="#">Customise</a></div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="inq-panel-container">
+                                    <div class="order-preview">
+                                      <div class="preview-container">
+                                        <div class="container-fluid">
+                                          <img src="../assets/Images/chrome_tab.png" class="img-tab">
+                                          <div class="preview-container-innerwrapper">		 
+                                            <div class="transform-container-wrapper" id="preview-background-style">
+                                              <div class="transform-container">
+                                                <div class="container" id="preview-font-family">			
+                                                  <div class="jumbotron">
+                                                    <div class="campaign-img-container">
+                                                      <p class="lead">Your campaign image will be shown here when you create campaigns.</p>
+                                                      <div class="client-logo">
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="row marketing">
+                                                    <div class="col-lg-12">
+                                                      <h2 class="campaign-question" id="preview-question-color">Your question will appear like this</h2>
+                                                      <form class="campaign-form">
+                                                        <div class="form-group">
+                                                          <input type="email" class="form-control" id="preview-answer-color" placeholder="Your Email Id">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-default col-lg-6 col-lg-offset-3 col-xs-6 col-xs-offset-3 campaign-submit-btn" id="preview-btn-style">Submit</button>
+                                                      </form>
+                                                    </div>
+                                                  </div> 
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
+                        <div class="row M0">
+                          <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                            <div class="container-fluid P0M0">
+                              <div class="col-sm-8 col-md-8 col-lg-8"> 
+                                <div class="inq-panel"> 
+                                  <div class="inq-panel-title-bar">
+
+                                    <div class="row">
+                                      <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <div class="inq-panel-title fnt-sm">INCENTIVISE</div>
+                                      </div>
+                                      <div class="col-sm-4 col-md-4 col-lg-4">                       
+                                        <div class=" inq-panel-title fnt-sm">
+                                          <a href="#">Why should | incentivise?</a>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="inq-panel-container">
+                                    <div class="container-fluid">
+
+                                      <div class=" row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                          <div class="form-group inq-form-group">
+                                            <label class="fnt-sm">How do you want to incentivise?</label>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">		     
+                                          <div class="btn-group btn-grp-style" role="group">
+                                            <button type="button" class="btn btn-lg btn-style btn-grp-active">With An Offer</button>
+                                            <button type="button" class="btn btn-lg btn-style">By Saying Thank You</button>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                          <div class="form-group inq-form-group">
+                                            <label class="fnt-sm">Enter offer text</label>
+                                            <textarea class="form-control" placeholder=""> </textarea>
+                                            <label class="fnt-sm fnt-gry">your text goes here</label>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
+                        <div class="row M0">
+                          <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                            <div class="container-fluid P0M0">
+                              <div class="col-sm-8 col-md-8 col-lg-8"> 
+                                <div class="inq-panel"> 
+                                  <div class="inq-panel-title-bar">
+
+                                    <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="inq-panel-title fnt-sm">ALL SET!</div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="inq-panel-container">
+                                    <div class="container-fluid">
+                                      <form class="inq-from">
+
+                                        <div class="row">			  
+                                          <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <div class="form-group inq-form-group">
+                                              <button type="button" class="btn btn-share btn-block btn-lg">SHARE THIS NOW</button>
+                                            </div>
+                                          </div>
+                                          <div class="col-sm-6 col-md-6 col-lg-6">
+                                            <div class="form-group inq-form-group">
+                                              <div class="lnk-container"><a href="#">SCHEDULE FOR LATER</a></div>
+                                            </div>
+                                          </div>
+                                          <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <div class="form-group inq-form-group">
+                                              <div class="lnk-container"><a href="#" class="lnk-cancel">CANCEL</a><div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>			         
+                                        
+                                      </div></form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                  </div>

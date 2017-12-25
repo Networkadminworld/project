@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Inquirly : <%=h yield(:title) %></title>
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
+  <%= stylesheet_link_tag "scaffold"%>
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+
+  <script type="text/javascript">var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);</script>
+
+  <!--// start typekit font include -->
+  <script type="text/javascript" src="//use.typekit.net/ltc1ytn.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <!--// end typekit font include -->
+
+  <!--css-->
+  <% a=controller.action_name %>
+  <% b=controller.controller_name %>
+  <%= yield :page_specific_head_content %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% benchmark '##Render admin_header in admin layout' do %>
+  <%= render :partial => "layouts/admin_header"%>
+  <% end %>
+  <div id="admin-page" class="main-content">
+    <div class="container">
+      <div class="wrap-box">
+        <% benchmark '##Render flash message in admin layout' do %>
+        <%= render :partial => "shared/flash_message"%>
+        <% end %>
+
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <% benchmark '##Render footer in admin layout' do %>
+    <%= render :partial => "shared/footer"%>
+    <% end %>
+  </div><!--footer-->
+</body>
+</html>

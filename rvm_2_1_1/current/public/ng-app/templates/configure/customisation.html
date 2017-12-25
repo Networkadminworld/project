@@ -1,0 +1,148 @@
+<div class="row M0" ng-controller="CustomisationController as campaigns">
+  <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+    <div class="container-fluid P0M0">
+
+      <div class="col-sm-8 col-md-8 col-lg-8">
+
+        <div class="inq-panel">
+          <div class="inq-panel-title-bar">
+            <div class="row">
+              <div class="col-md-12 col-md-12 col-lg-12">
+                <div class="inq-panel-title fnt-sm">PREVIEW</div>
+              </div>
+            </div>
+          </div>
+          <div class="inq-panel-container">
+            <div class="preview-container">
+              <div class="container-fluid">
+                <img src="/ng-app/Images/chrome_tab.png" class="img-tab">
+                <div class="preview-container-innerwrapper">
+                  <div class="transform-container-wrapper" ng-style="{'background-color': campaignsFont}" id="preview-background-style" back-img='{{ bgImage }}'>
+                    <div class="transform-container">
+                      <div class="container" id="preview-font-family">
+                        <div class="jumbotron">
+                          <div class="campaign-img-container">
+                            <p class="lead">Your campaign image will be shown here when you create campaigns.</p>
+                            <div class="client-logo">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row marketing">
+                          <div class="col-lg-12">
+                            <h2 class="campaign-question" ng-style="{'color': questionTxtColor, 'font-family':  getFontName(fontSelected)}" id="preview-question-color">Your question will appear like this</h2>
+                            <form class="campaign-form">
+                              <div class="form-group">
+                                <input type="email" class="form-control" id="preview-answer-color" ng-style="{'color': answerTxtColor, 'font-family': getFontName(fontSelected)}" placeholder="Your Email Id">
+                              </div>
+                              <button type="submit" ng-style="{'background-color': buttonBgColor}" class="btn btn-default col-lg-6 col-lg-offset-3 col-xs-6 col-xs-offset-3 campaign-submit-btn" id="preview-btn-style"><div ng-style="{'color': buttonTxtColor,'font-family': getFontName(fontSelected)}"> Submit</div></button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+        <div class="inq-panel">
+          <div class="inq-panel-title-bar">
+            <div class="row">
+              <div class="col-md-12 col-md-12 col-lg-12">
+                <div class="inq-panel-title fnt-sm">DESIGN</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="inq-panel-container">
+            <div class="container-fluid" style="padding-bottom:20px;">
+
+              <form class="inq-from">
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Background Image</label>
+                  <button type="button" class="btn btn-inq fnt-sm" accept="image/*" ngf-select="" ng-model="picFile" name="file" ngf-change="generateThumb(picFile[0], $files)">Add Background Image</button>
+                </div>
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Background Color</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" colorpicker="hex" ng-model="campaigns.backgroundColor" ng-style="{'background-color': campaigns.backgroundColor}">
+                    <div class="input-group-addon inq-color-select">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Font</label>
+                  <select class="form-control" ng-model="fontSelected.id">
+                    <option  ng-selected="{{font.id == fontSelected.id}}"ng-repeat="font in fonts" value="{{font.id}}">{{font.name}}</option>
+                  </select>
+                </div>
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Question Text Color</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" colorpicker="hex" ng-model="campaigns.questionTxtColor" ng-style="{'background-color': campaigns.questionTxtColor}">
+                    <div class="input-group-addon inq-color-select">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Answer Text Color</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" colorpicker="hex" ng-model="campaigns.answerTxtColor" ng-style="{'background-color': campaigns.answerTxtColor}">
+                    <div class="input-group-addon inq-color-select">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Button Text Color</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" colorpicker="hex" ng-model="campaigns.buttonTxtColor" ng-style="{'background-color': campaigns.buttonTxtColor}">
+                    <div class="input-group-addon inq-color-select">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group inq-form-group">
+                  <label class="fnt-sm">Button Background Color</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" colorpicker="hex" ng-model="campaigns.buttonBgColor" ng-style="{'background-color': campaigns.buttonBgColor}">
+                    <div class="input-group-addon inq-color-select">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-actions row M0">
+                    <div class="container-fluid P0M0">
+                        <div class="container-fluid P0M0">
+                            <button type="button" class="btn btn-lt-orng fnt-sm" ng-click="upload(picFile)">Save</button>
+                        </div>
+                    </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+</div>

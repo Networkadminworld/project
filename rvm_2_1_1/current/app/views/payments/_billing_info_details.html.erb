@@ -1,0 +1,76 @@
+    <style>
+.input-sm
+{
+  font-size: 14px;
+}
+  </style>
+
+  <!--//. main content -->
+  <div class="modal fade" id="billingInfo" aria-hidden="true">
+    <div class="modal-dialog signup">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&nbsp;</button>
+          <center><h2 class="modal-title billingInfo-plan-name"></h4></center>
+					<center><span class="modal-plan-sub-title">(The details provided here will be used for billing purposes.)<span><center>
+        </div>
+        <div class="modal-body question-suggestion-lb">
+          <div id="success" style="color:red;"></div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div id="business_select" style="color:red;display:none;">Please select any one of the business type</div>
+              <%= form_tag '/transaction', :method => :post   ,:class=>"form-horizontal", :name => "customerData" do%>
+              <div id="payment_error" style="color:red;display:none;">Please fill all the fields...</div>
+              <div id="numeric_validation" style="color:red;display:none;">Please enter numeric values</div>
+              <div id="email_validation" style="color:red;display:none;">Please enter valid email</div>
+								<%= hidden_field_tag 'plan_id', :id => "plan_id"  %>
+								<%= hidden_field_tag 'plan_action', :id=> "plan_action"%>
+                <input type="hidden" name="merchant_param1"  value="<%= APP_MSG["payment"]["payment_tax_msg"]%>" />
+              <div class="form-group">
+                <%= text_field_tag 'billing_name',"", :class=>"form-control disab billing_name_new" , :value => current_user.blank? ? "" : "#{current_user.first_name} #{current_user.last_name}", :placeholder => "Billing Name"%>
+								<p class="error" id="billing_name" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+                <%= email_field_tag "billing_email","",:placeholder => "Email", :class=>"form-control disab billing_email_new" , :value => current_user.blank? ? "" : current_user.email %>
+								<p class="error" id="error_email" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+                <%= text_field_tag "billing_address","",:placeholder => "Address", :class=>"form-control disab" , :value => !@billing_info.blank? ? @billing_info.billing_address : ""%>
+								 <p class="error" id="error_address" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+                <%= text_field_tag "billing_city","",:placeholder => "City(min 3,Max 30)", :class=>"form-control disab", :maxlength => 30, :value => !@billing_info.blank? ? @billing_info.billing_city : "" %>
+								<p class="error" id="error_city" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+                <%= text_field_tag "billing_state","",:placeholder => "State", :class=>"form-control disab", :maxlength => 30,:value => !@billing_info.blank? ? @billing_info.billing_state : "" %>
+									<p class="error" id="error_state" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+                <%#= text_field_tag "billing_country","",:placeholder => "Country", :class=>"form-control", :maxlength => 30 %>
+                       <% countr = (params[:country] ? params[:country] : (!@billing_info.blank?? @billing_info.billing_country : ["India"])) %>
+							<%= select_tag "billing_country", options_for_select(billing_info_country,countr),:prompt=>"-Select Country-", :class => "form-control input-sm" %>
+							 <p class="error" id="error_country" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+                <%= text_field_tag "billing_zip","",:placeholder => "Pin/Zip code", :class=>"form-control disab" ,:maxlength => 6,:value => !@billing_info.blank? ? @billing_info.billing_zip : ""%>
+								 <p class="error" id="error_zip" style="display:none;"></p>
+              </div>
+              <div class="form-group">
+               <%= text_field_tag "billing_tel","",:placeholder => "Phone",:maxlength => 12, :onblur=> "return validate_phone($(this).val())" , :class=>"form-control disab",:value => !@billing_info.blank? ? @billing_info.billing_phone : "" %>
+							 <p class="error" id="error_tel" style="display:none;"></p>
+             </div>
+						<input type="hidden" value="" id="bus_type" name="bus_type">
+             <div class="btn-wrap">
+               <a href="#" class="edit_billing_details">Edit Billing Details</a>  <a href="#" class="update_billing" style="display:none">Update OR</a>  <a href="#" class="edit_billing_details_leave" style="display:none">Leave </a>	<center><%= submit_tag "Make Payment",:class => "button medium orange",:onclick => "return validate_payment()", :id => "make_payment" %></center>
+            </div>
+            <%end%>
+          </div>
+					<div class="pull-left" style="margin-top: 11px !important;">
+						<p style="margin:0 0 -18px !important;">Payment will be processed using secured channel.</p>
+					</div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

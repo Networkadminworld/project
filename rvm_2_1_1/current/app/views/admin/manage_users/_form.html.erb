@@ -1,0 +1,98 @@
+<div class="tab-content inner">
+  <div class="tab-wrapper">
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 col-md-12 col-xs-12">
+        <%= form_for [:admin, @user] do |f| %>
+            <div class="row">
+              <div class="col-lg-12">
+                <label>First Name</label>
+                <div class="form-group">
+                  <%= f.text_field :first_name, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Enter First name" , :tabindex => 1%>
+                  <p><span id="error_first_name" style="width:190px;color: red;"> <%= @user.errors && @user.errors.messages ? @user.errors.messages[:first_name][0] : '' %></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Last Name</label>
+                <div class="form-group">
+                  <%= f.text_field :last_name, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Enter Last name" , :tabindex => 2%>
+                  <p><span id="error_first_name" style="width:190px;color: red;"> <%= @user.errors && @user.errors.messages ? @user.errors.messages[:last_name][0] : '' %></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Email</label>
+                <div class="form-group">
+                  <%= f.text_field :email, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Enter email" , :tabindex => 3%>
+                  <p><span id="error_first_name" style="width:190px;color: red;"> <%= @user.errors && @user.errors.messages ? @user.errors.messages[:email][0] : '' %></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Password</label>
+                <div class="form-group">
+                  <%= f.password_field :password, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Enter password" , :tabindex => 4%>
+                  <p><span id="error_first_name" style="width:190px;color: red;"> <%= @user.errors && @user.errors.messages ? @user.errors.messages[:password][0] : '' %></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Password Confirmation</label>
+                <div class="form-group">
+                  <%= f.password_field :password_confirmation, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Enter password confirmation" , :tabindex => 5%>
+                  <p><span id="error_first_name" style="width:190px;color: red;"> <%= @user.errors && @user.errors.messages ? @user.errors.messages[:password_confirmation][0] : '' %></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Mobile</label>
+                <div class="form-group">
+                  <%= f.text_field :mobile, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Enter mobile number" , :tabindex => 6%>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Role</label>
+                <div class="form-group">
+                  <%= f.select :role_id, options_for_select(Role.where(name: "Customer-Service-Executive", is_default: true).collect {|role| [role.name, role.id ] }), {}, { :class => 'text_field rc_5 form-control input-medium',:tabindex => 7 }%>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <label>Businesses</label>
+                <div class="form-group">
+                  <select data-placholder="Choose businesses" style="width:350px;" multiple class="form-control chosen-select" name="businesses[]" tabindex="8">
+                    <% @all_businesses.each do |biz| %>
+                        <option value=<%= biz.id %> <%= selected_business(@user,biz) %>><%= biz.name %></option>
+                    <% end %>
+                  </select>
+                  <p><span id="error_email" style="width:190px;" class="error"></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-wrap btn-update-info">
+              <input type="hidden" class="form-control" name="user[parent_id]" value="<%= current_user.id %>"/>
+              <%= f.submit  "Save", :class => "button medium orange", :tabindex => 9%>
+              <a href="/admin/users" class="article" id="back_to_users">Back</a>
+            </div>
+            </div>
+            </div>
+        <% end %>
+        </div>
+</div>
+</div>

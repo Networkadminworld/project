@@ -1,0 +1,24 @@
+<div class="row P0M0 align-cen">
+  <div class="fnt-lg status">
+  {{percent_completion}}%
+  </div>
+  <div class="fnt-sm profile-info">
+    <div>Profile Completeness</div>
+    <span ng-show="percent_completion != 100">
+      <span dropdown>
+        <a href="" dropdown-toggle>
+        Complete your profile
+        </a>
+        <ul class="dropdown-menu fnt-sm col-sm-11 col-md-11 col-lg-11" aria-labelledby="simple-dropdown" >
+          <li class="title">Tips for building a star-studded profile</li>
+          <li ng-repeat="choice in data | filter: { completed:false }">
+            <a ui-sref="{{ choice['url']}}">{{choice['action']}}</a>
+          </li>
+          <li class="divider"></li>
+          <li class="title">Completed items</li>
+          <li class="profile-progress" ng-repeat="choice in data | filter: { completed:true }">{{choice["action"]}}</li>
+        </ul>
+      </span>
+    </span>
+  </div>
+</div>

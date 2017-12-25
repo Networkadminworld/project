@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="navbar-header">
+    <a href="/" class="navbar-brand"><%= image_tag("responsive/logo-inquirly.png",alt: "Inquirly")%><!--<img src="/assets/responsive/logo-inquirly.png" alt="Inquirly" />--></a>
+  </div>
+  <%= render :partial => 'shared/profile_dropdown'%>
+ <div id="main-navigation">
+  <ul class="nav navbar-nav">
+   <% a = controller.controller_name %>
+   <% b = controller.action_name %>
+   <% if user_signed_in? %>
+   <% acc_active = current_user.is_active %>
+        <!--<%#if check_listener_permisson == true && @is_listener_activated.blank? %>-->
+        <!--<li class="">-->
+        <!--<a href="javascript:void(0)" onclick="request_listener()">Request Listener</a>-->
+        <!--</li>-->
+        <!--<%#end%>-->
+        <%#if current_user.business_type_id == 2 && @is_listener_activated.present?%>
+        <%if check_listener_permisson == true%>
+            <!--<%# if @is_listener_activated.first.is_active == true %>-->
+            <!--<li class="<%#= 'active' if params[:action] == 'listeners_page' %>">-->
+            <!--<%#  url = "/share/listeners_page?username=#{@is_listener_activated.first.username}&password=#{@is_listener_activated.first.password }" %>-->
+            <!--<%#= link_to "Listen", {action: :listeners_page, controller: :share, username: @is_listener_activated.first.username, password: @is_listener_activated.first.password } %>-->
+            <!--<%#= link_to "Listen", url %>-->
+            <!--</li>-->
+            <!--<%#else%>-->
+            <li class=""><a href="<%= ENV["NEW_LISTENER_URL"]%>" onclick="">Listen</a></li>
+            <%#end%>
+        <%end%>
+ <li class="<%= ((a == "question" && (b == "new"|| b=="preview" || b=="create" || b=="edit" || b == "index" ) || (b == "question_list") || (b == "share") || (b == "show")) || (b=="share_question") && (a !="share"))  ? "active" : ""%>" ><a href="<%=question_index_path%>" class="main-navigation">Engage</a></li>
+  <li class="<%= (a == "dashboard" && b == "index")  ? "active" : ""%>"><a href="<%= acc_active == true ?  "/dashboard" :"javascript:void(0)"%>">Act</a></li>
+        <% if current_user.business_type_id.to_i ==  3 %><li class=""><a href="<%= ENV["DISTRIBUTE_URL"]%>" onclick="">Distribute</a></li><% end %>
+  <% else %>
+  <li><a href="/">Home</a></li>
+  <li><a href="#" class="main-navigation">How it Works</a></li>
+  <li class="sign-in"><a data-toggle="modal" href="#myModal" class="main-navigation" id="user-sign-in">Sign in</a></li>
+  <% end %>
+</ul>
+</div>
+</div>
+
+<div class="modal fade" id="pending_listener" aria-hidden="true" tabindex='-1'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &nbsp;
+        </button>
+        <h4 class="modal-title">Listener</h4>
+      </div>
+      <div class="modal-body" id="listener_request_body">
+        <label class="text-center listener-success-text">Listener module not yet activated for this account.</label>
+      </div>
+      <div class="modal-footer">
+        <div class="text-center">
+          <a href="javascript:void(0);" id="btnYes" class="button medium orange" data-dismiss="modal">Close</a>
+        </div>
+      </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+jQuery('#pending_listener').on('shown.bs.modal', function (e) {
+  jQuery(".modal-backdrop").remove();
+});
+</script>

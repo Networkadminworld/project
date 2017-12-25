@@ -1,0 +1,445 @@
+<% content_for :page_specific_head_content do%>
+<%= javascript_include_tag "responsive/page_loaders/account_settings" %>
+<%end%>
+<div id="flash_message" class="flash-message" style="display:none">
+  <div class="alert alert-warning fade in">
+    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+    <strong><span id="msg_container"></span></strong>
+  </div>
+</div>
+<script>
+  function confirmAction(){
+    var confirmed = confirm("Are you sure to Upgrade your account?");
+    return confirmed;
+  }
+</script>
+<style>
+  ::-ms-clear {
+    display: none;
+  }
+</style>
+<%= content_for(:title, "Settings") %>
+<% c=controller.controller_name %>
+<% a=controller.action_name %>
+<!-- successful popup-->
+<% if params[:status]%>
+    <div class="modal fade" id="question_suggestion_model" aria-hidden="true" tabindex='-1'>
+      <div class="modal-dialog signup modal-size">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &nbsp;
+            </button>
+            <h4 class="modal-title">Your Transaction was Successful </h4>
+          </div>
+          <div class="modal-body signin">
+            <div class="">
+              <div class="cancel_head_success" id="qustion_suggestion_list">
+                <div id="print_div">
+                <% transaction=get_transaction_detail(params[:order_id])%>
+								You have been upgraded to <%= get_plan_name(current_user.business_type_id) %>. This plan is valid till <%=current_user.exp_date%>.
+								<hr class="hor-style"/>
+                <table><tr><th class="header_tab">Transaction Detail</th></tr><tr><td>Status</td><td><%= transaction.payment_status%></td></tr>
+                  <tr><td>Purchase Type</td><td>Upgraded to <%= get_plan_name(current_user.business_type_id)%></td></tr>
+                  <tr><td>Transaction Id</td><td><%= params[:t_id]%></td></tr>
+                  <tr><td>Transaction Amount</td>     <td><%=transaction.amount%></td></tr>
+                  <tr><td>Date & Time</td><td><%= Time.now%></td></tr></table><hr class="hor-style"/>
+                </div>
+                <a id="share_question"  class="download_link" href="<%= download_success_payments_path(:format=>"pdf",:params =>{:order_id => params[:order_id]})%>" style="margin: 150px;" target = '_blank'>
+                  Download
+                </a>
+                <a id="share_question"  class="print_link" href="#" onclick="printDiv('print_div')">
+                  Print
+                </a>
+                <hr class="hor-style"/>
+                <div class="btn-wrap text-center">
+                  <a id="share_question"  class="button medium button-blue" href="/users/edit" style="margin-right: 36px;">
+                    Go to Account Setting
+                  </a>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%end%>
+<div class="pull-right" style="height: 0px;width: 0px;overflow:hidden;">
+  <a href= "#" class="btn-link" data-toggle="modal" data-target="#question_suggestion_model" id="cc_avenue_cancel"></a>
+</div>
+<!-- End Sucessful Popup-->
+<div class="main-content">
+  <div class="container">
+    <div class="wrap-box">
+      <div class="wrap-box-head clearfix">
+        <h2>Account</h2>
+      </div>
+      <div class="modal fade" id="verify_caller_model" aria-hidden="true" tabindex='-1'>
+        <div class="modal-dialog signup modal-size">
+          <div class="modal-content">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &nbsp;
+                </button>
+                <h4 class="modal-title">Verification Code </h4>
+              </div>
+              <div class="modal-body verify_call_message">
+                </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="pull-right" style="height: 0px;width: 0px;overflow:hidden;">
+        <a href= "#" class="btn-link" data-toggle="modal" data-target="#verify_caller_model" id="verify_caller"></a>
+      </div>
+      <div class="wrap-box-cont">
+        <div class="white-box-wrapper">
+          <div class="box-head clearfix">
+            <h3><span class="glyphicon glyphicon-cog"></span>Settings</h3>
+          </div>
+          <div class="white-box">
+       <!-- Offline payment -->
+        <div class="link-downgrade">
+            <div class="btn-wrap">
+              <%= account_subscription(current_user)%>
+            </div>
+          </div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs main-tabs" id="myTab">
+            <li class="active">
+              <a href="<%= edit_user_registration_path %>"><span class="glyphicon glyphicon-cog"></span>Account Settings</a>
+            </li>
+            <li>
+              <a href="/account/company_settings"><span class="glyphicon glyphicon-tower"></span>Customer Data</a>
+            </li>
+            <!-- Offline payment process-->
+            <% if @subscribe != "false" %>
+            <li>
+              <a  href="/account/transaction_history" class="account_nav_button billing"><span class="glyphicon glyphicon-credit-card"></span>Payment History</a>
+            </li>
+            <% end %>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="account_settings">
+              <div class="tab-wrapper">
+                <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put, :multipart => true }) do |f| %>
+
+
+                <div class="row">
+                  <div class="col-lg-4 col-sm-6 col-md-12 col-xs-12">
+
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <label>Company Name</label>
+                        <div class="form-group">
+                          <label class="sr-only" for="InputFirstName">Company Name</label>
+                          <%= f.text_field :company_name, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "Company Name", :tabindex => 1 %>
+                          <p><span class="error" style="width:190px;"> <%= resource.errors[:company_name][0] %> </span></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <label>First Name</label>
+                        <div class="form-group">
+                          <label class="sr-only" for="InputFirstName">First Name</label>
+                          <%= f.text_field :first_name, :class => "text_field rc_5 form-control input-medium" ,:placeholder => "First Name", :tabindex => 2 %>
+                          <p><span class="error" style="width:190px;"> <%= resource.errors[:first_name][0] %> </span></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <label>Last Name</label>
+                        <div class="form-group">
+                          <label class="sr-only" for="InputLastName">Last Name</label>
+                          <%= f.text_field :last_name, :class => "text_field rc_5 form-control input-medium", :placeholder => "Last Name", :tabindex => 3 %>
+                          <p><span class="error" style="width:190px;"> <%= resource.errors[:last_name][0] %> </span></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <label>Email Address</label>
+                        <div class="form-group">
+                          <label class="sr-only" for="InputEmailAddress">Email Address</label>
+                          <%if @email %>
+                          <%= f.text_field :email, :class => "text_field rc_5 form-control input-medium", :placeholder => "Email Address", :tabindex => 4 %>
+                          <%else%>
+                          <%= f.text_field :email, :class => "text_field rc_5 form-control input-medium", :placeholder => "Email Address", :tabindex => 4,:value => params.present? && params[:user].present? && !params[:user][:email].blank?? params[:user][:email] : "" %>
+                          <%end%>
+                          <p><span class="error" style="width:190px;"> <%= resource.errors[:email][0] %> </span></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <%if current_user.client_setting%>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <label>Select languages</label>
+                        <input type="hidden" id="maximum_limit" value="<%=@maximum_limit%>">
+                        <div class="form-group">
+                          <label class="sr-only" for="InputLanguages">Select languages</label>
+
+   <%=select_tag 'client_setting[language_ids][]', options_for_select(
+@languages.map {|l| [l.name,l.id]} , @selected_languages.map {|l| l.id} ), :multiple => true,:onchange => 'limit_restriction();'%>
+                        </div>
+                      </div>
+                    </div>
+                    <%end%>
+
+                    <%unless current_user.business_type_id.present?%>
+                      <div class="row">
+                      <div class="col-lg-12">
+                        <label>Select a plan</label>
+                        <div class="form-group">
+
+                          <%unless @email%>
+                          <div class="radio-btn">
+                          <%@plans.each do |plan|%>
+                                <%if plan.id != 1%>
+                             <%= f.radio_button :business_type_id,plan.business_type_id,:class => "radio-sp", :tabindex => "7" %>&nbsp;<%=plan.plan_name%>
+                                    <%else%>
+                                    <%= f.radio_button :business_type_id,plan.business_type_id, :checked => true, :class => "radio-sp", :tabindex => "7",:style => "display:none;"%>
+                               <%end%>
+                          <%end%>
+                          </div>
+                          <%end%>
+
+                          <p><span class="error" style="width:190px;"> <%= resource.errors[:business_type_id][0] %> </span></p>
+                        </div>
+                      </div>
+                    </div>
+                    <%end%>
+
+
+                    <% if ['facebook', 'linkedin', 'twitter', 'google_oauth2'].include? current_user[:provider] %>
+                    <% else %>
+                    <% if current_user.parent_id == 0 || current_user.parent_id == nil %>
+                    <div class="subhead">
+                      <h4><span class="glyphicon glyphicon-cog"></span><a href="javascript:void(0);" id="change_password" class="change-pwd" tabindex="5">Change Password</a></h4>
+                    </div>
+                    <% end %>
+                    <div id="toggle_password">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label>Old Password</label>
+                          <div class="form-group">
+                            <label class="sr-only" for="InputOldPassword">Old Password</label>
+                            <%= f.password_field :current_password, :class => "text_field rc_5 form-control input-medium", :disabled => true, :value => params[:user] && params[:user][:current_password].present? ? params[:user][:current_password] : "" ,:placeholder => "Old Password", :tabindex => 6 %>
+                            <p><span class="error" style="width:190px;"> <%= resource.errors[:current_password][0]=="is invalid" ? "Current Password is invalid" : resource.errors[:current_password][0] == "can't be blank" ?  "Please enter current password." : resource.errors[:current_password][0] %> </span></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label>New Password</label>
+                          <div class="form-group">
+                            <label class="sr-only" for="InputNewPassword">New Password</label>
+                            <%= f.password_field :password, :class => "text_field rc_5 form-control input-medium", :disabled => true, :value => params[:user] && params[:user][:password].present? ? params[:user][:password] : "" ,:placeholder => "New Password", :tabindex => 7 %>
+                            <p><span class="error" style="width:190px;"> <%= resource.errors[:password][0] %> </span></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label>Confirm Password</label>
+                          <div class="form-group">
+                            <label class="sr-only" for="InputConfirmPassword">Confirm Password</label>
+                            <%= f.password_field :password_confirmation, :class => "text_field rc_5 form-control input-medium", :disabled => true, :value => params[:user] && params[:user][:password_confirmation].present? ? params[:user][:password_confirmation] : "",:placeholder => "Confirm Password", :tabindex => 8  %>
+                            <p><span class="error" style="width:190px;"> <%= resource.errors[:password_confirmation][0] %> </span></p>
+                            <input type="hidden" id="hidden_pass" name="hidden_pass" disabled="" value="password_enabled" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <% end %>
+
+                    <% check_pricing_plan_access(current_user)%>
+                    <%default_url_phone_user%>
+                    <%if !@redirect_url.blank?%>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <label>Redirect Url</label>
+                            <div class="form-group">
+                              <label class="sr-only" for="InputRedirectUrl">InputRedirectUrl</label>
+                              <%if current_user.parent_id.to_i ==0 || current_user.parent_id.blank?%>
+                                  <%= f.text_field :redirect_url, :class => "text_field rc_5 form-control input-medium", :placeholder => "Redirect Url", :value => current_user.redirect_url.blank? ?  @default_url : current_user.redirect_url ,:tabindex => 9 %>
+                              <%else%>
+                                  <%tennat_url = Tenant.where(id: current_user.tenant_id).first%>
+                                  <%= f.text_field :redirect_url, :class => "text_field rc_5 form-control input-medium", :disabled => true, :placeholder => "Redirect Url", :value => tennat_url.redirect_url.blank? ? @default_url : tennat_url.redirect_url ,:tabindex => 9 %>
+                              <%end%>
+                              <p><span class="error" id="error_redirect_url" style="width:190px;"> <%= resource.errors[:redirect_url][0] %> </span></p>
+                            </div>
+                          </div>
+                        </div>
+                    <%end%>
+                    <%if !@from_number.blank?%>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <label>From Number(*Please add with country code)</label>
+                            <div class="form-group">
+                              <label class="sr-only" for="InputRedirectUrl">InputFromNumber</label>
+                              <%if current_user.parent_id.to_i ==0 || current_user.parent_id.blank?%>
+                                  <input type="text" value="<%=current_user.from_number.blank? ?  "#{@default_no.gsub("+","")}"  : current_user.from_number%>" tabindex="9" placeholder="Call from number" name="user[from_number]" id="user_from_number" readonly class="text_field rc_5 form-control input-medium from_number">
+                                  <%#= f.text_field :from_number, :class => "text_field rc_5 form-control input-medium from_number",:disabled => true, :placeholder => "Call from number", :value => current_user.from_number.blank? ?  "#{@default_no.gsub("+","")}"  : current_user.from_number ,:tabindex => 9 %><a href="#" class ="edit_froms" id="verify_caller_edit">Edit</a> <a href="#" class="verify_caller_id" id="true" style="display:none;">Verify & Update</a>
+                              <%else%>
+                                  <%tennat_url = Tenant.where(id: current_user.tenant_id).first%>
+                                  <input type="text" value="<%=tennat_url.from_number.blank? ?  "#{@default_no.gsub("+","")}"  : tennat_url.from_number%>" tabindex="9" placeholder="Call from number" name="user[from_number]" id="user_from_number" readonly class="text_field rc_5 form-control input-medium from_number">
+                                  <%#= f.text_field :from_number, :class => "text_field rc_5 form-control input-medium from_number", :disabled => true, :placeholder => "Call from number", :value => tennat_url.from_number.blank? ?  "#{@default_no.gsub("+","")}"  : tennat_url.from_number ,:tabindex => 9 %>
+                              <%end%>
+                              <p><span class="error" style="width:190px;" id="error_from_number"> <%= resource.errors[:from_number][0] %> </span></p>
+                            </div>
+                          </div>
+                        </div>
+                    <%end%>
+                  </div>
+                  <div class="col-lg-8 col-sm-6 col-md-12 col-xs-12">
+                    <h4>Add Social Accounts</h4>
+                    <% benchmark '##Render social account company setting in company setting' do %>
+                    <%= render '/shared/share_social_network', :share_info => @share_info, :status => @status, :question => @question, :custom_url => @custom_url %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-wrap text-center btn-update-info">
+                <a href="/users/edit" class="btn btn-link">Cancel</a>
+                <%= f.submit "Update Info", :class => "button medium orange update_account_det", :tabindex => 12%>
+              </div>
+              <% end %>
+            </div>
+            <!--<div class="tab-pane" id="company_settings">
+              2
+            </div>
+            <div class="tab-pane" id="manage_users">
+              3
+            </div>
+            <div class="tab-pane" id="billing_info">
+              4
+            </div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+    var status = '<%= params[:status]%>'
+    if(status == "Success"){jQuery("#cc_avenue_cancel").click();}
+  jQuery(document).ready(function () {
+    var pass =
+    '<%=  (params[:user] && params[:user][:password].present? )|| ( params[:user] && params[:user][:password_confirmation].present? )|| resource.errors[:current_password][0].present? || resource.errors[:password][0].present? || resource.errors[:password_confirmation][0].present? || resource.errors[:password_confirmation][1].present?%>';
+if (pass == 'true') {
+  $(".loading").hide();
+  $("#toggle_password").show();
+  $("#hidden_pass").attr("disabled", "disabled");
+  $("#hidden_pass").val("");
+  $("#user_current_password").removeAttr("disabled");
+  $("#user_password").removeAttr("disabled");
+  $("#user_password_confirmation").removeAttr("disabled");
+}
+else {
+  $(".loading").hide();
+  $("#toggle_password").hide();
+  $("#hidden_pass").val("password_enabled");
+  $("#hidden_pass").removeAttr("disabled");
+  $("#user_current_password").attr("disabled", "disabled");
+  $("#user_password").attr("disabled", "disabled");
+  $("#user_password_confirmation").attr("disabled", "disabled");
+}
+var pass_count = 0;
+jQuery('body').on('click', '#change_password', function () {
+  pass_count = pass_count + 1;
+  var remainder = pass_count % 2
+  if (remainder == 1) {
+    $("#toggle_password").show();
+    $("#hidden_pass").attr("disabled", "disabled");
+    $("#hidden_pass").val("");
+    $("#user_current_password").removeAttr("disabled");
+    $("#user_password").removeAttr("disabled");
+    $("#user_password_confirmation").removeAttr("disabled");
+  }
+  else {
+    $("#toggle_password").hide();
+    $("#hidden_pass").val("password_enabled");
+    $("#hidden_pass").removeAttr("disabled");
+    $("#user_current_password").attr("disabled", "disabled");
+    $("#user_password").attr("disabled", "disabled");
+    $("#user_password_confirmation").attr("disabled", "disabled");
+  }
+});
+});
+</script>
+
+<script>
+  $(document).ready(function () {
+//~ $('input[type=password]').password_strength(texts);
+$(':input[data-placeholder]').each(function (index) {
+  if ($(this).val() == '') {
+    $(this).val($(this).data('placeholder'));
+    $(this).addClass('placeholder');
+  }
+  $(this).closest('form').submit(function () {
+    $(':input[data-placeholder]').each(function () {
+      if ($(this).hasClass('placeholder')) {
+        $(this).removeClass('placeholder');
+        $(this).val('');
+//console.log($(this));
+}
+});
+  });
+}).on(this, 'focus',function () {
+//check if the field not filled
+if ($(this).hasClass('placeholder')) {
+  $(this).removeClass('placeholder');
+  $(this).val('');
+}
+}).on(this, 'blur', function () {
+  if ($(this).val() == '') {
+    $(this).val($(this).data('placeholder'));
+    $(this).addClass('placeholder');
+  }
+});
+
+
+$("#user_password").focus(function () {
+  $(this).replaceWith('<input type="password" value="' + this.value + '" id="' + this.id + '" class="text_field rc_5 form-control input-medium" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=7>');
+  $("#" + this.id).focus();
+}).blur(function () {
+  if ($("#user_password").val() == "Password") {
+    $(this).replaceWith('<input type="text" value="' + this.value + '" id="' + this.id + '" class="text_field rc_5 form-control input-medium" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=7>');
+  }
+
+});
+
+$("#user_password_confirmation").focus(function () {
+  $(this).replaceWith('<input type="password" value="' + this.value + '" id="' + this.id + '" class="text_field rc_5 form-control input-medium" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=8>');
+  $("#" + this.id).focus();
+}).blur(function () {
+  if ($("#user_password_confirmation").val() == "Password") {
+    $(this).replaceWith('<input type="text" value="' + this.value + '" id="' + this.id + '" class="text_field rc_5 form-control input-medium" name="' + this.name + '" placeholder="' + this.placeholder + '" tabindex=8>');
+  }
+
+
+});
+});
+
+</script>
+

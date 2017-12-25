@@ -1,0 +1,23 @@
+    <div class="modal-header fnt-lg align-cen">{{ title }} Beacon
+        <div class="x-close fa fa-times" ng-click="cancel();"></div>
+    </div>
+    <div class="modal-body">
+      <form class="inq-from" name="form.beacon" novalidate>
+	<div class="form-group inq-form-group">
+	  <label class="fnt-sm">Device ID</label>
+	  <input type="text" class="form-control" placeholder="Input Device ID for beacon" name="uid" ng-model="beacon.uid" required>
+          <span style="color:red" class="help-block" ng-show="form.beacon.uid.$error.serverMessage">{{form.beacon.uid.$error.serverMessage}}</span>
+	</div>
+	<div class="form-group inq-form-group">
+	  <label class="fnt-sm">Name</label>
+	  <input type="text" class="form-control" placeholder="Input friendly name" name="name" ng-model="beacon.name" required>
+          <span style="color:red" class="help-block" ng-show="form.beacon.name.$error.serverMessage">{{form.beacon.name.$error.serverMessage}}</span>
+	</div>
+	<div class="form-actions row">
+	  <button type="submit" class="col-sm-4 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 btn btn-warning btn-lg" ng-click="submitBeaconForm(beacon)" ng-disabled="isBSubmitted">Save</button>
+	</div>
+      </form>
+    </div>
+    <div class="modal-footer ng-scope">
+      <a href="javascript:void(0);" class="fnt-md" ng-click="cancel()">Close this window</a>
+    </div>

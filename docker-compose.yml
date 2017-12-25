@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  piwikdb:
+    image: inquirly-mysql:1.0
+    ports:
+      - "3306:3306"
+
+  piwikweb:
+    image: inquirly-nginx:1.0
+    hostname: piwik.markethub.com
+#    links:
+#      - chenny-mysql:latest
+    ports:
+      - "80:80"

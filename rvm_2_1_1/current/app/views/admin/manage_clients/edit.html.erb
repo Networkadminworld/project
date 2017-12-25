@@ -1,0 +1,47 @@
+<% if @user.parent_id == 0 %>
+    <a href="/admin/manage_clients" style="margin-left: 20px;font-size: 15px">Back</a>
+<% else %>
+    <%= link_to 'Back ', admin_manage_client_show_users_path(@user.parent_id),{style: "margin-left: 20px;font-size: 15px;text-decoration: underline;"} %>
+<% end %>
+<div class="row">
+  <div class="col-xs-6 col-md-offset-3">
+    <%= form_tag("/admin/manage_clients/#{@user.id}", :method => "PUT") do %>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">First Name</label>
+            <input type="text" required="required" class="form-control" id="first_name" name="first_name" value="<%= @user.first_name %>" placeholder="Enter First Name"  />
+            <span class="error"><%= @user.errors.messages.present? ? (@user.errors.messages[:first_name].present? ? @user.errors.messages[:first_name][0] : '') : '' %></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Last Name</label>
+            <input type="text" required="required" class="form-control" id="last_name" name="last_name" value="<%= @user.last_name %>" placeholder="Enter Last Name" />
+            <span class="error help-inline" id="error_last_name" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Email</label>
+            <input type="text" required="required" class="form-control" id="email" name="email" value="<%= @user.email %>" placeholder="Enter email" />
+            <span class="error"><%= @user.errors.messages.present? ? (@user.errors.messages[:email].present? ? @user.errors.messages[:email][0] : '') : '' %></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Mobile</label>
+            <input type="text" required="required" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile"  value="<%= @user.mobile %>"/>
+            <span class="error help-inline" id="error_mobile" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Role</label>
+            <select name="role_id" id= "role_id" class="form-control">
+              <% Role.where(name: 'Client-Admin').each do |role|%>
+                  <option value="<%= role.id %>"><%= role.name %></option>
+              <% end %>
+            </select>
+          </div>
+
+          <%= submit_tag "Update ", class:"button medium orange" %>
+          <% if @user.parent_id == 0 %>
+              <a href="/admin/manage_clients/<%= @user.id %>/client_company" style="margin-left: 20px;font-size: 15px">Update company</a>
+              <a href="/admin/manage_clients/<%= @user.id %>/client_pricing_plan" style="margin-left: 20px;font-size: 15px">Update Pricing Plan</a>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>

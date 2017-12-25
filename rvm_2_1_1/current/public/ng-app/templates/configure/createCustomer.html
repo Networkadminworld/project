@@ -1,0 +1,94 @@
+<div class="modal-header fnt-lg align-cen">{{ title }} Customer
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<div class="modal-body">
+  <div class="container-fluid">
+
+    <div class="row">
+    <form class="form-horizontal" name="form.customers" novalidate>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Email</label><span class="fnt-sm consumer-span" data-ng-click="checkIsConsumer(isConsumer)" ng-model="isConsumer"> <i data-ng-class="isConsumerSelected()"></i> Opinify Consumer?</span>
+          <input type="text" class="form-control" id="inputEmail" placeholder="Enter Email" ng-model="customer.email">
+	      <span style="color:red" ng-show="form.customers.email.$error.serverMessage">{{form.customers.email.$error.serverMessage}}</span>
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Name</label>
+          <input type="text" class="form-control" id="inputName" placeholder="Enter Name" ng-model="customer.customer_name">
+        </div>
+	<div class="form-group inq-form-group">
+          <label class="fnt-sm">Mobile</label>
+          <input type="text" class="form-control" id="inputMobile" placeholder="Enter Mobile number without Country Code (e.g) 98xxxx" ng-model="customer.mobile">
+	  <span style="color:red"  ng-show="form.customers.mobile.$error.serverMessage">{{form.customers.mobile.$error.serverMessage}}</span>
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Age</label>
+          <input type="text" class="form-control" id="inputAge" placeholder="Enter Age" ng-model="customer.age">
+	  <span style="color:red"  ng-show="form.customers.age.$error.serverMessage">{{form.customers.age.$error.serverMessage}}</span>
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Gender</label>
+          <div class="radio">
+            <label class="fnt-sm radio-inline">
+              <input type="radio" name="gender" ng-value="'male'" ng-model="customer.gender">
+              Male
+            </label>
+            <label class="fnt-sm radio-inline">
+              <input type="radio" name="gender" ng-value="'female'" ng-model="customer.gender">
+              Female
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group inq-form-group">
+        <label class="fnt-sm">Country</label>
+          <select class="form-control" ng-model="customer.country"  ng-change="loadStates()">
+            <option ng-selected="country[0] == customer.country" ng-repeat="country in countries" value="{{country[0]}}">{{country[0]}}</option>
+          </select>
+	        <span style="color:red"  ng-show="form.customers.country.$error.serverMessage">{{form.customers.country.$error.serverMessage}}</span>
+        </div>
+        <div class="form-group inq-form-group">
+        <label class="fnt-sm">State</label>
+          <select class="form-control" ng-model="customer.state">
+                <option ng-selected="state[0] == customer.state" ng-repeat="state in states" value="{{state[0]}}">{{state[0]}}</option>
+            </select>
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">City</label>
+          <input type="text" class="form-control" id="inputCity" placeholder="Enter City" ng-model="customer.city">
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Area</label>
+          <input type="text" class="form-control" id="inputArea" placeholder="Enter Area" ng-model="customer.area">
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Custom Field</label>
+          <input type="text" class="form-control" id="inputCustomField" placeholder="Enter Custom Field" ng-model="customer.custom_field">
+        </div>
+        <div class="form-group inq-form-group">
+          <label class="fnt-sm">Contact Group</label>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <dropdown-multiselect pre-selected="customer.groups" model-name="Group" model="customer.selected_groups" options="groups"></dropdown-multiselect>
+            </div>             
+          </div>
+          
+        </div>
+        
+      </div>
+    </form>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-sm-2 col-md-2 col-lg-2">
+        <div class="form-group inq-form-group">
+          <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="isSubmitted" ng-click="submitForm(customer)">{{ title }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer ng-scope">
+  <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

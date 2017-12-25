@@ -1,0 +1,19 @@
+<% if user_signed_in? %>
+    <div class="user-info clearfix">
+      <a href="javascript:void(0);"><%=image_tag("#{current_user.attachment.present? ? current_user.attachment.image.url(:thumb) :'responsive/user.jpg'}",class: "user-picture img-circle", height: "35", width: "35")%><span><%=current_user.first_name%></span> <span class="arrow-down"></span> </a>
+      <div class="sub-menu">
+        <%=form_tag '/account/account_attachment', :method=>:post ,:multipart=>true,:id=>"account_attachment" do %>
+            <div class="change-profile-img">Change Display Image
+              <input type="file" name="image" class="profile-img-upload" id="company_attachment" onchange ="validateFiles(this);" max_file_size ="2.megabytes"/>
+            </div>
+            <input type="hidden" value="<%= current_user.id%>" name="account_id" readonly />
+            <input type="hidden" value="company_logo" name="step" readonly />
+        <%end%>
+        <%= link_to "Change Plan", "/payments/merchant_test" %>
+        <%= link_to "Settings", edit_user_registration_path %>
+        <%= link_to "Admin", tenants_path %>
+        <a href="<%=ENV["FRESH_DESK_URL"]%>" target="_blank" >Help</a>
+        <%= link_to "Logout", destroy_user_session_path, onclick: "deleteCookie('socialCookie')", class: "last" %>
+      </div>
+    </div>
+<% end %>

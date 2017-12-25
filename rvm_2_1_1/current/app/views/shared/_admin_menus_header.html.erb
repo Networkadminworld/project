@@ -1,0 +1,16 @@
+<%  c = controller.controller_name %>
+<%  a = controller.action_name %>
+<ul class="nav nav-tabs main-tabs" id="myTab">
+  <%# if is_permission_view("roles","index",current_user,session[:user_permissions]) %>
+  <li class = "<%= c=="tenants" ? "active" : "" %>"><a href="/tenants" tabindex="9"><span class="glyphicon glyphicon-tower"></span>Manage Tenants</a></li>
+	<%#end%>
+  <%# if is_permission_view("corporate_users","index",current_user,session[:user_permissions]) %>
+  <li class="<%= (c=="corporate_users" && (a == "new" || a == "edit" || a == "index" || a == "show" || a == "create" || a == "update") ) ? "active" : "" %>">
+    <a href="/corporate_users" tabindex="1"><span class="glyphicon glyphicon-cog"></span>Manage Users</a></li>
+<%#end%>
+	<%# if is_permission_view("corporate_users","mapping_tenant",current_user,session[:user_permissions]) %>
+  <li class=" <%= (c =="corporate_users" && a == "mapping_tenant") ? "active" : "" %>"><a  href="/corporate_users/mapping_tenant" class="account_nav_button billing" tabindex="12"><span class="glyphicon glyphicon-credit-card"></span>Manage Executives</a></li>
+
+  <li class=" <%= (c =="manage_roles") ? "active" : "" %>"><a  href="/manage_roles" class="account_nav_button billing" tabindex="12"><span class="glyphicon glyphicon-credit-card"></span>Manage Roles</a></li>
+	<%# end%>
+</ul>

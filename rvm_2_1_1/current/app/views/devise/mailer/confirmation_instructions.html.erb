@@ -1,0 +1,11 @@
+<p>Dear <%= @resource.first_name %>,</p>
+
+<p>You can confirm your account email through the link below:</p>
+<% plan_name = PricingPlan.where(id: @resource.business_type_id).first.plan_name%>
+<%if (plan_name =='Trial')%>
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+ <%else%>
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<%end%>
+Regards,<br>
+Inquirly Admin<br>

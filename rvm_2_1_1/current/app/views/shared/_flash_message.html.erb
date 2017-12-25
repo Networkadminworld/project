@@ -1,0 +1,50 @@
+<% if alert.present?%>
+    <div id="flash_message" class="flash-message">
+    <div class="alert alert-warning fade in">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+      <strong><span id="msg_container"><%= alert %></span></strong>
+    </div>
+  </div>
+<% end %>
+
+<% if flash[:non_fade_notice].present?%>
+  <div id="flash_message" class="flash-message">
+    <div class="alert alert-warning fade in">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+      <strong><span id="msg_container"><%= flash[:non_fade_notice] %></span></strong>
+    </div>
+  </div>
+<%end%>
+
+<% if flash[:notice].present? || params[:notice]%>
+  <div id="flash_message" class="flash-message">
+    <div class="alert alert-warning fade in">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+      <strong>
+        <span id="msg_container">
+          <%= params[:notice].present? ? params[:notice] : flash[:notice]%>
+        </span>
+      </strong>
+    </div>
+  </div>
+<% end %>
+
+<% if flash[:after_logged_in].present? || !params[:after_logged_in].blank?%>
+  <div id="flash_message" class="flash-message">
+    <div class="alert alert-warning fade in">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+      <strong>
+        <span id="msg_container">
+          <%= params[:after_logged_in].present? ? params[:after_logged_in] : flash[:after_logged_in] %>
+			<% if current_user && current_user.is_valid_email(current_user.email) %><a href='javascript:void(0);' onclick="click_bus(<%= current_user.business_type_id%>,'<%= user_plan_billinginfo(current_user)[1]%>','<%= user_plan_billinginfo(current_user)[0].blank? ? false : true%>'); "><strong>Pay Now</strong></a><% end %>
+        </span>
+      </strong>
+    </div>
+  </div>
+<% end %>
+
+
+<style>
+ /*.flash-on{padding-top: 110px;}*/
+ .flash-off{ padding-top: 70px; }
+</style>

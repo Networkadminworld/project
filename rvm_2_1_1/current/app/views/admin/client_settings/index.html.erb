@@ -1,0 +1,29 @@
+<%= stylesheet_link_tag "admin/client_settings" %>
+<%= javascript_include_tag "admin/client_settings" %>
+<div class="tab-content">
+  <div class="tab-pane active" id="account_settings">
+    <div class="tab-wrapper">
+
+      <div class="form-horizontal">
+        <div class="row">
+          <div class="col-lg-4 lang-type" style="float:left;">
+            <div class="form-group">
+              <label for="inputLanguage" class="col-sm-6 text-left control-label">
+                Select User
+              </label>
+              <div class="col-sm-6">
+                <input type="text" name="email_id" id="search_user_email" class="text_field rc_5 form-control input-small" placeholder="Email"/>
+              </div>
+              <div class="btn-wrap text-right btn-update-info"    >
+                <input type="button" id="search_user" class="button medium orange" value="Search" />
+              </div>
+
+              <p><span class="error" style="width:190px;" id="error_role_id"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="render_user_settings"></div>
+    </div>
+  </div>
+</div>

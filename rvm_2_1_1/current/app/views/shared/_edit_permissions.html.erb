@@ -1,0 +1,39 @@
+<div class="tab-content inner">
+  <div class="tab-wrapper">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+        <%= form_for :feature, :url => {:action => 'update'},:method => :put, :class => "form-inline"  do |f|%>
+            <%@parent_features.each do |feature| %>
+             <div class="field" >
+               <div class="col-sm-6 col-md-6 col-lg-6 Pr0">
+                  <% p_access = Permission.check_feature_permission(feature,params[:id])%>
+                  <%= feature.title %>
+               </div>
+                  <% if feature.sub_features.count == 0 %>
+                   <%= check_box('parent_feature', "#{feature.id}", options = {:checked => p_access,:class => "parent-select",:id => "feature_#{feature.id}_access_level"}) %>
+                  <%else%>
+                   <%= check_box('parent_feature', "#{feature.id}", options = {:checked => p_access, :class => "parent-select", disabled: true, :id => "feature_#{feature.id}_access_level"}) %>
+                  <% end %>
+                </div>
+             <div id="sub_feature_index_<%= feature.id %>">
+                  <% feature.sub_features.each do |sub_feature|%>
+                   <div class="field" style="margin: 10px;">
+                     <div class="col-sm-6 col-md-6 col-lg-6 Pr0">
+                      <% access = Permission.check_feature_permission(sub_feature,params[:id])%>
+                      <%= sub_feature.title %>
+                     </div>
+                     <%= check_box('sub_feature', "#{sub_feature.id}", options = {:checked => access,:class => "sub_case",:id => "sub_case_#{feature.id}"}) %>
+                   </div>
+                <% end %>
+             </div>
+             <br>
+            <% end %>
+            <div class="btn-wrap text-center btn-update-info">
+               <%= submit_tag 'Update',:class=> 'button medium orange'%>
+               <%=link_to 'Back','/admin/permissions',:class=>'button medium orange'%>
+            </div>
+        <% end %>
+        </div>
+    </div>
+  </div>
+</div>

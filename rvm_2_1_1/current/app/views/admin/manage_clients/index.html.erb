@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-sm-2 col-lg-2 col-md-2" style="padding-top:7px;">
+    <div style="padding-top:4px;font-size:16px;font-weight:bold;">Select Client
+    </div>
+  </div>
+  <%= form_tag("/admin/manage_clients", :method => "GET") do %>
+  <div class="col-sm-3 col-lg-3 col-md-3">
+    <input  type="text" name="search_val" value ="<%= params[:search_val] || '' %>" id="search_client_email" class="text_field rc_5 form-control input-small" placeholder="Search Client">
+  </div>
+  <div class="col-sm-1 col-lg-1 col-md-1" style="padding:2px;">
+    <%= button_tag "Search ", class:"button medium orange" %>
+  </div>
+  <% end %>
+
+  <div class="col-sm-1 col-lg-1 col-md-1" style="padding-top:13px;">
+    <%= link_to "Reset", admin_manage_clients_path,{style: "margin-left: 20px;font-size: 15px;text-decoration: underline;"} %>
+  </div>
+  <div class="col-sm-5 col-lg-5 col-md-5">
+    <div class="btn-wrap text-right btn-update-info" style="margin-top: 5px;">
+      <a href="/admin/manage_clients/client_signup" class="btn btn-primary">+ Add Client</a>
+    </div>
+  </div>
+</div>
+
+<div class= "table-responsive" style="margin-top:15px;">
+  <table class= "table user-table">
+    <thead>
+    <tr>
+      <th class="align-cen"> FirstName</th>
+      <th class="align-cen">LastName</th>
+      <th class="align-cen">Email</th>
+      <th class="align-cen">Status</th>
+      <th class="align-cen">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% if @user_lists.present? %>
+        <% @user_lists.each do |user| %>
+        <tr>
+          <td class="align-cen"> <%= user.first_name %> </td>
+           <td class="align-cen"><%= user.last_name%></td>
+          <td class="align-cen"><%= user.email%> <%if user.active_pricing_plan %><i class="fa fa-trophy" style="<%= plan_color(user.active_pricing_plan) %>" aria-hidden="true" onclick="loadClientPlanDetails(<%= user.id %>)"></i><%end%></td>
+          <td  style="width: 13%;padding-left: 44px;">
+            <input type="checkbox" class="user-status-switch" id="change-status-<%= user.id %>" data-on-text="Active" data-off-text="Inactive" data-status='<%= user.is_active %>' <% if user.is_active %> checked <% end %>/>
+          </td>
+          <td>
+            <div class="action-items">
+              <a href="/admin/manage_clients/<%= user["id"] %>/edit" title="EditClient"><i class="fa fa-edit" aria-hidden="true"></i></a>
+              <a href="/admin/manage_clients/<%= user["id"] %>/show_tenants" title="Show Tenants"><i class="fa fa-list" aria-hidden="true"></i></a>
+              <a href="/admin/manage_clients/<%= user["id"] %>/show_users" title="Show Users"><i class="fa fa-users" aria-hidden="true"></i></a>
+              <a href="/admin/manage_clients/<%= user["id"] %>/download_client_detail.pdf" title="Download Report"><i class="fa fa-download" aria-hidden="true"></i></a>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <%else%>
+      <div style="color: #d9534f;text-align: center;top: 61px;position: relative;font-size: 17px;">
+        No user results found.
+      </div>
+    <% end %>
+  </table>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      <%= will_paginate @user_lists, renderer: BootstrapPagination::Rails %>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6">
+    <div style="float: right;margin-top: 28px;background: #F7F9F8;padding: 0.4em 0.6em;width: 22em;margin-bottom: 0.3em;text-align: center">
+        <%= page_entries_info  @user_lists %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="reset-client" class="modal fade">
+  <div class="modal-dialog" style="width:755px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="status-change-header">Are you sure you want activate this user?</h4>
+      </div>
+      <div class="modal-footer" style="text-align: center;border-top:none">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="deactivate-client" user-id="" status="">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="client-plan-detail" class="modal fade">
+  <div class="modal-dialog" style="width:755px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Client Pricing Plan Detail</h4>
+      </div>
+      <div class="modal-body">
+        <div id="render-plan-details"></div>
+      </div>
+    </div>
+  </div>
+</div>

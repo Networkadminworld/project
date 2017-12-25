@@ -1,0 +1,1 @@
+$('#render_user_settings').html("<%= escape_javascript(render(:partial => 'user_settings',:locals => {:settings => @settings,:user => @user, :pricing_plan => @pricing_plan})) %>");

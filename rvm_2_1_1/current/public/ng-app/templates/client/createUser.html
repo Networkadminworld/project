@@ -1,0 +1,95 @@
+<div class="modal-header fnt-lg align-cen">{{ title }}
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+
+        <div class="row">
+            <form class="form-horizontal" name="form.userForm" novalidate>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">First Name</label>
+                        <input type="text" class="form-control" placeholder="First Name" name="firstname" ng-model="user.first_name" required>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.first_name.$error.serverMessage">{{form.userForm.first_name.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Last Name</label>
+                        <input type="text" class="form-control" placeholder="Last Name"  name="lastname" ng-model="user.last_name"  required>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.last_name.$error.serverMessage">{{form.userForm.last_name.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Email</label>
+                        <input type="text" class="form-control" placeholder="Email" name="email" ng-model="user.email"  required>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.email.$error.serverMessage">{{form.userForm.email.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Password</label>
+                        <input type="password" class="form-control" data-ng-disabled="action != 'add'" placeholder="Password" name="password" ng-model="user.password"  required>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.password.$error.serverMessage">{{form.userForm.password.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Confirm Password</label>
+                        <input type="password" class="form-control" data-ng-disabled="action != 'add'" placeholder="Confirm Password" name="password" ng-model="user.password_confirmation"  required>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.password_confirmation.$error.serverMessage">{{form.userForm.password_confirmation.$error.serverMessage}}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Currency</label>
+                        <select class="form-control" ng-model="user.currency_id">
+                            <option  ng-selected="{{ currency.id == user.currency_id}}" ng-repeat="currency in allCurrencies" value="{{currency.id}}">{{currency.name}}</option>
+                        </select>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.currency.$error.serverMessage">{{form.userForm.currency.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Mobile</label>
+                        <input type="text" class="form-control" placeholder="Mobile" name="mobile" ng-model="user.mobile"  required>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.mobile.$error.serverMessage">{{form.userForm.mobile.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Role Name</label>
+                        <select class="form-control" ng-model="user.role_id">
+                            <option  ng-selected="{{ role[1] == user.role_id}}" ng-repeat="role in roles" value="{{role[1]}}">{{role[0]}}</option>
+                        </select>
+                        <span style="color:red" class="help-block" ng-show="form.userForm.role_id.$error.serverMessage">{{form.userForm.role_id.$error.serverMessage}}</span>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Tenant Region</label>
+                        <select class="form-control" ng-model="user.tenant_region" ng-change="loadTenants()">
+                            <option  ng-selected="{{ region['id'] == user.tenant_region}}" ng-repeat="region in tenantRegions" value="{{region['id']}}">{{region['name'] | uppercase }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group inq-form-group">
+                        <label class="fnt-sm">Tenant Name</label>
+                        <select class="form-control" ng-model="user.tenant_id">
+                            <option value="">Select Tenant</option>
+                            <option  ng-selected="{{ tenant['id'] == user.tenant_id}}" ng-repeat="tenant in tenants" value="{{tenant['id']}}">{{tenant['name']}}</option>
+                        </select>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-sm-2 col-md-2 col-lg-2">
+                <div class="form-group inq-form-group">
+                    <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="formSubmitted" ng-click="submitUserForm(user)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

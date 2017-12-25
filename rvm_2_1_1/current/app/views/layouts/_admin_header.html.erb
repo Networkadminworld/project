@@ -1,0 +1,42 @@
+<div class="header navbar navbar-inverse bs-docs-nav">
+  <div class="container" style="width: 1351px;margin-left: 0;">
+    <div class="navbar-header">
+      <button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><%= image_tag("responsive/logo-inquirly.png", alt: "inquirly") %></a>
+    </div>
+    <% if user_signed_in? %>
+    <div class="user-info clearfix">
+      <a href="javascript:void(0);">
+			<%= image_tag("responsive/user.jpg", class: "user-picture") %>
+			<span><%= current_user.first_name %> <%= current_user.last_name %></span> <span class="arrow-down">&nbsp;</span> </a>
+      <div class="sub-menu">
+        <%= link_to "Logout", destroy_user_session_path, :class => "last" %>
+	<%= link_to "Pipeline Admin",  "#{ENV['CUSTOM_URL']}pipeline2/admin", :class => "last", :target => :blank %>
+	<%= link_to "Campaign Admin",  "#{ENV['CUSTOM_URL']}campaigns/template#/template_list", :class => "last", :target => :blank %>
+      </div>
+    </div>
+    <% end %>
+    <div class="collapse navbar-collapse bs-navbar-collapse" id="main-navigation" style="float: none;">
+      <ul class="nav navbar-nav" style="margin-left: 75px;">
+          <% c=controller.controller_name %>
+          <li class="<%= (c == "permissions")  ? "active" : ""%>"><a href="/admin/permissions"><i class="fa fa-chain" aria-hidden="true" style="font-size: 20px;margin-right: 5px;"></i>Manage Roles</a></li>
+          <li class="<%= (c == "pricing_plans")  ? "active" : ""%>"><a href="/admin/pricing_plans"><i class="fa fa-dollar" aria-hidden="true" style="font-size: 20px;margin-right: 5px;"></i>Pricing Plan</a></li>
+          <li class="<%= (c == "action_lists")  ? "active" : ""%>"><a href="/admin/action_lists"><i class="fa fa-plane" aria-hidden="true" style="font-size: 20px;margin-right: 5px;"></i>Onboarding</a></li>
+<% 
+=begin %>  
+<li class="<%= (c == "manage_users")  ? "active" : ""%>">
+         <a href="/admin/users"><i class="fa fa-user-plus" aria-hidden="true" style="font-size: 20px;margin-right: 5px;"></i>Manage Users
+         </a>
+         </li>
+<% 
+=end %>
+          <li class="<%= (c == "manage_clients")  ? "active" : ""%>"><a href="/admin/manage_clients"><i class="fa fa-users" aria-hidden="true" style="font-size: 20px;margin-right: 5px;"></i>Manage Clients</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

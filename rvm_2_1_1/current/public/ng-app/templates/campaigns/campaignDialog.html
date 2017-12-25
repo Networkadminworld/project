@@ -1,0 +1,80 @@
+<div class="modal-header P0">
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      
+      <div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+          <h3 class="modal-title fnt-black">Start a new {{campaignType}} Campaign</h3>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+    	  <div class="inq-form-group">
+      	    <label class="fnt-sm">Give your campaign a name</label>
+	        <a class="has-link">#{{ campaigns.label | removeSpacesThenLowercase }}</a>
+      	    <input type="text" class="form-control" placeholder="" ng-model="campaigns.label">
+    	  </div>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="inq-form-group">
+      	    <label class="fnt-sm">How long do you want the campaign to run</label>
+      	    <select class="form-control" ng-model="campaigns.exp_date">
+              <option ng-repeat=" campaign_exp_date in campaign_exp_dates" value="{{campaign_exp_date.value}}">{{ campaign_exp_date.name}}</option>
+	        </select>
+	  </div>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="inq-form-group">
+            <label class="fnt-sm">Enter campaign url</label>
+            <input type="text" class="form-control" placeholder="" ng-model="campaigns.campaign_end_url">
+          </div>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+          <h3 class="modal-title fnt-black">How do you want to engage?</h3>
+        </div>
+      </div>
+
+      <div class="row">
+	<div class="col-sm-4 col-md-4 col-lg-4">
+	  <div class="campaign-type">
+            <p><i class="fa fa-users"></i></p> 
+	    <p class="fnt-md">Social</p>
+	    <p class="fnt-xs">Create campaigns and <br> share on Facebook,<br> Twitter or Linkedin.</p>
+          <button type="button" class="btn btn-inq fnt-xs" ng-click="createQuestion(campaignType,'social')">Start with Social</button>
+	  </div>
+        </div>
+	<div class="col-sm-4 col-md-4 col-lg-4">
+	  <div class="campaign-type">
+            <p><i class="fa fa-mobile"></i></p> 
+	    <p class="fnt-md">Mobile</p>
+	    <p class="fnt-xs">Take a mobile route to <br> engage with cusotmers <br> on SMS and email.</p> 
+	    <button type="button" class="btn btn-inq fnt-xs" ng-click="createQuestion(campaignType,'mobile')">Start with Mobile</button>
+	  </div>	 
+        </div>
+	<div class="col-sm-4 col-md-4 col-lg-4">
+	  <div class="campaign-type">
+            <p><i class="fa fa-map-marker"></i></p> 
+	    <p class="fnt-md">In-Location</p>
+	    <p class="fnt-xs">Push content and engage<br>with users in or around<br> your stores.</p> 
+	    <button type="button" class="btn btn-inq fnt-xs disable">Coming Soon</button>
+	  </div>
+        </div>
+      </div>
+
+    </div><!--end of modal body container fluid-->
+  </div><!--end of modal body--> 
+
+  <div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+  </div>

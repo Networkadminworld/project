@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html ng-app="InquirlyApp">
+<head>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<%= favicon_link_tag '/ng-app/Images/favicon.ico' %>
+<%= render :partial => "shared/css_files_link" %>
+<%= csrf_meta_tag %>
+<title update-title></title>
+
+<!--
+<script>
+  var PIWIK_URL = "<%= ENV['PIWIK_URL'] %>";
+  var PIWIK_TOKEN = "<%= ENV['PIWIK_TOKEN'] %>";
+</script>
+-->
+
+</head>
+<body ng-cloak>
+<div class="main-container">
+  <div class="main-menu">
+    <div class="container-fluid P0">
+
+      <div class="row M0">
+        <div class="col-sm-12 col-md-12 col-lg-12 P0">
+            <div class="client-logo-main" back-img='{{ session.data.company_logo }}' back-img-size="contain"></div>
+        </div>
+      </div>
+
+      <div class="side-bar">
+        <div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+            <div class="main-menu-item" ng-class="{'selected': $state.includes('command-center') }">
+              <a ui-sref="command-center.index">
+                <p class="fnt-lg"><i class="fa fa-dashboard"></i></p>
+                <p class="fnt-xs">Command Center</p></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+              <div class="main-menu-item" ng-class="{'selected': $state.includes('campaigns') }">
+                <a ui-sref="campaigns.index">
+                <p class="fnt-lg"><i class="fa fa-bolt"></i></p>
+                <p class="fnt-xs">PowerShare</p>
+                </a>
+              </div>
+          </div>
+        </div>
+
+        <div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+              <div class="main-menu-item" ng-class="{'selected': $state.includes('listen') }">
+                <a ui-sref="listen">
+                <p class="fnt-lg"><i class="fa fa-headphones"></i></p>
+                <p class="fnt-xs">Listen</p></a>
+              </div>
+          </div>
+        </div>
+
+        <div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+            <div class="main-menu-item" ng-controller="routeAccessCtrl" data-ng-click="checkPageAccess('pipeline')" ng-class="{'selected': $state.includes('pipeline') || $state.includes('justbake')
+            || $state.includes('jbsearch') || $state.includes('jb_tenant_account') || $state.includes('jb_admin_account') || $state.includes('pipelines') || $state.includes('pipelines.index')}">
+              <a>
+                <p class="fnt-lg"><i class="fa fa-list"></i></p>
+                <p class="fnt-xs">Pipeline</p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0M0">
+              <div class="main-menu-item deactive">
+                <a href="<%= ENV['BUSINESS_APP']%>" target="_blank"><img src="/ng-app/Images/google-play.png" style="height:35px;"></a>
+                <a href="javascript:void(0);"><img src="/ng-app/Images/powered_by_logo.png" style="width:100px;margin-top:20px"></a>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-container">
+      <div class="container-fluid P0M0">
+        <div class="row M0">
+          <div class="col-sm-12 col-md-12 col-lg-12 P0">
+            <nav class="navbar navbar-inverse user-navbar">
+              <div class="container-fluid">
+                <div class="navbar-header" style="width: 100%;">
+                  <button type="button" class="navbar-toggle collapsed side-menu-mini" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand client-addr fnt-gray fnt-xs" style="cursor: default;"></a>
+                  <ul class="nav navbar-nav navbar-right profile-navbar">
+                    <li class="active">
+                    <div class="profile-nav-alert">
+                      <input id="send" style="display: none"/>
+                      <button id="fire" style="display: none">Send</button>
+                     <!-- <span class="fa fa-comments" style="color: #FFFFFF" data-ng-click="$state.go('messages.index');$location.path('/messages/index');"></span>-->
+                    </div>
+                     <!-- End Alert HTML -->
+                    <span class="profile-img-link">
+                      <img  id="logo" ng-src="{{session.data.user_profile_top}}" class="thumb img-circle profile-img" alt="">
+                    </span>
+                    <div class="profile-menu-header-mini">
+                      <i class="fa fa-ellipsis-v" ></i>
+                    </div>
+                      <span class="dropdown" dropdown>
+                      <span class="dropdown-toggle" dropdown-toggle>
+                        <div class="profile-menu-header">
+                          <div class="profile-user-name fnt-xs">
+                            {{session.data.user_first_name | titleCase }}&nbsp{{session.data.user_last_name | titleCase }}
+                          </div>
+                          <div class="profile-more fnt-md">
+                            <i class="fa fa-angle-down"></i>
+                          </div>
+                        </div>
+                      </span>
+                      <ul class="dropdown-menu profile-down" dropdown-menu>
+                        <div ng-controller="routeAccessCtrl">
+                          <div class="fnt-sm fnt-blue drop-down-separator" data-ng-click="checkPageAccess('configure')">
+                            <div class="row M0">
+                              <div class="col-sm-3 col-md-3 col-lg-3 Pr0 align-cen" style="font-size: 16px;">
+                                <i class="fa fa-wrench"></i>
+                              </div>
+                              <div class="col-sm-9 col-md-9 col-lg-9" style="margin-top: 3px;"> Configurations </div>
+                            </div>
+                          </div>
+                          <div class="fnt-sm fnt-blue drop-down-separator" data-ng-click="checkPageAccess('account')">
+                            <div class="row M0">
+                              <div class="col-sm-3 col-md-3 col-lg-3 Pr0 align-cen" style="font-size: 16px;">
+                                <i class="fa fa-cog"></i>
+                              </div>
+                              <div class="col-sm-9 col-md-9 col-lg-9" style="margin-top: 3px;"> Account Settings</div>
+                            </div>
+                          </div>
+                          <div class="fnt-sm fnt-blue drop-down-separator" data-ng-click="checkPageAccess('client')" >
+                            <div class="row M0">
+                              <div class="col-sm-3 col-md-3 col-lg-3 Pr0 align-cen" style="font-size: 16px;">
+                                <i class="fa fa-users"></i>
+                              </div>
+                              <div class="col-sm-9 col-md-9 col-lg-9" style="margin-top: 3px;"> Teams and Roles</div>
+                            </div>
+                          </div>
+                          <div class="fnt-sm fnt-blue drop-down-separator" data-ng-click="logOut()">
+                            <div class="row M0">
+                              <div class="col-sm-3 col-md-3 col-lg-3 Pr0 align-cen" style="font-size: 16px;">
+                                <i class="fa fa-external-link"></i>
+                              </div>
+                              <div class="col-sm-9 col-md-9 col-lg-9" style="margin-top: 3px;"> Logout</div>
+                            </div>
+                          </div>
+                        </div>
+                      </ul>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+	        <div ui-view></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% if Rails.env.production? %>
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDomains", ["*.app.ezeees.com","*.ezeees.com"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    //var u="//analytics.ezeees.com/";
+    var u = "<%= ENV['PIWIK_URL'] %>";
+   //var u = "//173.212.193.22:8081/"
+    _paq.push(['setTrackerUrl', u+'index.php']);
+   // _paq.push(['setSiteId', '1']);
+    _paq.push(['setSiteId', <%= ENV['PIWIK_SITE_ID'] %>]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!--<noscript><p><img src="//analytics.ezeees.com/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>-->
+<!--<noscript><p><img src="http://173.212.193.22:8081/index.php?idsite=1&rec=1" style="border:0;" alt="" /></p></noscript>-->
+<noscript><p><img src="//#{ENV['PIWIK_URL']}/index.php?idsite=#{ENV['PIWIK_SITE_ID']}" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+<!--
+ <script>
+    var email = "<%= current_user.email %>";
+    var name = "<%= current_user.first_name %>";
+    window.intercomSettings = {
+        app_id: "b3x4wkl0",
+        name: name,
+        email: email,
+        created_at: 1312182000 // Signup date as a Unix timestamp
+    };
+</script>
+ -->
+<!--<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/b3x4wkl0';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>-->
+ <% end %>
+ <div id="local-server" data-uri="<%= request.host %>:<%= ENV['SOCKET_PORT'] %>/websocket?user_id=<%= current_user.id %>"></div>
+ <input type="hidden" value="<%= current_user.id %>" id="socket-id">
+ <input type="hidden" value="<%= ENV['V2_LISTEN_URL'] %>" id="v2-listen" >
+ <input type="hidden" value="<%= ENV['PIPELINE_URL'] %>" id="v2_pipeline">
+ <input type="hidden" value="<%= ENV['PIPELINE_WS_URL'] %>" id="v2_pipeline_ws">
+ <input type="hidden" value="<%= ENV['RECCOS_URL'] %>" id="v2_reccos">
+ <input type="hidden" value="<%= ENV['PIWIK_URL'] %>" id="piwik_url">
+ <input type="hidden" value="<%= ENV['PIWIK_SITE_ID'] %>" id="piwik_site_id">
+ <input type="hidden" value="<%= ENV['PIWIK_TOKEN'] %>" id="piwik_token">
+
+ <%= render :partial => "shared/js_files_link" %>
+  </body>
+</html>

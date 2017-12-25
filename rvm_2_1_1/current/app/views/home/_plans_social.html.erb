@@ -1,0 +1,53 @@
+<div  class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	<div class="sign-form-wrap">
+		<div class="wrap-sign clearfix">
+			<%if link == "signup"%>
+			<div class="login-title">SIGN IN USING</div>
+			<%elsif link== "signin"%>			
+			<div class="login-title">SIGN UP USING</div>
+			<%end%>
+			<a href="/users/auth/facebook" class="login-social-icon face-book"> Facebook</a>
+			<a href="/users/auth/google_oauth2" class="login-social-icon google-plus"> Google</a>
+			<a href="/users/auth/linkedin" class="login-social-icon linked-in">LinkedIn</a>
+			<a href="/users/auth/twitter" class=" login-social-icon twitter">Twitter</a>
+		</div>
+		<%if link == "signup"%>
+		<div class="not-member">
+			<a id='signup_form_link' style="cursor: pointer;" onClick="render_signup_form();">Not yet member? <span>Signup Now</span></a>
+		</div>
+		<%elsif link== "signin"%>
+		<div class="not-member">
+			<a style="cursor: pointer;" onClick="render_signin_form();">Already a member?<span> Signin Now</span></a>
+		</div>
+		<div class="not-member terms-privacy">By signing up you are indicating that you have read and agree to our  <a href="http://inquirly.com/?page_id=6125"><span> Terms </span> and </a> <a href="http://inquirly.com/?page_id=6112"><span>PrivacyPolicy.</span></a></div>
+		<%end%>
+		<!--//
+		<div class="hr-line"></div>
+		<div class="price-plan">Pricing Plans</div>
+		<div>
+			<div style="cursor: pointer;" class="individual-box blue-box" onclick="display_plans();">
+			  <div class="user-prite-img blue-user"></div>
+			    <div class="indiviual-txt">INDIVIDUAL</div>
+			    <div class="blue-user1">User - 1</div>
+			</div>
+			<div style="cursor: pointer;" class="individual-box green-box" onclick="display_plans();">
+			  <div class="user-prite-img green-user"></div>
+			    <div class="indiviual-txt">SMALL BUSINESSES</div>
+			    <div class="green-user1">Users - 3</div>
+			</div>
+			<div style="cursor: pointer;" class="individual-box red-box" onclick="display_plans();">
+			  <div class="user-prite-img red-user"></div>
+			    <div class="indiviual-txt">ENTERPRISE</div>
+			    <div class="blue-user1">Users - 10</div>
+			</div>
+			<div class="space"></div>
+		</div>
+		//-->
+	</div>
+</div>
+<script>
+function display_plans()
+{
+	window.location.href = "http://inquirly.com/?page_id=5955";
+}
+</script>

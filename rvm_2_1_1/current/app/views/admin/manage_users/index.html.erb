@@ -1,0 +1,56 @@
+<div class="btn-wrap text-right btn-update-info" style="margin-top: 5px;">
+  <a href="/admin/users/new" class="btn btn-primary" data-toggle="modal">+ Add User</a>
+</div>
+<div class= "table-responsive" style="margin-top: 15px;">
+  <table class= "table user-table">
+    <thead>
+    <tr>
+      <th class="align-cen">Name</th>
+      <th class="align-cen">Email</th>
+      <th class="align-cen">Mobile</th>
+      <th class="align-cen">Role</th>
+      <th class="align-cen">Businesses</th>
+      <th class="align-cent">Status</th>
+      <th class="align-cen">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @service_users.each do |user| %>
+        <tr>
+          <td><%= user["first_name"] %> <%= user["last_name"] %></td>
+          <td><%= user["email"] %></td>
+          <td><%= user["mobile"] %></td>
+          <td><%= user["role_name"] %></td>
+          <td><b><%= user["businesses"] %></b></td>
+          <td>
+            <div class="<%= user["is_active"] ? 'client-active' : 'client-deactive' %>">
+                <%= user["is_active"] ? 'Active' : 'In-active' %>
+            </div>
+          <td>
+            <div class="action-items" style="width: 70px;">
+                <a href="/admin/users/<%= user["id"] %>/edit" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                <a href="javascript:void(0);" title="de-activate" onclick="resetUser('<%= user["id"] %>','<%= user["status"]%>')" ><i class="fa fa-ban" aria-hidden="true"></i></a>
+            </div>
+          </td>
+        </tr>
+     <% end %>
+    </tbody>
+
+  </table>
+</div>
+
+<!-- Deactivate/Activate User -->
+<div id="reset-user" class="modal fade">
+  <div class="modal-dialog" style="width:440px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Are you sure you want activate this user?</h4>
+      </div>
+      <div class="modal-footer" style="text-align: center;border-top:none">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" id="deactivate-user" user-id="" status="">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

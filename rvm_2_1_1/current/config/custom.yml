@@ -1,0 +1,8 @@
+development:
+  url: <%=ENV["CUSTOM_URL"]%>
+
+production:
+  url: <%=ENV["CUSTOM_URL"]%>
+  
+test:
+  url: <%=ENV["CUSTOM_URL"]%>

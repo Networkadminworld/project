@@ -1,0 +1,27 @@
+<table class="master_list" id="users_list">
+	  <thead>
+  <tr>
+    <th colspan="2">Payment Details</th>
+  </tr>
+  </thead>
+  <tbody>
+	<% @zaakpay_post.each do |key, value| %>
+			<tr>
+				<td width="50%" valign="middle"><%= key %></td>
+				<td width="50%" valign="middle"><%= value %></td>
+			</tr>
+			<%end%>
+			<tr>
+				<td colspan="2" align="center">Payment not success</td>
+			</tr>
+				<tr>
+			<td colspan="2" align="center">
+			<a href="/" id="bus-select" class="btn rc_5">Back</a>
+			</td>
+			</tr>
+	</tbody>
+	<!--tr>
+		<td width="50%" align="center" valign="middle">Checksum Verified?</td>
+		<td width="50%" align="center" valign="middle"><%#= @checksum_check ? "Yes" : "No" %></td>
+	</tr-->
+</table>

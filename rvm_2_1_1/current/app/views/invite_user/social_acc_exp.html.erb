@@ -1,0 +1,29 @@
+<p>Dear <%= @first_name %>,</p>
+<p>Following social account(s) have been deleted as they are invalid:</p>
+<p>Please the reconnect social account(s) and share the question again.</p>
+<%if @fb_user.present? %>
+<p>Provider : Facebook</p>
+<ul>
+<%@fb_user.each do |email| %>
+<li><%= email %></li>
+<%end%>
+</ul>
+<%end %>
+<%if @twitter_user.present? %>
+<p>Provider : Twitter</p>
+<ul>
+<%@twitter_user.each do |email| %>
+<li><%= email %></li>
+<%end%>
+</ul>
+<%end %>
+<% if @linkedin_user.present? %>
+<p>Provider : Linkedin</p>
+<ul>
+<% @linkedin_user.each do |email| %>
+<li><%= email %></li>
+<%end%>
+</ul>
+<%end%>
+Regards,<br>
+Inquirly Admin<br>

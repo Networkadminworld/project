@@ -1,0 +1,265 @@
+<% content_for :title, "Payments" %>
+<%#= javascript_include_tag "responsive/payment", "jquery.jcontent.0.8.min.js"%>
+<%#= javascript_include_tag "responsive/payment"%>
+<%#= stylesheet_link_tag    'jcontent.css' %>
+<link rel="stylesheet" type="text/css" href="http://cdn.webrupee.com/font">
+    <div class="main-content">
+      <div class="container">
+        <div class="page-wrapper">
+          <div class="subscribe-content">
+            <h1>Subscribe to Inquirly</h1><hr class="hor-style"/>
+            <div>
+              You are currently using the <%=get_plan_name(current_user.business_type_id)%> plan.
+              Your current plan is valid till <%=current_user.exp_date.strftime("%d %B %Y")%>.
+						</div>
+            <hr class="hor-style"/>
+            <!---<div class="welcome-content">
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+            </div>-->
+          </div>
+         <!-- <div class="row">
+            <div class="col-lg-three-plan col-md-4 col-sm-4 col-xs-12">
+              <div class="price-box features">
+                <div class="price-box-head">
+                  <h2>Features</h2>
+                </div>
+                <div class="price-head">
+                  <h2>Find the Features</h2>
+                </div>
+                <div class="price-box-cont">
+                  <ul class="price-list">
+									<%# feature_column_list.each do |column| %>
+                    <li><span class="glyphicon glyphicon-user"></span><%#= column[0]%></li>
+									<%#end%>
+                  </ul>
+                </div>
+                <div class="price-box-bot">
+
+                </div>
+              </div>
+            </div>-->
+            <!--//. features -->
+            <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="price-box individual">
+                <div class="price-box-head">
+                  <h2>Individual Plan</h2>
+                </div>
+                <div class="price-head">
+                  <div class="price-info">
+                    <div class="price"><span class="WebRupee">Rs</span> 1000</div>
+                    <span class="permonth">Per Month</span>
+                  </div>
+                </div>
+                <div class="price-box-cont">
+                  <ul class="price-list">
+                    <li><strong>10</strong> Users</li>
+                    <li><strong>10</strong> Survey Monthly</li>
+                    <li>Unavailable</li>
+                    <li><strong>10</strong> Survey Monthly</li>
+                    <li>Extensive</li>
+                    <li>Extensive</li>
+                  </ul>
+                </div>
+                <div class="price-box-bot">
+                 <a href="javascript:void(0)" id="ind-select" class="button medium orange" tabindex="1" onclick="click_ind();">Select</a>
+               </div>
+             </div>
+           </div>-->
+           <!--//. individual plan -->
+            <!--<div id="demo1" class="demo1">
+              <a title="" href="#" class="prev"></a>
+              <div class="slides">-->
+					 <% @plans.each do |plan| %>
+           <div class="col-lg-three-plan col-md-4 col-sm-4 col-xs-12" style="padding-right: 0px !important ;padding-left: 0px !important">
+            <div class="price-box business">
+						<% highlight_class = plan.business_type_id == current_user.business_type_id ? "price-box-head price-box-head-highlight" : "price-box-head"%>
+              <div class="<%= highlight_class%>">
+                <h2><%= plan.plan_name %></h2>
+              </div>
+              <div class="price-head">
+                <div class="price-info">
+                  <div class="price"><span class="WebRupee"><%= image_tag("rupee_symbol.png", alt: "RS", width: "30px", height: "30px") %></span> <%= plan.amount.to_i %></div>
+                  <span class="permonth">Per Year<sup>*</sup></span>
+                </div>
+              </div>
+              <div class="price-box-cont">
+                <ul class="price-list">
+                  <% re_setting =  COLUMN_NAME["column_name"].values%>
+                  <%i = 0%>
+								<% feature_column_list_new.each do |column| %>
+							   <li>
+								 <% if column[0] == "categories" %>
+                                     can post<br/>
+								 <%= plan.category_types.map{|c| c.category_name.downcase}.to_sentence %><br/>
+								 <%= re_setting[i]%>
+								 <% if plan.category_types.count < 3 %>
+                                         </br></br>
+                                 <%end%>
+								 <%elsif column[0] == "languages" %>
+								 <%= plan.language_count %> <%= re_setting[i]%>
+								 <%else%>
+								 <%if plan[column[1]] == true %>
+                                         <%if re_setting[i] == "share social"%>
+                                             social share available
+                                         <%else%>
+                                             <%= re_setting[i]%> available
+                                         <%end%>
+								 <%elsif plan[column[1]] == false %>
+                                         <%if re_setting[i] == "share social"%>
+									         social share not available
+                                             <%else%>
+                                             <%= re_setting[i]%> not available
+                                             <%end%>
+								 <%else%>
+                                         <%if re_setting[i] == "questions" && (plan.plan_name == "Business" || plan.plan_name == "Enterprise") %>
+									        unlimited <%= re_setting[i]%>
+                                             <%else%>
+                                             <%if re_setting[i] == "email count" %>
+                                             <%= re_setting[i]%>
+                                                 <%else%>
+                                                 <%if re_setting[i] == "sms share"%>
+                                                 <%= plan[column[1]]%> sms
+                                                   <%elsif re_setting[i] == "call share"%>
+                                                     <%= plan[column[1]]%> call
+                                                   <%else%>
+                                                     <%= plan[column[1]]%> <%= re_setting[i]%>
+                                                     <%end%>
+                                             <%end%>
+                                        <%end%>
+								 <%end%>
+								 <%end%>
+								 </li>
+                      <%i=i+1%>
+								<%end%>
+                </ul>
+              </div>
+              <div class="price-box-bot">
+							<!--<form method="POST" name="customerData" action="/transaction">
+							<%#= hidden_field_tag 'plan_id', plan.id %>
+							<%#= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %> 
+							<INPUT TYPE="submit" value="Select" class="button medium orange" >		        
+							</form>-->
+
+                <a href="javascript:void(0)" id="bus-select" class="button medium orange" tabindex="2" onclick="click_bus(<%= plan.business_type_id%>,'<%= plan.plan_name%>','<%= @billing_info.blank? ? false : true%>');">Select</a>
+              </div>
+            </div>
+          </div>
+
+					<% end %>
+              <!--</div>
+              <a title="" href="#" class="next"></a>
+            </div>-->
+          <!--//. business plan -->
+        </div>
+     <!-- <div class="col-lg-three-plan col-md-4 col-sm-4 col-xs-12">
+			 <div>
+					<h3>&#9733; Paid Annually</h3>
+				</div>
+				</div> -->
+      </div>
+    </div>
+<hr class="hor-style"/>
+</div>
+<%= render :partial => 'payments/billing_info_details'%>
+<div class="modal fade" id="alert_msg" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &nbsp;
+        </button>
+        <h4 class="modal-title text-center">Pricing Plan</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <h5 class="text-center plan_message"></h5><br/>
+          <!--<button type="button" class="button orange" id="modal-submit"></button>-->
+          <button type="button" class="button orange" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+  var planSize = '<%= @plans.blank? ? 0 : @plans.count%>'
+  if(planSize == '3')
+  {
+  jQuery(".col-lg-three-plan").css("width" ,'340px');
+  }
+  if(planSize == '5')
+  {
+      jQuery(".col-lg-three-plan").css("width" ,'214px');
+  }
+
+  var billStatus = '<%= @billing_info.blank? ? false : true%>';
+   if (billStatus == 'true'){jQuery(".disab").prop('readonly', true);}
+   else{jQuery(".disab").prop('readonly', false);}
+
+	$('#billingInfo').on('shown.bs.modal', function () {
+	 $(":input").each(function (i) { $(this).attr('tabindex', i + 1); });
+});
+</script>
+
+<!--<script type="text/javascript" language="javascript">
+    $("document").ready(function(){
+        //demo1
+        $("div#demo1").jContent({orientation: 'horizontal',
+            easing: "easeOutCirc",
+            duration: 500});
+
+
+        //demo2
+        $("div#demo2").jContent({orientation: 'vertical',
+            easing: "easeOutCirc",
+            duration: 500});
+
+        //demo3
+        $("div#demo3").jContent({orientation: 'horizontal',
+            easing: "easeOutCirc",
+            duration: 500,
+            auto: true,
+            pause_on_hover: true,
+            direction: 'next',
+            pause: 1500});
+
+        //demo4
+        $("div#demo4").jContent({orientation: 'horizontal',
+            easing: "easeOutCirc",
+            duration: 500,
+            auto: true,
+            pause_on_hover: true,
+            direction: 'prev',
+            pause: 1500});
+
+        //demo5
+        $("div#demo5").jContent({orientation: 'vertical',
+            easing: "easeOutCirc",
+            duration: 500,
+            auto: true,
+            pause_on_hover: true,
+            direction: 'next',
+            pause: 1500});
+
+        //demo6
+        $("div#demo6").jContent({orientation: 'vertical',
+            easing: "easeOutCirc",
+            duration: 500,
+            auto: true,
+            pause_on_hover: true,
+            direction: 'prev',
+            pause: 1500});
+
+        //demo7
+        $("div#demo7").jContent({orientation: 'horizontal',
+            easing: "easeOutCirc",
+            duration: 500,
+            circle: true});
+
+        //demo8
+        $("div#demo8").jContent({orientation: 'vertical',
+            easing: "easeOutCirc",
+            duration: 500,
+            circle: true});
+    });
+</script>-->

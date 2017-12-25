@@ -1,0 +1,80 @@
+<div class="modal-header fnt-lg align-cen" style="padding-bottom: 0;"> Post Information
+    <div class="x-close fa fa-times" ng-click="cancel();">
+    </div>
+</div>
+<hr>
+<div class="modal-body">
+    <div class="content-wrapper" style="margin-left: 20px;" data-ng-if="postCount > 0">
+  <div class="socl-chnl-container">
+    <div class="row">
+      <div class="col-sm-12 md-12 col-lg-12">
+	<div class="time-detail">
+	  PowerShared on {{ postCampaign["scheduled_on"] | date:'medium' }}
+	</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-md-9 col-lg-9 P0">
+	  <div class="socl-chnl" back-img='{{ mobileAccount.profile_image || getInitials(mobileAccount.profile_name[0]) }}' ng-repeat="mobileAccount in postCampaign['mobile_accounts']" title="{{ mobileAccount.profile_name }}" style="cursor: pointer;">
+	      <div class="icn-wrapper" ng-class="{'email-chnl': mobileAccount.channel == 'email','sms-chnl': mobileAccount.channel == 'sms','opinify-chnl-history': mobileAccount.channel == 'opinify'}">
+		  <i class="fa icon-position" ng-if="mobileAccount.channel != 'opinify'" ng-class="{'fa-envelope-o': mobileAccount.channel == 'email','fa-comment-o': mobileAccount.channel == 'sms'}"></i>
+	      </div>
+	  </div>
+	  <div class="socl-chnl" back-img='{{ socialAccount.profile_image }}' ng-repeat="socialAccount in postCampaign['social_accounts']"  title="{{ socialAccount.name }}" style="cursor: pointer;">
+	      <div class="icn-wrapper" ng-class="{'fb-chnl': socialAccount.channel == 'facebook','linkin-chnl': socialAccount.channel == 'linkedin', 'twt-chnl': socialAccount.channel == 'twitter'}">
+		  <i class="fa icon-position" ng-class="{'fa-facebook': socialAccount.channel == 'facebook','fa-linkedin': socialAccount.channel == 'linkedin', 'fa-twitter': socialAccount.channel == 'twitter'}"></i>
+	      </div>
+	  </div>
+	  <div class="socl-chnl" back-img='{{ locationAccount.profile_image || getInitials(locationAccount.profile_name[0]) }}' ng-repeat="locationAccount in postCampaign['location_accounts']" title="{{ locationAccount.profile_name }}" style="cursor: pointer;">
+	      <div class="icn-wrapper" ng-class="{'beacon-chnl': locationAccount.channel == 'beacon','qr-code-chnl': locationAccount.channel == 'qrcode'}">
+		  <i class="fa icon-position" ng-class="{'fa-thumb-tack': locationAccount.channel == 'beacon','fa-qrcode': locationAccount.channel == 'qrcode'}"></i>
+	      </div>
+	  </div>
+      </div>
+      <div class=" col-sm-3 col-md-3 col-lg-3" data-ng-show="checkOnlyBeaconShared(postCampaign['location_accounts']).length == 0">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 md-12 col-lg-12 Pl0">
+      <div class="socl-chnl-container">
+	<div class="inq-form-group">
+	    <label ng-bind-html="postCampaign['campaign_data']['share_content'] | parseUrlFilter:'_blank'"></label>
+	</div>
+      </div>
+    </div>
+  </div>
+    <div class="row" ng-show="postCampaign['campaign_data']['campaign_media_url']">
+	<div class="col-sm-5 col-md-5 col-lg-5">
+	    <div class="inq-from">
+		<img ng-src="{{postCampaign['campaign_data']['campaign_media_url']}}" style="width:100%;">
+	    </div>
+	</div>
+    </div>
+    <div class="row" ng-show="postCampaign['campaign_data']['og_meta_data']">
+	<div class="url-preview">
+	    <div class="col-sm-2 col-sm-2 col-lg-2 P0">
+		<div class="url-img" back-img="{{ postCampaign['campaign_data']['og_meta_data']['image'] }}">
+		</div>
+	    </div>
+	    <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+		<div class="url-title">
+		    {{ postCampaign['campaign_data']['og_meta_data']['title'] }} | {{ postCampaign['campaign_data']['og_meta_data']['site_name'] }}
+		</div>
+		<div class="url">
+		    <a ng-href="{{ postCampaign['campaign_data']['og_meta_data']['url'] }}" target="_blank"> {{ postCampaign['campaign_data']['og_meta_data']['url'] }}</a>
+		</div>
+		<div class="url-detail">
+		    {{ postCampaign['campaign_data']['og_meta_data']['description'] }}
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+    <div class="content-wrapper fnt-lg fnt-red align-cen" data-ng-if="postCount == 0">
+        <div>No Info found.</div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+	<a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

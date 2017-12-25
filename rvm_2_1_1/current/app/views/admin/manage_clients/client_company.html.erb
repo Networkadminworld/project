@@ -1,0 +1,37 @@
+<%if @company %>
+    <a href="/admin/manage_clients/<%= params[:client_id]%>/edit" style="margin-left: 20px;font-size: 15px">Back</a>
+<% end %>
+<div class="row">
+  <div class="col-xs-6 col-md-offset-3">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="control-label">Company Name</label>
+        <input  type="text" required="required" class="form-control" name="company_name" id="company_name" value="<%= @company.name %>" placeholder="Enter Company Name" />
+        <span class="error help-inline" id="error_name" style="color: red;"></span>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Company Address</label>
+        <input  type="text" required="required" class="form-control" name="company_address" id="company_address" value="<%= @company.address %>" placeholder="Enter Company Address"  />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Industry</label>
+        <select name="industry_id" class="form-control" name="industry_id" id="industry_id">
+          <%= IndustryTag.list.each do |industry|%>
+              <option value="<%= industry["id"] %>" <%= selected_industry(@company, industry) %>><%= industry["industry"] %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Tags</label>
+        <input type="text" required="required" class="form-control tagsinput" data-role="tagsinput" name="tags" id="tags" placeholder="Enter Tags"  />
+      </div>
+      <input type="hidden" id="client_id" value="<%= params[:client_id] %>">
+      <input type="hidden" id="company_id" value="<%= @company.id %>">
+      <%if @company.new_record? %>
+          <button class="btn btn-success btn-sm pull-left" id="client-company-form" type="button" style="font-size: 14px;">Save</button>
+      <% else %>
+          <button class="btn btn-success btn-sm pull-left" id="update-client-company" type="button" style="font-size: 14px;">Update</button>
+      <% end %>
+    </div>
+  </div>
+</div>

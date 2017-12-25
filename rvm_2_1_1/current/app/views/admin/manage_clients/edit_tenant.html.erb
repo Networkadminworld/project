@@ -1,0 +1,50 @@
+<div class="tab-content">
+  <div class="tab-wrapper">
+    <%= form_tag("/admin/manage_clients/#{@tenant.id}/update_tenant", :method => "PUT") do %>
+      
+      <div class="row">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>Tenant Name</label>
+          <div class="form-group">
+            <input type="text" value="<%= @tenant.name %>" tabindex="1" placeholder="Enter Tenant name" name="tenant_name"  class="text_field rc_5 form-control input-medium">
+            <span class="error"><%= @tenant.errors.messages.present? ? @tenant.errors.messages[:name][0] : '' %>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>Tenant Address</label>
+          <div class="form-group">
+            <input type="text" value="<%=  @tenant.address %>" tabindex="1" placeholder="Enter Tenant Address" name="tenat_address"  class="text_field rc_5 form-control input-medium">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>Tenant Region Name</label>
+          <div class="form-group">
+           <%= select_tag "tenant_region_id", options_for_select(TenantRegion.all.collect {|tenant_region| [tenant_region.name, tenant_region.id ] }),{class: 'form-control'}  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+        <label>Tenant Type Name</label>
+          <div class="form-group">
+           <%= select_tag "tenant_type_id", options_for_select(TenantType.all.collect {|tenant_type| [tenant_type.name, tenant_type.id ] }),{class: 'form-control'}  %>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin: 0px;">
+        <div class="btn-wrap btn-update-info">
+        <%= submit_tag "Update ", class:"button medium orange" %>
+        <%= link_to 'Back ', admin_manage_client_show_tenants_path(@tenant.client_id),{style: "margin-left: 20px;font-size: 15px;text-decoration: underline;"} %>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>

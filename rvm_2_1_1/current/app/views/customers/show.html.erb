@@ -1,0 +1,5 @@
+<div id="customer_det">
+<% benchmark '##Render customer info in customer show' do %>
+<%=render :partial => 'dashboard/customer_info', :locals => {:cust_count => @cust_count, :customers => @customers} %>
+<% end %>
+</div>

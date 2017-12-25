@@ -1,0 +1,113 @@
+company_logo:
+  file_type: "Please select valid logo type"
+  file_size: "Please choose a file less then 2 MB"
+account:
+  upgrade: "You are already a business user, if you need you can downdrade you account by next billing cycle"
+  downgrade: "You are already a business user. You can downgrade your plan after"
+  downgrade_exp_date: "You can not downgrade your plan until"
+  current_plan: "You have to choose a new plan"
+  allow_to_pay: "allow to pay"
+  upload_logo_sucess: "Company logo uploaded successfully"
+  invalid_account: "Invalid account info"
+  expire: "Your account has expired. Please upgrade your account"
+  verification_success : "Phone Number Successfully updated."
+  verification_failed: "Please verify your number before you update."
+listener:
+  activated: "Listener module activated successfully"
+  invalid_id: "Invalid account id. Please try again"
+  buzz_word : "No buzz word is available."
+authorization:
+  failure: "You are not authorized for this operation"
+  limit: "You have used the maximum limit allowed for your plan"
+payment:
+  payment_success: "Payment has been processed successfully"
+  payment_cancel:  "The transaction was incomplete."
+  payment_abort:  "The transaction was aborted."
+  payment_failure:  "The transaction failed."
+  payment_tax: "12.36"
+  payment_tax_msg: "Service tax amount is also included in the total value."
+email:
+  email_incorrect: "Your email is incorrect or not confirmed yet. Please update or confirm your E-mail address"
+corporate_user:
+  create: "User details was successfully created."
+  update: "User details was successfully updated."
+tenant:
+  present: "Please create Tenant before you create User"
+csv:
+  name_format: "Customer Name should have at least one alphabet"
+  name_min: "Customer Name length can't be less than 2 characters"
+  name_max: "Customer Name length can't be more than 20 characters"
+  email_or_mobile_blank: "Email/Mobile column is blank"
+  email_format: "Email address invalid"
+  email_exist: "Email address already associated with some customer"
+  age_limit: "Age should be numeric also value can't be more than 99"
+  gender_format: "Gender is invalid"
+  country_blank: "Country can't be blank"
+  country_format: "Country is invalid"
+  mobile_format: "Mobile number is invalid"
+  mobile_exist: "Mobile number already associated with some customer"
+  state_max: "State length can't be more than 20 characters"
+  state_invalid: "State is invalid"
+  city_max: "City length can't be more than 20 characters"
+  city_invalid: "Area is invalid"
+  area_max: "Area length can't be more than 20 characters"
+  area_invalid: "Area is invalid"
+  repeat_email: "Email already associated with some data in this file"
+  repeat_mobile: "Mobile already associated with some data in this file"
+  custom_field_length: "Custom Field length should be less than 30 chars"
+  custom_field_invalid: "Custom Field is invalid"
+  success_upload: "Customer information has been successfully processed and will be available shortly."
+  invalid_file: "Invalid CSV file"
+admin:
+  payment_error: "Please enter all the values"
+  wrong_user: "Unable to process the payment for this account"
+  payment_success: "Payment details updated successfully"
+  settings_update: "Client Settings updated successfully."
+sms:
+  phone_blank: "Please select at least one phone number."
+  survey_removed: "'<survey link>' has been altered or removed."
+  multiple_survey: "Multiple '<survey link>' not allowed."
+api:
+  invalid_email: "Invalid client email."
+  invalid_from_email: "Invalid from email."
+  blank_value: "can't be blank"
+  email_success: "Emails were sent successfully"
+  sms_success: "SMS were sent successfully"
+  email_max_limit: "to_address input exceeds the maximum limit. (max allowed 1000)"
+power share:
+  SCHEDULED_POWERSHARE: "Your post scheduled for {scheduled_date} will be shared in {alert_time}."
+  SCHEDULED_POWERSHARE_SHARED: "Your post scheduled for {scheduled_date} has been shared."
+campaign:
+  SCHEDULED_CAMPAIGN: "Your campaign scheduled for {scheduled_date} will be shared in {alert_time}."
+  SCHEDULED_CAMPAIGN_SHARED: "Your campaign scheduled for {scheduled_date} has been shared."
+  SHARE_API_EXCEPTION: "Your campaign {campaign_name} was not shared on {campaign_channel} due to {error_msg}."
+  LINKEDIN_ACCOUNT_EXPIRY: "Your linkedin account {account_name} about to expiry {days}. Please reconnect again for seamless share."
+pipeline:
+  NEW_SALES_ORDER: "You have received a new order for {product_id}"
+  SALES_ORDER_ACCEPT: "Your order for {item_code} has been accepted and is under process."
+  SALES_ORDER_REJECT: "Your order for {item_code} has been rejected."
+  SALES_ORDER_ASSIGNED: "Your order for {item_code} has been assigned to {delivery_name} for delivery."
+  SALES_ORDER_DELIVERED: "Your order for {item_code} has been delivered successfully."
+  NEW_MARKETING_LEAD: "You have a new lead for {campaign_name}."
+  MARKETING_LEAD_ASSIGNED: "A new lead {lead_name} has been assigned to you."
+  MARKETING_LEAD_STATE_CHANGE: "{user_name_of_marketing_exec} has marked {customer_name} lead as {status}"
+event_name:
+  SCHEDULED_POWERSHARE: "Your post is ready"
+  SCHEDULED_POWERSHARE_SHARED: "Your post was shared"
+  SCHEDULED_CAMPAIGN: "Your campaign is ready"
+  SCHEDULED_CAMPAIGN_SHARED: "Your campaign was shared"
+  NEW_SALES_ORDER: "You received a new sales order"
+  SALES_ORDER_ACCEPT: "Your order has been accepted"
+  SALES_ORDER_DELIVERED: "Your order was delivered"
+  SALES_ORDER_ASSIGNED: "Your order has been assigned"
+  SALES_ORDER_REJECT: "Your order was rejected"
+  REMINDER_APPOINTMENT: "You have an appointment"
+  NEW_MARKETING_LEAD: "You received a new lead"
+  MARKETING_LEAD_ASSIGNED: "You assigned a new lead"
+  MARKETING_LEAD_STATE_CHANGE: "Your lead has been updated"
+  CAMPAIGN_WAITING_FOR_APPROVAL: "Your campaign waiting for approval"
+
+
+
+
+

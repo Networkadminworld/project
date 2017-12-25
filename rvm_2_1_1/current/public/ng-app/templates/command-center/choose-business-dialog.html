@@ -1,0 +1,43 @@
+<div class="modal-header fnt-md align-cen">SELECT BUSINESS
+    <div class="x-close fa fa-times" data-ng-show="{{clientId != undefined}}" ng-click="cancel();"></div>
+</div>
+<div class="modal-body">
+    <div class="form-group inq-form-group">
+        <label class="fnt-sm">Business</label>
+        <select class="form-control" ng-model="user.mapped_business" ng-change="checkTenantUserCount()">
+            <option ng-selected="business.id == user.mapped_business" ng-repeat="business in businesses" value="{{business.id}}">{{business.name}}</option>
+        </select>
+        <div class="radio" style="margin-bottom: 0;" data-ng-show="user.mapped_business && mappedBusiness.tenant_count > 0">
+            <label class="fnt-sm radio-inline">
+                <input type="radio" name="tenant-user" data-ng-click="loadTenants()" ng-value="'true'" ng-model="user.is_tenant_user">
+                Tenant User
+            </label>
+            <label class="fnt-sm radio-inline">
+                <input type="radio" name="tenant-user" data-ng-click="loadTenants()" ng-value="'false'" ng-model="user.is_tenant_user">
+                Non-Tenant User
+            </label>
+        </div>
+    </div>
+    <div class="form-group inq-form-group" data-ng-show="user.is_tenant_user == 'true' && tenants.length > 0">
+        <label class="fnt-sm">Tenants</label>
+        <select class="form-control" ng-model="user.mapped_tenant" ng-change="loadTenantUser()">
+            <option ng-selected="tenant.id == user.mapped_tenant" ng-repeat="tenant in tenants" value="{{tenant.id}}">{{tenant.name}}</option>
+        </select>
+    </div>
+    <div class="form-group inq-form-group" data-ng-show="users.length > 0">
+        <label class="fnt-sm">Users</label>
+        <select class="form-control" ng-model="user.mapped_user">
+            <option ng-selected="user.id == user.mapped_user" ng-repeat="user in users" value="{{user.id}}">{{user.email}}</option>
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group inq-form-group">
+                <button type="button" class="btn btn-inq btn-block fnt-sm" ng-disabled="!user.mapped_user" ng-click="switchUser()">SWITCH USER</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

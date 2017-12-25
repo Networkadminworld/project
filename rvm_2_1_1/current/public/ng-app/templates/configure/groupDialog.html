@@ -1,0 +1,24 @@
+<div class="modal-header fnt-lg align-cen">SELECT GROUP(s)
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<hr style="margin: 0">
+<div class="modal-body">
+    <li class="group-list">
+        <span class="fa fa-plus group-add-icon"></span>
+        <span class="group-input-span">
+            <input class="form-control group-input" placeholder="Type to add a Group" ng-model="modalGroupName" type="text">
+            <hr class="group-hr">
+        </span>
+        <span style="color:red" class="help-block" ng-show="duplicateMGroup">Duplicate Group names not allowed </span>
+    </li>
+    <li ng-repeat="group in groups" ng-if="group.name != 'All Customers'" class="group-list">
+        <span data-ng-class="isSelectedGroup(group.id)" data-ng-click="setSelectedGroup(group.id)"></span>
+        <span data-ng-click="setSelectedGroup(group.id)" class="group-name">{{ group.name }}</span>
+    </li>
+    <div class="group-submit">
+        <button class="btn btn-lt-orng group-btn" ng-click="addGroup()" ng-disabled="(modalGroupName == '' && selectedGroup.length == 0) || isSubmitted">Go</button>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

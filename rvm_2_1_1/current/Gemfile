@@ -1,0 +1,203 @@
+source 'https://rubygems.org'
+
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.1.0'
+
+# Use postgres as the database for Active Record
+gem 'pg', '0.14.1'
+# JSON implementation for Ruby
+gem 'json'
+
+# Flexible authentication solution for Rails with Warden
+gem 'devise', '3.0.0.rc'
+
+# Oauth2 strategy for Google
+gem "omniauth-google-oauth2"
+
+# OmniAuth is a flexible authentication system utilizing Rack middleware
+gem 'omniauth-oauth2', '~> 1.3.1'
+
+# OmniAuth strategy for Twitter
+gem 'omniauth-twitter', "~> 0.0.14"
+
+# Facebook OAuth2 Strategy for OmniAuth
+gem "omniauth-facebook"
+
+# LinkedIn OAuth strategy for OmniAuth 2
+gem 'omniauth-linkedin-oauth2'
+
+# Easy file attachment management for ActiveRecord
+gem 'paperclip','~> 4.3'
+
+# Pagination library for Rails
+gem 'will_paginate', '3.0.4'
+
+# A Ruby gem for communicating with the Twilio API and generating TwiML
+gem 'twilio-ruby','3.9.0'
+
+# A Gem build complex and custom JSON data structures
+gem "json_builder", "3.1.7"
+
+# A gem to automate using jQuery with Rails
+gem 'jquery-rails'
+
+# jQuery UI for the Rails asset pipeline
+gem 'jquery-ui-rails'
+
+# A full-stack Facebook Graph API wrapper in Ruby.
+gem 'fb_graph2'
+
+# A Ruby interface to the Twitter API.
+gem 'twitter','4.8.1'
+
+# Ruby wrapper for the LinkedIn OAuth2 API
+gem "linkedin-oauth2", :github => 'railsfactory-kumaresan/linkedin-oauth2'
+
+gem "linkedin"
+
+# All sorts of useful information about every country packaged as convenient little country objects
+gem "countries", "0.9.2"
+
+# Database based asynchronous priority queue system
+gem 'delayed_job'
+
+# ActiveRecord backend integration for DelayedJob 3.0
+gem 'delayed_job_active_record', '4.0.1'
+
+# Daemons provides an easy way to wrap existing ruby scripts to be run as a daemon
+gem "daemons",'1.1.9'
+
+# A static analysis security vulnerability scanner for Ruby on Rails applications
+gem 'brakeman','2.1.2'
+
+# Nokogiri is an HTML, XML, SAX, and Reader parser with XPath and CSS selector support.
+gem 'nokogiri'
+
+# The official AWS SDK for Ruby
+gem 'aws-sdk-v1'
+gem 'aws-sdk', '~> 2'
+
+# AWS-S3 is a Ruby implementation of Amazon's S3 REST API
+gem 'aws-s3','0.6.3'
+
+# Command line Interface for HTTP calls
+gem "httparty",'0.10.2'
+
+# Inherited Resources speeds up development by making your controllers inherit all restful actions
+gem 'inherited_resources','1.4.1'
+
+# Transloadit's official Rails SDK
+gem 'transloadit-rails','1.1.1'
+
+# Cron jobs in Ruby
+gem 'whenever', :require => false
+
+# A Ruby API library for the Mandrill email as a service platform.
+gem "mandrill-api", "~> 1.0.16"
+
+# Mass Mandrill is thin wrapper around mandrill-api gem that makes sending emails with Mandrill easier and more pleasent to use.
+gem "mass_mandrill", "~> 0.3.0"
+
+# Integrates the Twitter Bootstrap pagination component with will_paginate
+gem 'will_paginate-bootstrap'
+
+# New Relic RPM Ruby Agent
+gem 'newrelic_rpm'
+
+# Decorators/View-Models for Rails Applications
+gem 'draper'
+
+# Rails 3 plugin to log sources of SQL queries to Rails log
+gem 'active_record_query_trace'
+
+# Active Record's Session Store extracted from Rails
+gem 'activerecord-session_store'
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.0'
+
+# bundle exec rake doc:rails generates the API under doc/api.
+gem 'sdoc', '~> 0.4.0',group: :doc
+
+# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+gem 'spring',group: :development
+
+# Loads environment variables from `.env`.
+gem 'dotenv-rails'
+
+# The mime-types library provides a library and registry for information about MIME content type definitions
+gem 'mime-types', :require => 'mime/types'
+
+# Do some browser detection with Ruby. Includes ActionController integration.
+gem "browser"
+
+# An interface to the ImageMagick and GraphicsMagick image processing libraries
+gem "rmagick"
+
+# Raven is a Ruby client for Sentry (getsentry.com)
+gem 'sentry-raven'
+
+# Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
+gem "addressable", "~> 2.3.2"
+
+# Debugging in Ruby 2
+gem 'byebug'
+
+# A Ruby library that encodes QR Codes
+gem 'rqrcode_png'
+
+# It allows you to create pretty URL’s and work with human-friendly strings as if they were numeric ids
+gem 'friendly_id', '~> 5.1.0'
+
+# Plug and play websocket support for ruby on rails.
+gem 'websocket-rails'
+
+# A gem that helps developers send data from servers to their Android applications on Android devices via Google Cloud Messaging
+gem 'gcm'
+
+#A PDF generation plugin
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
+#tagsinput-rails
+gem 'bootstrap-tagsinput-rails'
+
+group :development do
+  gem "rails-erd"
+  gem "rubocop", "~> 0.16.0"
+  gem "better_errors"
+  gem 'capistrano'
+  gem 'rails_best_practices'
+  gem "bullet"
+end
+
+group :assets do
+  gem 'sass-rails',   '4.0.2'
+  gem 'sass', '3.2.19'
+  gem 'sprockets', '2.11.0'
+  gem 'sprockets-rails', '2.0.1'
+  gem 'compass-rails', '~> 2.0'
+  gem 'coffee-rails', '~> 4.0.1'
+  gem 'compass', '~> 0.12.7'
+  gem 'therubyracer', :platforms => :ruby
+  gem 'uglifier', '>= 1.0.3'
+  gem "font-awesome-rails"
+end
+
+group :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem "shoulda"
+  gem "shoulda-matchers"
+  gem 'factory_girl_rails'
+  gem "sunspot_test"
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'faker'
+  gem 'simplecov', :require => false
+  gem 'spork', :github => 'sporkrb/spork'
+  gem 'spork-rails', :github => 'sporkrb/spork-rails'
+end

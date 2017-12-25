@@ -1,0 +1,94 @@
+<div class="row M0">
+    <div class="panel-container fnt-sm" style="min-height: 700px;">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout='500' class="fade-in-out">{{alert.msg}}</alert>
+    <div class="inq-panel"> <!--start of describe row-->
+      <div class="inq-panel-title-bar">
+        <div class="row">
+          <div class="col-sm-10 col-md-10 col-lg-10">
+            <div class="alert-nav" data-ng-class="{'active': isBusiness}" data-ng-click="setTab('business')">
+                <span class="inq-panel-title fnt-sm">BUSINESS</span>
+            </div>
+<!--
+            <span style="padding-left:15px;">
+              |
+            </span>
+            <div class="alert-nav" data-ng-class="{'active': !isBusiness}" data-ng-click="setTab('consumer')">
+              <span class="inq-panel-title fnt-sm">CONSUMER</span>
+            </div>
++-->
+          </div>
+          <div class="col-md-2 col-md-2 col-lg-2">
+            <div class="inq-panel-title fnt-xs">
+                <button type="button" class="btn btn-inq fnt-sm" ng-click="createCampaignAlerts(isBusiness)">+ New Alert</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inq-panel-container">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 P0">
+              <div class="roles-wrapper">
+                <div class="inq-seperator header">
+                  <div class="row M0">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="fnt-sm">ALERT ID</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="fnt-sm">EVENT</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="fnt-sm">TYPE</div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 Pl0 align-cen">
+                      <div class="fnt-sm">CHANNELS</div>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4 Pl0 align-cen">
+                      <div class="fnt-sm">ACTION</div>
+                    </div>
+
+                  </div>
+                </div>
+                  <div class="img-suggest-gallery loading" data-ng-show="isFetching">
+                      <span style="font-size:34px;">Loading</span><img src="/ng-app/Images/loading.gif"></span>
+                  </div>
+                <div class="inq-seperator" data-ng-repeat="eventList in eventLists | filter:{ type:'campaigns'}">
+                  <div class="row M0">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="inq-data fnt-sm"> {{ eventList.alert_id }}</div>
+                    </div>
+
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="inq-data fnt-sm"> {{ eventList.name | uppercase }}</div>
+                    </div>
+
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                      <div class="inq-data fnt-sm alert-type-container" data-ng-class="{'pipeline-span': eventList.type == 'pipeline', 'campaign-span': eventList.type == 'campaigns','power-share-span': eventList.type == 'power share'}">
+                          <span class="alert-type-span">{{ eventList.type }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-2 col-md-2 col-lg-2 align-cen">
+                        <span class="alert-chnl" data-ng-repeat="channel in eventList.event_channels" data-ng-class="{'active': channel.is_active}">
+                            <span class="fa icon-position" style="cursor: pointer;" data-ng-click="changeChannelStatus(channel,eventList,channel.channel_name)" data-ng-class="{'fa-envelope': channel.channel_name == 'email','fa-comment': channel.channel_name == 'sms','opinify-alert': channel.channel_name == 'opinify','business-alert': channel.channel_name =='inquirly'}"></span>
+                        </span>
+                    </div>
+
+                    <div class="col-sm-4 col-md-4 col-lg-4 Pl0 align-cen">
+                        <span class="inq-table-action fnt-sm" style="margin-right: 10px;cursor: pointer;" title="Settings"><i class="fa fa-wrench" data-ng-click="alertConfig(eventList);"></i></span>
+                        <span class="inq-table-action fnt-sm" style="margin-right: 10px;cursor: pointer;" data-ng-disabled="eventList.is_default" title="Edit"><i class="fa fa-edit" data-ng-click="editCampaignAlert(eventList);"></i></span>
+                        <span class="inq-table-action fnt-sm" style="margin-right: 10px;cursor: pointer;" data-ng-disabled="eventList.is_default" title="Delete"><i class="fa fa-remove" data-ng-click="deleteCampaignAlert(eventList);"></i></span>
+                        <span class="inq-table-action fnt-sm" style="margin-right: 10px;cursor: pointer;"><switch name="onOff" class="alert-switch" ng-model="eventList.is_set" on="ON" off="OFF" disabled="true" status="true" ng-change="changeAlertStatus(eventList)"></switch></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+</div>

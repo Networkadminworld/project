@@ -1,0 +1,482 @@
+<% c=controller.controller_name%>
+<% a=controller.action_name%>
+<div class="row" style=" margin-left:15px;padding: 0 auto; width: 1000px;">
+  <% if c == "share" && a == "show" %>
+  <div class="col-md-12" style="float:left;width: 600px;">
+    <label>Custom Message</label>
+    <input type="hidden" id="count_char"/>
+    <textarea class="form-control message_feedback" id="question_body" maxlength="500" name="message" rows="3" style="width:600px;height:60px;"></textarea>
+    <div class="char-count">
+      <span class="req" id="charCount" style="margin-left:586px;"> </span>
+      <span class="req" id="show_message"> </span>
+    </div>
+  </div>
+<% end %>
+</div>
+<div class="tab-wrapper">
+  <div class="row">
+    <div class="col-lg-4 col-sm-4 col-xs-12" id="facebook">
+      <div class="box-main-wrap clearfix">
+        <div class="box-main-head-wrap">
+          <div class="ac-count pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+            <span class="counts"><%=share_info["facebook"] ? share_info["facebook"].count : 0%></span>
+          </div>
+        </div>
+        <div class="box-main-inner">
+			<% if share_info["facebook"].present? %>
+            <div class="social-icon">
+			  <a href="/users/auth/facebook" tabindex="1"><%= image_tag("responsive/icon-fb-medium.png",alt:"facebook")%></a>
+            </div>
+            <div class="make-switch" >
+              <div id="fb_on_off_switch" style="width:87px;margin-left:auto;margin-right:auto;"></div>
+            </div>
+          <%else %>
+            <div class="social-icon">
+              <a href="/users/auth/facebook" tabindex="1"><%= image_tag("responsive/icon-fb-medium-grey.png", alt:"facebook")%></a>
+            </div>
+          <div class="make-switch" data-on="primary" data-off="info" style="border-style:none;" >&nbsp;</div>
+          <%end%>
+          <div class="btn-wrap">
+            <button type="button" class="btn btn-link" onclick="writeCookie(this)" id="facebook" tabindex="2"><span class="glyphicon glyphicon-plus-sign"></span>Add another account</button>
+          </div>
+        </div>
+      </div>
+      <% if share_info['facebook'].present? %>
+			<div class="box-inner-bottom">
+        <div class="connected-users">
+          <ul class="social_account_list" id="facebook_account">
+            <% share_info['facebook'].each_pair do |key,value|%>
+              <li class="<%= (value['is_active'] == true) ? "select active" : ''%> "  id="div_<%= value["id"] %>"  >
+	           <%=image_tag("#{ value['profile_image'] }", id: "social-circle-image")%>
+                <p><%= value["user_name"].present? ? value["user_name"] : "Facebook Account Name"%></p>
+                <div class="checkbox_container">
+                  <% if (value["is_active"] == true)%>
+                    <%= check_box_tag "share_click_#{value["id"]}", '1', true, :class => 'fl share_chk chk_share', :onclick => "Share('#{value["id"]}')"%>
+                  <%else%>
+                    <%= check_box_tag "share_click_#{value["id"]}", '1', false, :class => 'fl share_chk chk_share', :onclick => "Share('#{value["id"]}')"%>
+                  <%end%>
+                </div>
+                <span class="glyphicon glyphicon-remove-circle remove-social" title="remove" value="<%= value['id']%>"></span>
+              </li>
+            <%end%>
+          </ul>
+          <% if c == "share" && a == "show" %>
+          <div class="col-md-12" style="margin:20px 10px 10px -15px">
+            <label>Footer 1</label>
+            <textarea class="form-control message_feedback" id="facebook_name" maxlength="140" name="fb_name" rows="3" style="width:275px;height:40px;" ><%= question.question %></textarea>
+          </div>
+          <div class="col-md-12" style="margin:20px 10px 10px -15px">
+            <label>Footer 2</label>
+            <textarea class="form-control message_feedback" id="facebook_caption" maxlength="50" name="fb_caption" rows="3" style="width:275px;height:40px;"><%= current_user.company_name %></textarea>
+          </div>
+            <span id="fb-help" style="cursor:pointer;float:right;">(?)</span>
+          <% end %>
+        </div>
+			</div>
+      <%end%>
+    </div>
+    <!--// .share facebook -->
+    <div class="col-lg-4 col-sm-4 col-xs-12" id="twitter">
+      <div class="box-main-wrap clearfix">
+        <div class="box-main-head-wrap">
+          <div class="ac-count pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+            <span class="counts"><%=share_info["twitter"] ? share_info["twitter"].count : 0%></span>
+          </div>
+        </div>
+        <div class="box-main-inner">
+          <% if share_info["twitter"].present? %>
+            <div class="social-icon">
+                <a href="/users/auth/twitter" tabindex="3"><%=image_tag("responsive/icon-twiter-medium.png",alt:"twitter")%><!--<img src="/assets/responsive/icon-twiter-medium.png" alt="twitter"/>--></a>
+            </div>
+            <div class="make-switch"  id="fb_on_off_twitter" >
+              <div id="twitter_on_off_switch" style="width:87px;margin-left:auto;margin-right:auto;"></div>
+            </div>
+          <%else %>
+            <div class="social-icon">
+                <a href="/users/auth/twitter" tabindex="3"><%=image_tag("responsive/icon-twiter-medium-grey.png",alt:"twitter")%><!--<img src="/assets/responsive/icon-twiter-medium-grey.png" alt="twitter"/>--></a>
+            </div>
+            <div class="make-switch" data-on="primary" data-off="info" style="border-style:none;" >&nbsp;</div>
+          <%end%>
+          <div class="btn-wrap">
+               <button type="button" class="btn btn-link" onclick="writeCookie(this)" id="twitter" tabindex="4">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                Add another account
+              </button>
+            </div>
+        </div>
+      </div>
+          <% if share_info["twitter"].present?%>
+			<div class="box-inner-bottom">
+			   <div class="connected-users">
+              <ul class="social_account_list" id="twitter_account">
+                <% share_info["twitter"].each_pair do |key,value|%>
+              <li class="<%= (value['is_active'] == true) ? "select active" : ''%> "  id="div_<%= value["id"] %>"  >
+        <%=image_tag("#{ value['profile_image'] }", id: "social-circle-image" )%>
+                <p><%= value['user_name'].present? ? value['user_name'] : "Twitter Account Name"%></p>
+                    <div class="checkbox_container">
+                     <% if (value["is_active"] == true)%>
+                    <%= check_box_tag "share_click_#{value["id"]}", '1', true, :class => "fl share_chk chk_share twitter_account_#{value["id"]}", :onclick => "Share('#{value["id"]}')"%>
+                  <%else%>
+                    <%= check_box_tag "share_click_#{value["id"]}", '1', false, :class => "fl share_chk chk_share twitter_account_#{value["id"]}", :onclick => "Share('#{value["id"]}')"%>
+                      <%end%>
+                    </div>
+                <span class="glyphicon glyphicon-remove-circle remove-social" title="remove" value="<%= value['id']%>"></span>
+                  </li>
+                <%end%>
+              </ul>
+						</div>
+					</div>
+				<%end%>
+    </div>
+    <!--// .share twitter -->
+    <div class="col-lg-4 col-sm-4 col-xs-12"  id="linked_in">
+      <div class="box-main-wrap clearfix">
+        <div class="box-main-head-wrap">
+          <div class="ac-count pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+            <span class="counts"><%=share_info["linkedin"] ? share_info["linkedin"].count : 0%></span>
+          </div>
+        </div>
+        <div class="box-main-inner">
+          <% if share_info["linkedin"].present? %>
+					<div class="social-icon"><a href="/users/auth/linkedin" tabindex="5"><%=image_tag("responsive/icon-linkedin-medium.png",alt: "linkedin")%><!--<img src="/assets/responsive/icon-linkedin-medium.png" alt="linkedin">--></a></div>
+            <div class="make-switch">
+              <div id="linkedin_on_off_switch" style="width:87px;margin-left:auto;margin-right:auto;"></div>
+            </div>
+          <%else %>
+            <div class="social-icon">
+                <a href="/users/auth/linkedin" tabindex="5"><%=image_tag("responsive/icon-linkedin-medium-grey.png",alt: "linkedin")%><!--<img src="/assets/responsive/icon-linkedin-medium-grey.png" alt="linkedin">--></a>
+            </div>
+            <div class="make-switch" data-on="primary" data-off="info" style="border-style:none;" >&nbsp;</div>
+          <%end%>
+          <div class="btn-wrap">
+              <button type="button" class="btn btn-link" onclick="writeCookie(this)" id="linkedin">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                Add another account
+              </button>
+         </div>
+        </div>
+      </div>
+				<% if share_info["linkedin"].present? %>
+				<div class="box-inner-bottom">
+					<div class="connected-users">
+            <ul class="social_account_list" id="linkedin_account">
+              <% share_info["linkedin"].each_pair do |key,value|%>
+              <li class="<%= (value['is_active'] == true) ? "select active" : ''%> "  id="div_<%= value["id"] %>"  >
+        <%=image_tag("#{ value['profile_image'] }", id: "social-circle-image" )%>
+                <p><%= value['user_name'].present? ? value['user_name'] : "Linkedin Account Name"%></p>
+                  <div class="checkbox_container">
+                  <% if (value["is_active"] == true)%>
+                    <%= check_box_tag "share_click_#{value["id"]}", '1', true, :class => 'fl share_chk chk_share', :onclick => "Share('#{value["id"]}')"%>
+                  <%else%>
+                    <%= check_box_tag "share_click_#{value["id"]}", '1', false, :class => 'fl share_chk chk_share', :onclick => "Share('#{value["id"]}')"%>
+                      <%end%>
+                  </div>
+                <span class="glyphicon glyphicon-remove-circle remove-social" title="remove" value="<%= value['id']%>"></span>
+                </li>
+              <%end%>
+            </ul>
+            <% if c == "share" && a == "show" %>
+              <div class="col-md-12" style="margin:20px 10px 10px -15px">
+                <label>Footer 1</label>
+                <textarea class="form-control message_feedback" id="linked_in_title" maxlength="140" name="linked_in_title" rows="3" style="width:275px;height:40px;"><%= question.question %></textarea>
+              </div>
+             <% end %>
+				 </div>
+			  </div>
+          <%end%>
+    </div>
+    <!--// .share linked in -->
+  </div>
+  <%if @question%>
+  <div class="btn-share-wrap">
+    <div class="btn-wrap text-center">
+    <a id="share_question" onclick="loading_img();" class="button medium orange share_quest" href="<%=share_to_social_nw_share_path( :question_id => (question.present? && question.id.present?) ? question.slug : '',:custom_url=>custom_url.present?  ? custom_url : "")%>">   
+       Share Question
+      </a>
+    </div>
+  </div>
+ <%end%>
+</div>
+<div class="modal fade" id="remove_social_account" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close social-removal" data-dismiss="modal" aria-hidden="true">
+          &nbsp;
+        </button>
+        <h4 class="modal-title text-center">Are you sure you want to remove this account?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <button type="button" class="button orange" id="yes-remove">Yes</button>
+          <button type="button" class="btn btn-link" data-dismiss="modal" id="no-remove">No</button>
+        </div>
+        <br />
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="fb_preview" style="display:none;">
+  <div class="modal-dialog" style="width: 460px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &nbsp;
+        </button>
+        <h4 class="modal-title text-center">FB Post Help</h4>
+      </div>
+      <div class="modal-body">
+        <div id="fb-preview"> <img alt="Ayuzrrul normal"  width="400px" src="<%= ENV['CUSTOM_URL']%>/FB_Footer.png"></div>
+        <br />
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    function writeCookie(current) {
+        var expire_days = null;//Specify how much days you want cookie age
+        var value = "";
+         <% if c == "share" && a == "show" %> value = document.getElementById('question_body').value; <% end %>
+        var expire_date = new Date();
+        expire_date.setDate(expire_date.getDate() + expire_days);
+        var c_value = escape(value) + ((expire_days == null) ? "" : "; expires=" + expire_date.toUTCString());
+        document.cookie = "socialCookie=" + c_value;//Cookie name with value
+        if (current.id == 'facebook'){
+            window.location='/users/auth/facebook'
+        }else if(current.id == 'twitter'){
+            window.location='/users/auth/twitter'
+        }else{
+            window.location='/users/auth/linkedin'
+        }
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+</script>
+<% if c == "share" && a == "show" %>
+<script type="text/javascript">
+     jQuery(document).ready(function(){
+         var twitter_account_count = jQuery('input:checkbox[class^="fl share_chk chk_share twitter_account_"]:checked').length;
+         twitter_share_count(twitter_account_count)
+         jQuery('input:checkbox[class^="fl share_chk chk_share twitter_account_"]').click(function(){
+             twitter_share_count(twitter_account_count)
+         });
+         var social_share_content = getCookie("socialCookie");
+         var custom_message = jQuery("#question_body").val();
+         var question_body = social_share_content == '' ? custom_message : decodeURIComponent(social_share_content)
+         jQuery("#question_body").val(question_body);
+         status = '<%=current_user.twitter_status%>'
+         if(status != 'false' && status != "" && twitter_account_count > 0)
+         {
+             jQuery("#charCount").html(90 - jQuery("#question_body").val().length);
+             jQuery("#question_body").attr("maxlength",90);jQuery("#count_char").val(90);
+         }
+         else
+         {
+             jQuery("#charCount").html(500 - jQuery("#question_body").val().length);
+             jQuery("#question_body").attr("maxlength",500);jQuery("#count_char").val(500);
+         }
+
+          function updateCount ()
+          {
+              var qText = jQuery("#question_body").val();
+              var lengt = jQuery("#count_char").val();
+              if(qText.length < lengt) {
+                  jQuery("#charCount").html(lengt - qText.length);
+              } else {
+                  jQuery("#charCount").html(0);
+                  jQuery("#question_body").val(qText.substring(0,lengt));
+              }
+                  jQuery('#share_question').attr( 'href', '<%=share_to_social_nw_share_path( :question_id => (question.present? && question.id.present?) ? question.slug : '',:custom_url=>custom_url.present?  ? custom_url : "")%>' );
+                  jQuery('#share_question').attr( 'onclick', 'loading_img();' );
+                  jQuery("#show_message").html("");
+
+          }
+
+          $("#question_body").keyup(function () {
+              updateCount();
+          });
+          $("#question_body").keypress(function () {
+              updateCount();
+          });
+          jQuery("#question_body").keydown(function () {
+              updateCount();
+          });
+
+         jQuery("#fb-help").click(function(){
+             $("#fb_preview").modal();
+         });
+});
+
+ function twitter_share_count(t_count){
+     var _count = jQuery('input:checkbox[class^="fl share_chk chk_share twitter_account_"]:checked').length;
+     if (_count == 0){
+         jQuery("#charCount").html(500 - jQuery("#question_body").val().length);
+         jQuery("#question_body").attr("maxlength",500);
+         jQuery("#count_char").val(500);
+         jQuery("#show_message").html("");
+         jQuery('#share_question').attr( 'href', '<%=share_to_social_nw_share_path( :question_id => (question.present? && question.id.present?) ? question.slug : '',:custom_url=>custom_url.present?  ? custom_url : "")%>' );
+         jQuery('#share_question').attr( 'onclick', 'loading_img();' );
+     }else{
+         jQuery("#charCount").html(90 - jQuery("#question_body").val().length);
+         jQuery("#question_body").attr("maxlength",90);
+         jQuery("#count_char").val(90);
+         if(jQuery("#question_body").val().length > 90 || jQuery("#question_body").val().length < 0){
+             jQuery('#share_question').attr( 'href', 'javascript:void(0);' );
+             jQuery('#share_question').attr( 'onclick', 'javascript:void(0)' );
+             jQuery("#show_message").html("Your message limit is exceed more than 90 character");
+         }
+     }
+ }
+
+function loading_img()
+    {
+        var message_feed = jQuery("#question_body").val();
+        var fb_name = jQuery("#facebook_name").val();
+        var fb_caption = jQuery("#facebook_caption").val();
+        var ln_title = jQuery("#linked_in_title").val();
+        var feed_message = "&message="+encodeURIComponent(message_feed)+"&fb_name="+encodeURIComponent(fb_name)+"&fb_caption="+encodeURIComponent(fb_caption)+"&ln_title="+encodeURIComponent(ln_title)
+        jQuery("a.share_quest").each(function() {
+            var _href = jQuery(this).attr("href");
+            jQuery(this).attr("href", _href + feed_message);
+        })
+        jQuery(".loading").css('display','block');
+    }
+  jQuery('#fb_on_off_switch').iphoneSwitch("<%=status && status[:fb] == "true" ? "on" : "off" %>",
+  function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: '/share/social_status_change?provider=fb&status=on',
+      data: {},
+      success: function(data){
+        jQuery("#facebook :input").attr("disabled", false);
+        jQuery("#facebook").find("a").attr("href", "/users/auth/facebook");
+      }
+    });
+     check_check();
+   },
+  function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: '/share/social_status_change?provider=fb&status=off',
+      data: {},
+      success: function(data){
+        jQuery("#facebook :input").attr("disabled", true);
+        jQuery("#facebook").find("a").removeAttr("href");
+      }
+    });
+    check_check();
+  },
+  { switch_on_container_path: "<%= asset_path 'iphone_switch_container_off.png' %>" });
+
+  jQuery('#twitter_on_off_switch').iphoneSwitch("<%=status && status[:twitter] =="true" ? "on" : "off" %>",
+  function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: '/share/social_status_change?provider=twitter&status=on',
+      data: {},
+      success: function(data){
+        jQuery("#twitter :input").attr("disabled", false);
+        jQuery("#twitter").find("a").attr("href", "/users/auth/twitter");
+        if(jQuery('input:checkbox[class^="fl share_chk chk_share twitter_account_"]:checked').length > 0){
+          jQuery("#charCount").html(90 - jQuery("#question_body").val().length);
+          jQuery("#question_body").attr("maxlength",90);
+          jQuery("#count_char").val(90);
+        }
+        if(jQuery("#question_body").val().length > 90 || jQuery("#question_body").val().length < 0){
+            jQuery('#share_question').attr( 'href', 'javascript:void(0);' );jQuery('#share_question').attr( 'onclick', 'javascript:void(0)' );
+            jQuery("#show_message").html("Your message limit is exceed more than 90 character");
+        }
+      }
+    });
+     check_check();
+
+  },
+  function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: '/share/social_status_change?provider=twitter&status=off',
+      data: {},
+      success: function(data){
+        jQuery("#twitter :input").attr("disabled", true);
+        jQuery("#twitter").find("a").removeAttr("href");
+        jQuery("#charCount").html(500 - jQuery("#question_body").val().length);
+        jQuery("#question_body").attr("maxlength",500);
+        jQuery("#count_char").val(500);
+        jQuery('#share_question').attr( 'href', '<%=share_to_social_nw_share_path( :question_id => (question.present? && question.id.present?) ? question.slug : '',:custom_url=>custom_url.present?  ? custom_url : "")%>' );
+        jQuery('#share_question').attr( 'onclick', 'loading_img();' );
+        jQuery("#show_message").html("");
+       //jQuery('#share_question').css( 'cursor', 'none' );
+      }
+    });
+     check_check();
+  },
+  { switch_on_container_path: "<%= asset_path 'iphone_switch_container_off.png' %>" });
+
+  jQuery('#linkedin_on_off_switch').iphoneSwitch("<%=status && status[:linkedin] =="true" ? "on" : "off" %>",
+  function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: '/share/social_status_change?provider=linkedin&status=on',
+      data: {},
+      success: function(data){
+        jQuery("#linked_in :input").attr("disabled", false);
+        jQuery("#linked_in #inside-linkedin").find("a").attr("href", "/users/auth/linkedin");
+
+      }
+    });
+    check_check();
+  },
+  function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: '/share/social_status_change?provider=linkedin&status=off',
+      data: {},
+      success: function(data){
+        jQuery("#linked_in :input").attr("disabled", true);
+        jQuery("#linked_in #inside-linkedin").find("a").removeAttr("href");
+      }
+    });
+     check_check();
+  },
+  { switch_on_container_path: "<%= asset_path 'iphone_switch_container_off.png' %>" });
+
+
+
+
+  function check_check()
+  {
+
+    var check_box_status = [];
+    jQuery(".iphone_switch_container").each(function() {
+
+      if(jQuery(this).children("img").css("background-position") == "0px 50%"){
+        check_box_status.push("true");
+      }else{
+        check_box_status.push("false");
+      }
+    });
+    if (jQuery.inArray('true',check_box_status) > -1)
+    {
+      jQuery("#share_question button").removeAttr("disabled");
+      jQuery("#share_question").attr("href", "<%= share_question_question_index_path( :question_id => (question.present? && question.slug.present?) ? question.slug : '',:custom_url=>custom_url.present?  ? custom_url : "") %>");
+    }
+    else
+    {
+
+      jQuery("#share_question button").attr("disabled", true);
+    }
+
+  }
+</script>
+<% end %>

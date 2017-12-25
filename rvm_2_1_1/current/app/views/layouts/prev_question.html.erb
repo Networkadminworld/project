@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Inquirly : Question Preview</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="discription" content="">
+	<meta name="keywords" content="">
+	<!-- rails4_image_tag_impact -->
+	<%= favicon_link_tag 'responsive/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon'%>
+	<%= favicon_link_tag 'responsive/favicon.ico', rel: 'icon', type: 'image/x-icon'%>
+	<!--<link rel="shortcut icon" href="/assets/responsive/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/assets/responsive/favicon.ico" type="image/x-icon">-->
+  <script type="text/javascript">var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);</script>
+  <!-- TYPEKIT -->
+<script type="text/javascript" src="//use.typekit.net/ltc1ytn.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <!--css-->
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "prev_question" %>
+	<%= javascript_include_tag "application" %>
+</head>
+<body>
+<div class="dash-board" id="header">
+<% benchmark '##Render header form in prev question' do %>
+<%= render :partial => "shared/header"%>
+<% end %>
+</div><!--header-->
+<div id="page">
+  <%= yield%>
+</div><!--page-->
+<div id="footer">
+<% benchmark '##Render footer in prev question' do %>
+<%= render :partial => "shared/footer"%>
+<% end %>
+</div><!--footer-->
+							              <div class="modal fade" id="listener_request" aria-hidden="true" tabindex='-1'>
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &nbsp;
+                      </button>
+                      <h4 class="modal-title">Listener</h4>
+                    </div>
+                    <div class="modal-body" id="activate_listener_message">
+                    </div>
+                   <div class="modal-footer">
+                    <div class="text-center">
+                      <a href="/" id="btnYes" class="button medium orange">Ok</a>
+                    </div>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+</body>
+</html>

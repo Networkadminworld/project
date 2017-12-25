@@ -1,0 +1,16 @@
+<p>Dear <%= @first_name %>, </p>
+<p>Welcome to Inquirly Product<p>
+<p>Signin Email: <b><%= @email %></b> </p>
+<p>Current Status: <b><%= @status %></b></p>
+<p>Role: <b><%= @role_name %></b></p>
+<p>Assigned to Tenant: <b><%= @tenant_name %></b></p>
+<p> Manage Tenants: </p>
+<ul>
+<% @tenants.each do |tenant|%>
+      <li><%= tenant.name %></li>
+<% end %>
+</ul>
+<p>Thanks & Regards</p>
+<p>Admin </p>
+<p>[<%= @admin_email %>]</p>
+<p>(for any clarification please contact the Admin)</p>

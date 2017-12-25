@@ -1,0 +1,37 @@
+engines:
+  rubocop:
+    enabled: true
+  brakeman:
+    enabled: true
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+ratings:
+  paths:
+  - app/**
+  - lib/**
+  - "**.rb"
+  - "**.go"
+exclude_paths:
+- spec/**/*
+- tests/**/*
+- public/**/*
+- log/**/*
+- coverage/**/*
+- app/assets/**/*
+- app/models/alert_script.rb
+- app/models/api/email_content.rb
+- app/models/concerns/campaign_process.rb
+- app/models/concerns/event_channel_service.rb
+- app/models/concerns/validate_csv.rb
+- app/models/concerns/csv_import.rb
+- app/models/concerns/csv_process.rb
+- app/models/concerns/customer_group_info.rb
+- db/schema.rb
+- "**/vendor/**/*"

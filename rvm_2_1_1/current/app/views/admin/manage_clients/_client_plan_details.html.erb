@@ -1,0 +1,139 @@
+<div class="tenant-region-container" xmlns="http://www.w3.org/1999/html">
+  <div class="form-group">
+    <label class="control-label">Plan Name:</label>
+    <span> <%= find_plan_name(@current_plan.pricing_plan_id)%></span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Start Date:</label>
+    <span> <%= @current_plan.start_date.strftime("%Y/%m/%d") %></span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Exp Date:</label>
+    <span>  <%= @exp_date %></span>
+  </div>
+  <div class="form-group">
+    <label class="control-label"> Share Channels</label>
+    <% @channels.each do |channel|%>
+      <label class="checkbox fnt-sm">
+        <input type="checkbox" name="channel" id="<%= channel.id %>" checked disabled="disabled"/>
+        <%= channel.name %>
+      </label>
+    <% end %>
+  </div>
+    <div class="tab-content inner" style="border: 2px solid rgba(179, 167, 167, 0.23);border-radius: 5px;padding: 17px;margin-top: 10px;">
+      <div class="tab-wrapper">
+        <div class="row">
+          <div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
+            <div class="row">
+              <div class="col-lg-12" style="margin-bottom: 15px;">
+                <span class="fnt-sm" style="color:#6ba5ca">ALLOWED QUOTA</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Email Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.email_count %>" readonly="readonly"  type="text">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">SMS Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.sms_count %>" readonly="readonly" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Customer Records Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.customer_records_count %>" readonly="readonly" type="text" >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Campaigns Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.campaigns_count %>" readonly="readonly" type="text" >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">FB Boost Budget</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.fb_boost_budget %>" readonly="readonly" type="text" >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Total Reach</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.total_reach %>" readonly="readonly" type="text" >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
+            <div class="row">
+              <div class="col-lg-12" style="margin-bottom: 15px;">
+                <span class="fnt-sm" style="color:#6ba5ca">USED QUOTA</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Email Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.share_detail.try(:email_count) || 0 %>"  tabindex="1" type="number" readonly="readonly">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">SMS Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.share_detail.try(:sms_count) || 0 %>"  tabindex="2" type="number" readonly="readonly">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Customer Records Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.share_detail.try(:customer_records_count) || 0 %>"  tabindex="3" type="number" readonly="readonly">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Campaigns Count</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium"  value="<%= @current_plan.share_detail.try(:campaigns_count) || 0%>"  tabindex="4" type="number" readonly="readonly">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">FB Boost Budget</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.share_detail.try(:fb_boost_budget) || 0 %>"  tabindex="5" type="number" readonly="readonly">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <span class="fnt-sm">Total Reach</span>
+                <div class="form-group">
+                  <input class="text_field rc_5 form-control input-medium" value="<%= @current_plan.share_detail.try(:total_reach) || 0 %>" tabindex="6" type="number" readonly="readonly">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

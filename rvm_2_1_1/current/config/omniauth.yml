@@ -1,0 +1,20 @@
+development: &development
+  fb_client_id: <%=ENV["FB_CLIENT_ID"]%>
+  fb_client_secret: <%=ENV["FB_CLIENT_SECRET"]%>
+  tw_client_id: <%=ENV["TW_CLIENT_ID"]%>
+  tw_client_secret: <%=ENV["TW_CLIENT_SECRET"]%>
+  linkedin_token: <%=ENV["LINKEDIN_TOKEN"]%>
+  linkedin_secret: <%=ENV["LINKEDIN_SECRET"]%>
+  google_token: <%=ENV["GOOGLE_TOKEN"]%>
+  google_secret: <%=ENV["GOOGLE_SECRET"]%>
+test:
+  <<: *development
+production:
+  fb_client_id: <%=ENV["FB_CLIENT_ID"]%>
+  fb_client_secret: <%=ENV["FB_CLIENT_SECRET"]%>
+  tw_client_id: <%=ENV["TW_CLIENT_ID"]%>
+  tw_client_secret: <%=ENV["TW_CLIENT_SECRET"]%>
+  linkedin_token: <%=ENV["LINKEDIN_TOKEN"]%>
+  linkedin_secret: <%=ENV["LINKEDIN_SECRET"]%>
+  google_token: <%=ENV["GOOGLE_TOKEN"]%>
+  google_secret: <%=ENV["GOOGLE_SECRET"]%>

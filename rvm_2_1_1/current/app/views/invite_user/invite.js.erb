@@ -1,0 +1,18 @@
+<% if @errors.present?%>
+  <% if @errors[:email].present?%>
+                            jQuery("#spinner_img").hide();
+                            jQuery('#month_error').show();
+                            jQuery('#month_error').html("<%=escape_javascript(@errors[:email])%>");
+  <% else%>
+                            jQuery('#month_error').hide();
+  <% end%>
+  <% if @errors[:role].present?%>
+                            jQuery('#role_error').show();
+                                    jQuery("#spinner_img").hide();
+                            jQuery('#role_error').html("<%=escape_javascript(@errors[:role])%>");
+  <% else %>
+                            jQuery('#role_error').hide();
+  <% end%>
+<% else%>
+ jQuery("#InviteUser .modal-body").html("<div  class='alert alert-success'>An invitation has been sent to <%= @email%></div>");
+<% end %>

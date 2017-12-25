@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Inquirly : <%=h yield(:title) %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="discription" content="">
+	<meta name="keywords" content="">
+	<!-- rails4_image_tag_impact -->
+	<%= favicon_link_tag 'responsive/favicon.ico', rel: 'shortcut icon', type: 'image/x-icon'%>
+	<%= favicon_link_tag 'responsive/favicon.ico', rel: 'icon', type: 'image/x-icon'%>
+	<!--<link rel="shortcut icon" href="/assets/responsive/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/assets/responsive/favicon.ico" type="image/x-icon">-->
+  <script type="text/javascript">var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);</script>
+  <!-- TYPEKIT -->
+ <script type="text/javascript" src="//use.typekit.net/ltc1ytn.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+<script type="text/javascript">
+	window.history.forward(1);
+	function noBack()
+  {
+  //~ window.history.forward();
+  }
+</script>
+
+	<!--css-->
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= yield :page_specific_head_content %>
+  <%= csrf_meta_tags %>
+  <!--// start typekit font include -->
+  <script type="text/javascript" src="//use.typekit.net/ltc1ytn.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <!--// end typekit font include -->
+</head>
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+<div class="dash-board" id="header">
+  <%#= render :partial => "shared/header"%>
+</div><!--header-->
+<div id="page">
+  <%#= render :partial => "shared/flash_message"%>
+  <%= yield %>
+</div>
+<div id="footer">
+  <%#= render :partial => "shared/footer"%>
+</div><!--footer-->
+</body>
+</html>

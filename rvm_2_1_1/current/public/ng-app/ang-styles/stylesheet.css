@@ -1,0 +1,396 @@
+
+.media img+span.badge {
+    position: relative;
+    top: -8px;
+    left: 8px;
+}
+/*.text-center {
+  padding-top: 20px;
+}
+.col-xs-12 {
+  background-color: #fff;
+}
+#sidebar {
+  height: 100%;
+  padding-right: 0;
+  padding-top: 20px;
+}
+#sidebar .nav {
+  width: 95%;
+}
+#sidebar li {
+  border:0 #f2f2f2 solid;
+  border-bottom-width:1px;
+}
+
+*/
+/* collapsed sidebar styles */
+/*
+@media screen and (max-width: 767px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+  .row-offcanvas-right
+  .sidebar-offcanvas {
+    right: -41.6%;
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -41.6%;
+  }
+  .row-offcanvas-right.active {
+    right: 41.6%;
+  }
+  .row-offcanvas-left.active {
+    left: 41.6%;
+  }
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 41.6%;
+  }
+  #sidebar {
+    padding-top:0;
+  }
+}
+*/
+/* for font*/
+
+@font-face {
+	font-family: 'fontawesome-webfont';
+	src:url('../fonts/fontawesome-webfont.eot');
+	src:url('../fonts/fontawesome-webfont.woff') format('woff'),
+        url('../fonts/fontawesome-webfont.woff2') format('woff2'),
+		url('../fonts/fontawesome-webfont.ttf') format('truetype'),
+        url('../fonts/fontawesome-webfont.svg') format('svg'),
+        url('../fonts/fontawesome-webfont.otf') format('otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body{
+font-family: 'Montserrat', sans-serif;
+font-color:#000000;
+}
+
+.fnt12
+{
+font-size:12px;
+}
+.fnt14
+{
+font-size:14px;
+}
+.fnt16
+{
+font-size:16px;
+}
+.fnt24
+{
+font-size:24px;
+}
+
+.fnt-blue
+{
+font-color:#82C7CA;
+}
+.fnt-black
+{
+font-color:#000000;
+}
+.fnt-gray
+{
+font-color:#7A7A7E;
+}
+
+.row
+{
+margin-left:0px;
+margin-right:0px;
+}
+.col-pad
+{
+padding-left:0px;
+padding-right:0px;
+}
+
+.col-padlt
+{
+padding-left:0px;
+}
+.col-padrt
+{
+padding-right:0px;
+}
+.txtalign
+{
+text-align:center;
+border-right: 4px;
+border-color: #EFEFF2;
+}
+.logo-ht
+{
+height:210px;
+}
+.side-barht
+{
+height:100px;
+}
+
+.active-backclr
+{
+background-color:#82C7CA;
+font-color:#FFFFFF;
+border-top:2px solid #82C7CA;
+border-bottom:2px solid #82C7CA;
+border-right:2px solid #82C7CA;
+}
+
+.empty-backclr
+{
+background-color:#FFFFFF;
+border-top:2px solid #ECECF0;
+font-color:#000000;
+}
+
+.side-txtclr
+{
+color:#4A4A4A;
+}
+.side-barstyle2
+{
+height:300px;
+border-top:2px solid #ECECF0;
+border-right:2px solid #ECECF0;
+}
+.bdr-top
+{
+border-top:2px solid #ECECF0;
+}
+.bdr-lt
+{
+border-left:2px solid #ECECF0;
+}
+.bdr-rt
+{
+border-right:2px solid #ECECF0;
+}
+.bdr-bt
+{
+border-bottom:2px solid #ECECF0;
+}
+.bdr
+{
+border:2px solid #ECECF0;
+border-radius:5px;
+}
+
+.margin2
+{
+margin-top:20px;
+}
+.margin3
+{
+margin-top:15px;
+}
+.mrgn10
+{
+margin-top:10px;
+}
+.margin4
+{
+margin-top:25px;
+}
+.mrgn-tp35
+{
+margin-top:35px;
+}
+.mrgn-lt
+{
+margin-left:20px;
+}
+.mrgn-rt
+{
+margin-right:20px;
+}
+.mrgn-bt
+{
+margin-bottom:20px;
+}
+.mrgn-bt30
+{
+margin-bottom:30px;
+}
+.mrgn-lt35
+{
+margin-left:35px;
+}
+.mrgn-rt15
+{
+margin-right:15px;
+}
+.mrgn-lt10
+{
+margin-left:10px;
+}
+.mrgn-rt10
+{
+margin-right:10px;
+}
+.choco-layout
+{
+margin-right: 0;
+margin-left: 0;
+height:60px;
+background-color:#FFFFFF;
+}
+.active-bdr-btn
+{
+border-bottom:5px solid #82C7CA;
+color:#82C7CA;
+font-size:14px;
+}
+.empty-bdr-btn
+{
+border:none;
+font-color:#4A4A4A;
+font-size:14px;
+}
+.badge
+{
+background-color:#E74C3C;
+padding: 2px 5px;
+}
+
+.build-layout
+{
+margin-right: 0px;
+margin-left: 0px;
+height:60px;
+background-color:#FFFFFF;
+border-top: 3px solid #E9E9EE;
+}
+
+.backclr
+{
+background-color:#F1F2F2;
+}
+.imgstyle
+{
+border:1px solid #ECECF0;
+width:100%;
+}
+
+.txtclr
+{
+color:#82C7CA;
+}
+
+.title-layout{
+background-color: #FFFFFF;
+border-top-right-radius: 18px;
+border-top-left-radius: 18px;
+border-bottom: 2px solid #ECECF0;
+height:60px;
+}
+.title-ht
+{
+height:60px;
+}
+.body-layout{
+background-color: #FFFFFF;
+border-bottom-right-radius: 18px;
+border-bottom-left-radius: 18px;
+}
+.body-layout2{
+background-color: #FFFFFF;
+height: 650px;
+border-bottom-right-radius: 18px;
+border-bottom-left-radius: 18px;
+}
+.body-layout3{
+background-color: #FFFFFF;
+height: 380px;
+border-bottom-right-radius: 18px;
+border-bottom-left-radius: 18px;
+}
+
+.body-layout4{
+background-color: #FFFFFF;
+height: 400px;
+border-bottom-right-radius: 18px;
+border-bottom-left-radius: 18px;
+}
+.navbar{
+margin-bottom: 0px;
+border-radius: 0px;
+}
+
+.btn-primary {
+color: #FFFFFF;
+background-color: #c380FD;
+border-color: #c380FD;
+}
+.side-barht a {
+	color: #82C7CA;
+}
+.row.empty-backclr.side-barht.active p{
+	color: white;
+}
+.active {
+	background-color:#82C7CA;
+	border: 2px solid #82C7CA;
+}
+.side-barht a:hover {
+	text-decoration: none;
+}
+.top-lebel {
+	padding-left: 15px;
+}
+.campign-create {
+	float: right;
+}
+.config-fb{
+	background-color: #337ab7;
+	border-color: #2e6da4;
+	font-size: 14px;
+}
+.config-tw{
+	background-color: #5bc0de;
+	border-color: #46b8da;
+	font-size: 14px;
+}
+.config-ln{
+	background-color: #3090C7;
+	border-color: #3090C7;
+	font-size: 14px;
+}
+.config-fb:hover, .config-fb:focus{
+	color: #fff;
+	background-color: #286090;
+	border-color: #204d74;
+}
+.config-tw:hover, .config-tw:focus{
+	color:#fff;
+	background-color: #31b0d5;
+	border-color:#269abc
+}
+.config-ln:hover, .config-ln:focus{
+	color:#fff;
+	background-color: #157DEC;
+	border-color:#269abc
+}
+.update-config{
+	color: #FFFFFF;
+	background-color: #FFE87C;
+	border-color: #FFE87C;
+	font-size: 14px;
+}
+.update-config:hover, .update-config:focus {
+	background-color: #FFA500;
+	border-color:#FFA500
+}

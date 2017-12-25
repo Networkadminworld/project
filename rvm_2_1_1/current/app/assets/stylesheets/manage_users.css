@@ -1,0 +1,69 @@
+.user-table {
+    border: 1px solid #9b9b9b;
+}
+.user-table thead > tr > th {
+    border-bottom: none;
+}
+.user-table thead > tr > th,
+.user-table tbody > tr > th,
+.user-table tfoot > tr > th,
+.user-table thead > tr > td,
+.user-table tbody > tr > td,
+.user-table tfoot > tr > td {
+    border: 1px solid #9b9b9b;
+}
+.user-table thead th {
+    background: lightgray;
+}
+.form-control {
+    height: 38px;
+}
+.chosen-container {
+    display: block;
+}
+.chosen-container-multi .chosen-choices {
+    width: 318px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.chosen-container .chosen-drop {
+    width: 318px;
+}
+.chosen-container-multi .chosen-choices li.search-field input[type=text] {
+    height: 34px;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+    margin-top: 5px;
+    line-height: 19px;
+}
+.align-cen {
+    text-align: center;
+}
+.select-user {
+    padding-left: 66px;
+    padding-top: 11px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.client-active {
+    background-color: #25724B;
+    font-size: 14px;
+    color: white;
+    border-radius: 10px;
+    padding: 2px;
+    text-align: center
+}
+.client-inactive {
+    background-color: #B2B8B8;
+}
+.client-deactive {
+    background-color: #B2B8B8;
+    font-size: 14px;
+    color: white;
+    border-radius: 10px;
+    padding: 2px;
+    text-align: center
+}
+.chosen-container-multi .chosen-choices, .chosen-container .chosen-drop{
+    width: 342px;
+}

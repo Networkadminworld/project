@@ -1,0 +1,90 @@
+<div class="row M0">
+            <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container fnt-sm">
+                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout='5000' class="fade-in-out">{{alert.msg}}</alert>
+              <div class="container-fluid P0M0">
+
+                <div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom: 100px;">
+
+                  <div class="inq-panel">
+                    <div class="inq-panel-title-bar">
+                    <table cellpadding="0" class="table-width">
+                        <tbody>
+                        <tr>
+                        <td class="table-width">
+                            <div class="inq-panel-title tab fnt-sm" data-ng-class="{'active': currentStates.indexOf(scheduleName.name) == 0}" data-ng-repeat="scheduleName in scheduleNames" data-ng-click="setActiveState(scheduleName)">{{ scheduleName.name | uppercase }}</div>
+                            <button type="button" class="btn btn-inq btn-schedule fnt-sm" ng-click="addSchedule()">+ ADD SCHEDULE</button>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="inq-panel-container">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-12 col-md-12 col-lg-12 P0">
+                            <div class="form-group inq-form-group">
+                              <label class="fnt-sm fnt-dark-gray">Active day of the week
+                              </label>
+                              <table cellpadding="0" class="table-width">
+                                <tbody>
+                                  <tr>
+                                    <td class="table-width">
+                                      <button type="button" class="btn btn-inq fnt-sm" data-ng-repeat="activeDay in activeDays" data-ng-class="{'inactive-day': !activeDay.is_active}" data-ng-click="changeActiveDays(activeDay,activeDay.is_active)">{{ activeDay.name }}</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12 col-md-12 col-lg-12 P0">
+                            <div class="form-group inq-form-group fnt-sm">
+                              <label class="fnt-sm fnt-dark-gray">Post Schedule on each active day
+                              </label>
+                              <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-6 fnt-dark-gray">
+                                  <div class="form-group" data-ng-repeat="scheduleSlot in scheduleSlots">
+                                    <div class="row">
+                                      <div class="col-sm-1 col-md-1 col-lg-1">
+                                        <div class="fa fa-times add-slot" data-ng-click="removeSlot(scheduleSlot)"></div>
+                                      </div>
+                                      <div class="col-sm-2 col-md-2 col-lg-2 P0">
+                                        <div class="fnt-blue">{{ scheduleSlot.slot }}</div>
+                                      </div>
+                                      <div class="col-sm-1 col-md-1 col-lg-1 Pl0">
+                                        <div class="fa fa-clock-o"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group" style="padding-top:5px;">
+                                    <div class="row">
+                                      <div class="col-sm-1 col-md-1 col-lg-1">
+                                        <div class="fa fa-plus add-slot" data-ng-click="addSlot()"></div>
+                                      </div>
+                                      <div class="col-sm-3 col-md-3 col-lg-3 P0">
+                                          <timepicker-pop input-time="time" ng-model="slotTime" class="input-group" show-meridian='showMeridian'></timepicker-pop>
+                                          <span style="color:red" class="help-block" ng-show="isInvalid">Please enter a valid date</span>
+                                          <span style="color:red" class="help-block" ng-show="isDuplicate">Duplicate slots not allowed</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              <button type="button" class="btn btn-lt-orng fnt-sm" data-ng-click="mapSchedule()">USE THIS SCHEDULE</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

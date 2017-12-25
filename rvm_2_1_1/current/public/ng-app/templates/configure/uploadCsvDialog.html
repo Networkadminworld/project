@@ -1,0 +1,39 @@
+<div class="modal-header fnt-lg align-cen">Customer CSV upload
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<hr style="margin: 0">
+<div class="modal-body">
+    <form class="form-horizontal" name="form.csv" novalidate>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-4 col-md-4 col-lg-4" style="top: 5px;color: #9b9b9b;"><span> {{ csv.newGroup ? 'Create Group' : 'Select Group'}}: </span></div>
+        <div class="col-sm-6 col-md-6 col-lg-6" data-ng-show="!csv.newGroup" ng-show="groups.length > 0">
+            <select class="form-control" name="group"  ng-model="csv.uploadGroupId">
+                <option value="{{ group.id }}" data-ng-repeat="group in groups" ng-selected="{{group.name == 'All Customers'}}">{{ group.name}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6" data-ng-show="csv.newGroup">
+            <input class="form-control" ng-model="csv.uploadGroupName">
+            <span style="color:red" class="help-block" ng-show="csv.duplicateGroup">Duplicate Group names not allowed </span>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2" ng-show="groups.length > 0">
+            <div data-ng-class="isUploadNewGroup()" class="" data-ng-click="uploadNewGroup()"></div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 15px">
+        <div class="col-sm-4 col-md-4 col-lg-4" style="top: 5px;color: #9b9b9b;"><span> Choose a file: </span></div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <input class="csv-input" id="csv-file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ngf-select="" ng-model="csv.customerFile" name="file">
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12" style="padding: 15px">
+        <div class="col-sm-4 col-md-4 col-lg-4"></div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+             <button class="btn btn-lt-orng group-btn" ng-disabled="groups.length > 0 && csv.newGroup && csv.uploadGroupName == '' || !csv.customerFile || csvSubmitted" ng-click="csvUpload(csv.customerFile)">{{ uploadText }}</button>
+        </div>
+    </div>
+    </form>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+</div>

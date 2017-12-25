@@ -1,0 +1,243 @@
+<div class="row M0">
+  <div class="tertiary-nav fnt-sm">
+    <div class="sub-action-bar">
+      <div class="col-sm-3 col-md-3 col-lg-3 listen-cat fnt-sm">
+        <div class="fnt-sm">
+          <div class="margin2 fnt-sm M0"class="fnt-sm">TO DELIVER</div>
+        </div>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3  listen-cat fnt-sm">
+        <div class="fnt-sm">
+          <div class="fnt-sm">
+            <p class="margin2 fnt-sm M0">DELIVERED</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row M0">
+    <div class="col-sm-12 col-md-12 col-lg-12 P0 fnt-sm panel-container">
+      <div class="container-fluid P0M0">
+
+        <!-- undelivered item -->
+        <div class="col-sm-3 col-md-3 col-lg-3 listen-cat-col-container">
+          <div class="container-fluid listen-cat-col">
+            <div class="row order-card" ng-repeat="item in dBoyUndelivered">
+              <div class="container-fluid" >
+                <div class="row">
+                  <div class="col-sm-8 col-md-8 col-lg-8 P0M0">
+                    <div class="item-name">{{item.item_name}}</div>
+                    <div class="item-name-border"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div  class="col-sm-1 col-md-1 col-lg-1 P0M0"></div>
+                  <div  class="col-sm-11 col-md-11 col-lg-11  P0M0">
+                    <div class="order-container">
+                      <div class="col-sm-6 col-md-6 col-lg-6 P0M0">
+                        <div class="ordered-item-info" style="cursor:pointer; cursor:hand;" data-ng-click="viewItemDetails(item)">
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#3BE218"><i class="fa fa-gift"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-name"><span>1 {{item.item_sku_id}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#BABABA"><i class="fa fa-arrow-right"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-person"><span>{{item.customer.first_name}} {{item.customer.last_name}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <span style="color:#FFA700"><i class="fa fa-map-marker"></i></span>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-location"><span>{{item.item_delivery_location}}</span></div>
+                            </div>
+                          </div>
+                          <div class="row item-info-list">
+                            <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                              <div><span style="color:#F9FB74"><i class="fa fa-exclamation-triangle"></i></span></div>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                              <div class="ordered-item-pref"><span>No special pref.</span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="container-fluid P0M0">
+                          <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                              <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                  <div class="payment-status-icon">
+                                    <div><i class="fa fa-info-circle" style="color:#B3B3B3"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12  P0" ng-class="{paymentCod : item.item_payment_mode == 'COD'}" ng-class="{paymentPaid : item.item_payment_mode == 'PAID'}">
+                                  <div class="fnt-xs">{{item.item_payment_mode}}</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8 P0M0">
+                              <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12"><div class="btn-container">
+                                <button class="btn btn-inq item-action-btn-purple" data-ng-click="onEngageClick(item)">ENGAGE</button></div>
+                              </div>
+                            </div>
+                            <!--  <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="order-countdown">
+                                  01:30:45
+                                </div>
+                              </div>
+                            </div> -->
+                            <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                <div class="order-datetime">
+                                  <span><i class="fa fa-clock-o" style="color:#EA0000"></i></span>
+                                  <span style="font-size:9px">{{item.item_date |  date:"MM/dd/yyyy H:mm"}}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- delivered item list -->
+      <div class="col-sm-3 col-md-3 col-lg-3 listen-cat-col-container">
+        <div class="container-fluid listen-cat-col">
+          <div class="row order-card" ng-repeat="item in dBoyDelivered">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-sm-8 col-md-8 col-lg-8 P0M0">
+                          <div class="item-name">{{item.item_name}}</div>
+                          <div class="item-name-border"></div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-1 col-md-1 col-lg-1 P0M0"></div>
+                        <div class="col-sm-11 col-md-11 col-lg-11  P0M0">
+                          <div class="order-container">
+
+                            <div class="col-sm-6 col-md-6 col-lg-6 P0M0">
+                              <div class="ordered-item-info">
+
+                                <div class="row item-info-list">
+
+                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                    <div><span style="color:#3BE218"><i class="fa fa-gift"></i></span></div>
+                                  </div>
+
+                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                    <div class="ordered-item-name"><span>{{item.item_sku_id}}</span></div>
+                                  </div>
+                                </div>
+
+                                <div class="row item-info-list">
+
+                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                    <div><span style="color:#BABABA"><i class="fa fa-arrow-right"></i></span></div>
+                                  </div>
+
+                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                    <div class="ordered-item-person"><span>{{item.customer.first_name}} {{item.customer.last_name}}</span></div>
+                                  </div>
+                                </div>
+
+                                <div class="row item-info-list">
+
+                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                    <span style="color:#FFA700"><i class="fa fa-map-marker"></i></span>
+                                  </div>
+
+                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                    <div class="ordered-item-location"><span>{{item.item_delivery_location}}</span></div>
+                                  </div>
+                                </div>
+
+                                <div class="row item-info-list">
+
+                                  <div class="col-sm-1 col-md-1 col-lg-1 P0">
+                                    <div><span style="color:#F9FB74"><i class="fa fa-exclamation-triangle"></i></span></div>
+                                  </div>
+
+                                  <div class="col-sm-10 col-md-10 col-lg-10 Pl0">
+                                    <div class="ordered-item-pref"><span>No special pref.</span></div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                              <div class="container-fluid P0M0">
+                                <div class="row">
+                                  <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12 P0">
+                                        <div class="payment-status-icon">
+                                          <div><i class="fa fa-info-circle" style="color:#B3B3B3"></i></div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12 payment-status-text-blue P0">
+
+                                        <div class="fnt-xs">PAID</div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-sm-9 col-md-9 col-lg-9 Pr0">
+                                    <div class="row">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="order-status-gray">DELIVERED</div>
+                                      </div>
+                                    </div>
+                                   <div class="row">
+                                      <div ng-if="item.item_rating">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">  
+                                          <div style="font-size:30px; color:#E59400;">
+                                            {{item.item_rating}}
+                                           </div>
+                                            <rating  ng-model="item.item_rating" max="5" readonly="true" state-on="'glyphicon-star star-on'" state-off="'glyphicon-star star-off'">
+                                            </rating>
+                                        </div>  
+                                      </div>
+                                      <div class="col-sm-12 col-md-12 col-lg-12" ng-if="!item.item_rating">No Rating</div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>

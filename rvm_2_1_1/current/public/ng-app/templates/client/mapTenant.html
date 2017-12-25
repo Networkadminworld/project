@@ -1,0 +1,46 @@
+    <div class="modal-header fnt-lg align-cen">User Details
+     <div class="x-close fa fa-times" ng-click="cancel();"></div>
+    </div>
+    </div>
+    <div class="modal-body">
+      <table class="table inq-table fnt-sm" style="margin-top:20px;">
+        <thead>
+          <tr>
+            <th>EMAIL</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ tuser.email }}</td>
+            <td>{{ tuser.first_name }}</td>
+            <td>{{ tuser.last_name }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="modal-title fnt-lg">Tenants</h3>
+      <table class="table inq-table fnt-sm" style="margin-top:20px;">
+        <thead>
+          <tr>
+            <th><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+            <th>NAME</th>
+            <th>ADDRESS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="tenantList in tenantLists">
+            <td><input type="checkbox" name="selectedTenants[]" value="{{tenantList.id}}" ng-checked="selection.indexOf(tenantList.id) > -1" ng-click="toggleSelection(tenantList)"></td>
+            <td>{{ tenantList.name }}</td>
+            <td>{{ tenantList.address | limitTo: 20 }}</td>
+          </tr>
+        </tbody>
+      </table>
+	<div class="form-actions row">
+	  <button type="submit" class="col-sm-4 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 btn btn-warning btn-lg" ng-click="submitMapTenantForm(tenantList)">Update</button>
+	</div>
+    </div>
+    <div class="modal-footer ng-scope">
+      <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+    </div>

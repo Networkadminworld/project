@@ -1,0 +1,27 @@
+<div class="modal-header">
+      <h3 class="modal-title">Feedback</h3>
+      <div class="x-close">
+      <a class="fa fa-times" href="javascript:void(0);" ng-click="cancel()" ></a>
+</div>
+</div>
+<div class="modal-body">
+  <div class="container-fluid">
+    <form class="inq-from" name="feedbackForm">
+      <div class="form-group inq-form-group" style="text-align:center;">
+        <h2>Please rate your experience </h2>
+        <div ng-init="rating = 3" style="font-size:50px; text-align:center;">
+          <rating ng-model="rating" max="5" state-on="'glyphicon-star star-on'" state-off="'glyphicon-star star-off'"></rating>
+        </div>
+      
+      </div>
+      <div class="form-actions row">
+        <button type="button" ng-click="saveFeedback();" ng-class="{'disabled': saving }" class="col-sm-4 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 btn btn-success btn-sm">Save</button>
+      </div>
+      </form>
+  </div>
+
+</div>
+<div class="modal-footer ng-scope">
+  <a href="javascript:void(0);" class="fnt-md" ng-click="cancel()">Close this window</a>
+</div>
+

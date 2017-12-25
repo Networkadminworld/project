@@ -1,0 +1,48 @@
+<div style="padding-top: 16px;font-size: 15px; text-decoration: underline;">
+  <%= link_to 'Back ', admin_manage_clients_path %>
+</div>
+<% if @tenants.present? %>
+<div class= "table-responsive" style="margin-top:15px;">
+	<table class= "table user-table" style="table-layout: fixed;">
+		<thead>
+			<tr>
+				<th class="align-cen">Tenant Name</th>
+				<th class="align-cen">Address</th>
+				<th class="align-cen">Tenant Region Name</th>
+				<th class="align-cen">Tenant Type Name</th>
+				<th class="align-cen">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+          <% @tenants.includes(:tenant_region, :tenant_type).each do |tenant| %>
+            <tr>
+              <td style="text-align: center;"><%= tenant.name %></td>
+              <td style="word-break: break-all;white-space: normal">
+                <%= tenant.address %>
+              </td>
+              <td style="text-align: center;"><%= tenant.tenant_region.try(:name) %></td>
+              <td style="text-align: center;"><%= tenant.tenant_type.try(:name) %></td>
+              <td>
+                   <div class="action-items">
+                    <a href="/admin/manage_clients/ <%= tenant.id %>/edit_tenant" title="Edit Tenant"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                   </div>
+              </td>
+            </tr>
+          <% end %>
+		</tbody>
+	</table>
+  <div class="row" style="margin:20px;">
+    <div class="col-sm-12 col-lg-12 col-md-12">
+    <%= will_paginate @tenants, renderer: BootstrapPagination::Rails %>
+    </div>
+  </div>
+	<div class="row" style="margin:20px;">
+		<div class="col-sm-12 col-lg-12 col-md-12">
+		</div>
+	</div>
+</div>
+<% else %>
+<div style="color: #d9534f;text-align: center;top: 61px;position: relative;font-size: 17px;">
+  No  results found.
+</div>
+<% end %>

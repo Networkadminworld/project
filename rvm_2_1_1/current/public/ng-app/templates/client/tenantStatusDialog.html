@@ -1,0 +1,10 @@
+<div class="modal-header fnt-lg align-cen">Are you sure want to {{ status }} this tenant?
+    <div class="x-close fa fa-times" ng-click="cancel();"></div>
+</div>
+<div class="modal-footer social">
+    <button class="btn btn-primary" ng-click="yes()" ng-disabled="changeStatusSubmitted">Yes</button>
+    <button class="btn btn-warning" ng-click="no()">No</button>
+</div>
+<div class="modal-footer ng-scope">
+    <a href="javascript:void(0);" class="fnt-sm" ng-click="cancel()">Close this window</a>
+  </div>

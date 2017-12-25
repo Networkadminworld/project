@@ -1,0 +1,107 @@
+<%#demo_graphics = demographics_calculation(age_wise_view_count,age_wise_response_count)%>
+<div class="row last">
+  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+    <div class="white-box-wrapper">
+      <div class="box-head clearfix">
+        <h3><span class="glyphicon glyphicon-stats"></span>Demograph <i class="disc">(by age group)</i></h3>
+      </div>
+      <div class="white-box">
+        <div class="demo-graph-wrapper box-fixed">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <div class="view-demograph clearfix">
+                <div class="demo-views view-female clearfix">
+                  <div class="user-icon">
+		  <%= image_tag("responsive/icon-female.png")%>
+                    <!--<img src="/assets/responsive/icon-female.png"/>-->
+                  </div>
+                  <div class="user-views">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><%=@total_count["total_f_view_count"]%></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><%=@total_count["total_f_response_count"]%></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="demo-views view-male clearfix">
+                  <div class="user-icon">
+		  <%= image_tag("responsive/icon-male.png")%>
+                    <!--<img src="/assets/responsive/icon-male.png"/>-->
+                  </div>
+                  <div class="user-views">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><%=@total_count["total_m_view_count"]%></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><%=@total_count["total_m_response_count"]%></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+              <div class="demograph-table">
+                <table class="table">
+                  <tbody>
+                    <tr class="female-row">
+                      <% @age_limits.each_with_index do |x,i| %>
+                        <td>
+                          <div class="bar"  >
+													 <% if age_wise_view_count[i]["female"] > 0 %>
+                            <div  data-toggle="tooltip" data-placement="left" title=" <%=age_wise_view_count[i]["female"]%> Views,<%=age_wise_response_count[i]["female"]%> Responses" class="female_view_percentage" style="height:<%=age_wise_view_count[i]["fpercentage"]%>%;"> </div>
+                            <% else %>
+                              <div  data-toggle="tooltip" data-placement="left" title=" <%=age_wise_view_count[i]["female"]%> Views,<%=age_wise_response_count[i]["female"]%> Responses" class="female_view_percentage" style="height: 1px;"> </div>
+														<% end %>
+														<% if age_wise_response_count[i]["female"] > 0 %>
+                              <div data-toggle="tooltip" data-placement="left" title="<%=age_wise_view_count[i]["female"]%> Views,<%=age_wise_response_count[i]["female"]%> Responses" class="female_response_percentage bar-in" style="height: <%=age_wise_response_count[i]["fpercentage"]%>%;"> &nbsp; </div>
+                            <% else %>
+                              <div data-toggle="tooltip" data-placement="left" title="<%=age_wise_view_count[i]["female"]%> Views,<%=age_wise_response_count[i]["female"]%> Responses" class="female_response_percentage bar-in" style="height: 1px;"> &nbsp; </div>
+														<% end %>
+                                 </div>
+                                </td>
+                               <%end%>
+                               </tr>
+                               <tr class="age-row">
+                               <td>&lt; 18</td>
+                            <td>18-25</td>
+                            <td>26-30</td>
+                            <td>31-35</td>
+                            <td>36-40</td>
+                            <td>41-45</td>
+                            <td>46-50</td>
+                            <td>&gt; 50</td>
+                            </tr>
+                            <tr class="male-row" >
+                              <%@age_limits.each_with_index do |x,i| %>
+                                <td>
+                                 <div class="bar" >
+																 <% if age_wise_view_count[i]["male"] > 0 %>
+                                    <div data-toggle="tooltip" data-original-title=" <%=age_wise_view_count[i]["male"]%> Views,<%=age_wise_response_count[i]["male"]%> Responses" class="male_view_percentage" style="height: <%=age_wise_view_count[i]["mpercentage"]%>%;"></div>
+
+                                <% else %>
+                                  <div data-toggle="tooltip" data-original-title=" <%=age_wise_view_count[i]["male"]%> Views,<%=age_wise_response_count[i]["male"]%> Responses" class="male_view_percentage" style="height: 1px;"></div>
+																<% end %>
+
+																<% if age_wise_response_count[i]["male"] > 0 %>
+                                    <div data-toggle="tooltip" data-original-title="<%=age_wise_view_count[i]["male"]%> Views,<%=age_wise_response_count[i]["male"]%> Responses" class="male_response_percentage bar-in" style="height: <%=age_wise_response_count[i]["mpercentage"]%>%;" > &nbsp; </div>
+                                <% else %>
+                                    <div data-toggle="tooltip" data-original-title="<%=age_wise_view_count[i]["male"]%> Views,<%=age_wise_response_count[i]["male"]%> Responses" class="male_response_percentage bar-in" style="height: 1px;" > &nbsp; </div>
+																<% end %>
+                                    </div>
+                                 </td>
+                                       <%end%>
+                                       </tr>
+                                       </tbody>
+                                       </table>
+                                       </div>
+                                       </div>
+                                       </div>
+                                       </div>
+                                       </div>
+                                       </div>
+                                       </div>

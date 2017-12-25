@@ -1,0 +1,17 @@
+<%- if controller_name != 'sessions' %>
+  <ul>
+   <li class="first"><a href="/users/auth/facebook"><!-- rails4_image_tag_impact --><%= image_tag("login_fb.png", alt: "facebook") %><!-- <img src="/assets/login_fb.png" alt="facebook" /> --></a></li>
+   <li><a href="/users/auth/google_oauth2"><!-- rails4_image_tag_impact --><%= image_tag("login_google.png", alt: "google") %><!--<img src="/assets/login_google.png" alt="google" />--></a></li>
+   <li><a href="/users/auth/linkedin"><!-- rails4_image_tag_impact --><%= image_tag("login_in.png", alt: "Linkedin") %><!--<img src="/assets/login_in.png" alt="Linkedin" />--></a></li>
+   <li><a href="/users/auth/twitter"><!-- rails4_image_tag_impact --><%= image_tag("login_twiter.png", alt: "twitter") %><!--<img src="/assets/login_twiter.png" alt="twitter" />--></a></li>
+  </ul>
+<% end -%>
+
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+	<ul>
+      <li class="first"><a href="/users/auth/facebook"><!-- rails4_image_tag_impact --><%= image_tag("login_fb.png", alt: "facebook") %><!-- <img src="/assets/login_fb.png" alt="facebook" /> --></a></li>
+      <li><a href="/users/auth/google_oauth2"><!-- rails4_image_tag_impact --><%= image_tag("login_google.png", alt: "google") %><!--<img src="/assets/login_google.png" alt="google" />--></a></li>
+      <li><a href="/users/auth/linkedin"><!-- rails4_image_tag_impact --><%= image_tag("login_in.png", alt: "Linkedin") %><!--<img src="/assets/login_in.png" alt="Linkedin" />--></a></li>
+      <li><a href="/users/auth/twitter"><!-- rails4_image_tag_impact --><%= image_tag("login_twiter.png", alt: "twitter") %><!--<img src="/assets/login_twiter.png" alt="twitter" />--></a></li>
+	</ul>
+<% end -%>

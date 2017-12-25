@@ -1,0 +1,23 @@
+##
+port: 3010
+user: inquirly
+address: 0.0.0.0
+group: inquirly
+pid: &quot;/var/www/apps/inquirly/current/tmp/pids/thin.pid&quot;
+timeout: 300
+wait: 30
+log: &quot;/var/www/apps/inquirly/current/log/thin.log&quot;
+#debug: true
+max_conns: 1024
+require: []
+environment: production
+max_persistent_conns: 512
+servers: 2
+onebyone: true
+#trace: yes
+#threaded: true
+no-epoll: true
+daemonize: true
+socket: &quot;/var/www/apps/inquirly/current/tmp/sockets/thin.sock&quot;
+chdir: &quot;/var/www/apps/inquirly/current&quot;
+tag: thin_v2

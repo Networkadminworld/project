@@ -1,0 +1,53 @@
+                  <%if @roles.present? %>
+                      <div class="table-responsive">
+                        <table class="table-bordered table-striped table-condensed cf">
+                          <thead class="cf">
+                          <tr>
+                            <th class="quescol">Name</th>
+                            <th class="th-actions">Actions</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <% @roles.each do |role| %>
+                              <tr>
+                                <td class="quescol">
+                                  <%= role.name %>
+                                </td>
+                                <td>
+
+              <div class="action-items">
+                    <a title="<%= Role::TENANT_ROLES.include?(role.name) ? "Show" : "Edit"%>" href="/manage_roles/<%=role.id %>/edit"><span class="glyphicon glyphicon-<%= Role::TENANT_ROLES.include?(role.name) ? "search" : "pencil" %>"></span></a>
+              </div>
+
+                                </td>
+                              </tr>
+                          <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--//. end question list -->
+                      <div class="row">
+                        <div class="pull-right">
+                        </div>
+                      </div>
+                  <%else%>
+                      <div class="table-responsive">
+                        <table class="table-bordered table-striped table-condensed cf no-data">
+                          <thead class="cf">
+                          <tr>
+                            <th class="quescol"></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                            <td>No Roles found!</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  <%end%>
+                </div>
+                <div class="btn-wrap text-center btn-update-info">
+                 <%=link_to 'Create new role',"/manage_roles/new",:class=>'button medium orange', :id=>'navButton'%>
+                </div>
+

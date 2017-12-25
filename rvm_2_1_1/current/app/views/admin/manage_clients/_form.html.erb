@@ -1,0 +1,135 @@
+<div class="container">
+  <div class="stepwizard col-md-offset-3">
+    <div class="stepwizard-row setup-panel">
+      <div class="stepwizard-step" id="user-tab">
+        <a href="#step-1" type="button" class="btn btn-primary btn-circle btn-override"><i class="glyphicon glyphicon-user glyph-icon"></i></a>
+        <p>Client Info</p>
+      </div>
+      <div class="stepwizard-step" id="company-tab">
+        <a href="#step-2" type="button" class="btn btn-default btn-circle btn-override" disabled="disabled"><i class="glyphicon glyphicon-picture glyph-icon"></i></a>
+        <p>Company Info</p>
+      </div>
+      <div class="stepwizard-step" id="plan-tab">
+        <a href="#step-3" type="button" class="btn btn-default btn-circle btn-override" disabled="disabled"><i class="glyphicon glyphicon-usd glyph-icon"></i></a>
+        <p>Pricing Plan Info</p>
+      </div>
+    </div>
+  </div>
+  <form role="user_form" action="" method="post">
+    <div class="row setup-content" id="step-1">
+      <div class="col-xs-6 col-md-offset-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">First Name</label>
+            <input type="text" required="required" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name"  />
+            <span class="error help-inline" id="error_first_name" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Last Name</label>
+            <input type="text" required="required" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" />
+            <span class="error help-inline" id="error_last_name" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Email</label>
+            <input type="text" required="required" class="form-control" id="email" name="email" placeholder="Enter email" />
+            <span class="error help-inline" id="error_email" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Mobile</label>
+            <input type="text" required="required" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile" />
+            <span class="error help-inline" id="error_mobile" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Password</label>
+            <input type="password" required="required" class="form-control" id="password" name="password" placeholder="Enter password" />
+            <span class="error help-inline" id="error_password" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Password Confirmation</label>
+            <input type="password" required="required" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Enter password confirmation" />
+            <span class="error help-inline" id="error_password_confirmation" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Role</label>
+            <select name="role_id" id= "role_id" class="form-control">
+              <% Role.where(name: 'Client-Admin').each do |role|%>
+              <option value="<%= role.id %>"><%= role.name %></option>
+              <% end %>
+            </select>
+          </div>
+
+          <button class="btn btn-primary btn-lg pull-right" id="user-step" type="button"  style="font-size: 14px;">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="row setup-content" id="step-2">
+      <div class="col-xs-6 col-md-offset-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">Company Name</label>
+            <input  type="text" required="required" class="form-control" name="company_name" id="company_name" placeholder="Enter Company Name" />
+            <span class="error help-inline" id="error_name" style="color: red;"></span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Company Address</label>
+            <input  type="text" required="required" class="form-control" name="company_address" id="company_address" placeholder="Enter Company Address"  />
+          </div>
+          <div class="form-group">
+            <label class="control-label">Industry</label>
+            <select name="industry_id" class="form-control" name="industry_id" id="industry_id">
+              <%= IndustryTag.list.each do |industry|%>
+                <option value="<%= industry["id"] %>"><%= industry["industry"] %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Tags</label>
+            <input type="text" required="required" class="form-control tagsinput" data-role="tagsinput" name="tags" id="tags" placeholder="Enter Tags"  />
+          </div>
+          <button class="btn btn-primary btn-lg pull-right" id="company-step" type="button" style="font-size: 14px;">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="row setup-content" id="step-3">
+      <div class="col-xs-6 col-md-offset-3">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">Choose Plan</label>
+            <select class="form-control" name="pricing_plan_id" id="pricing_plan_id">
+              <% PricingPlan.all.order(:id).each do |plan|%>
+                  <option value="<%= plan.id %>"><%= plan.name %></option>
+              <% end %>
+            </select>
+            <a style="top: 193px;cursor: pointer;" id="show-hide-details">Show Details</a>
+          </div>
+          <div id="render_plan_detail"></div>
+          <div class="date-picker">
+            <div class="row">
+              <div class="col-sm-6 col-lg-6 col-md-6">
+                <label>Start Date</label>
+                <div class="form-group">
+                  <input type="text" tabindex="4" placeholder="Start Date" name="user[start_date]" id="start_date" class="text_field rc_5 form-control input-medium date datepicker fliter-from-date">
+                  <p><span id="error_start_date" style="width:190px;color: red;display: none;">Please select the start date</span></p>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-6 col-md-6">
+                <label> Expiry In(months)</label>
+                <div class="form-group">
+                  <select name="expiry_in" class="form-control" id="expiry_in">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-success btn-lg pull-right" type="submit" style="font-size: 14px;" id="pricing-plan-step">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

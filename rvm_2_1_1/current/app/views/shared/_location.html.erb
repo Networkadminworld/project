@@ -1,0 +1,74 @@
+ <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id ="location_partial">
+    <div class="white-box-wrapper">
+      <div class="box-head clearfix">
+        <h3><span class="glyphicon glyphicon-globe"></span>Location</h3>
+      </div>
+      <div class="white-box">
+        <div class="location-wrapper box-fixed">
+          <ul class="location-list">
+            <%  count=0%>
+            <%total_known_view_count = 0%>
+            <%total_known_response_count = 0%>
+            <%countries = []%>
+            <%@location_count.each do |country| %>
+              <%if 'a' == 'a'%>
+                <li>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                      <div class="location-name">
+                        <h3><span class="icon-location">&nbsp;</span> <span class="locatename"><%= find_country(country[0]) %></span></h3>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                      <div class="shared-counts text-right">
+                        <div class="shared-views">
+                          <span class="glyphicon glyphicon-eye-open"></span>
+                          <% from_date = params["from_date"].present? ? params["from_date"] : nil %>
+                          <% to_date = params["to_date"].present? ? params["to_date"] : nil %>
+                          <% category_id = params["category"].present? ? params["category"] : nil %>
+                          <%status = @question.present? ? "question" : "dashboard"%>
+                          <%id= @question.present? ? @question.id : current_user.id%>
+                          <%# total_view_count = get_location_based_view_count(country.value,current_user.id,params,'dashboard') %>
+                          <span class="share-ct"><a href="/views/question_view_logs?country=<%= country[0] %><% if @question.blank? %><%= "&from_date=#{from_date}" if from_date.present? %><%= "&to_date=#{to_date}" if to_date.present? %><%= "&category_id=#{category_id}" if category_id.present? && category_id.to_i != 0 %><% else %>&slug=<%= @question.slug %><% end %>" class="location-view-response-count"><strong><%=country[1]["view"]%></strong></a></span>
+                        </div>
+                        <%# total_response_count = get_location_based_response_count(country.value,nil,current_user.id,params,'dashboard') %>
+                        <div class="shared-response">
+                          <span class="glyphicon glyphicon-envelope"></span>
+                          <span class="share-ct"><a href="/responses/question_response_logs?country=<%= country[0] %><% if @question.blank? %><%= "&from_date=#{from_date}" if from_date.present? %><%= "&to_date=#{to_date}" if to_date.present? %><%= "&category_id=#{category_id}" if category_id.present? && category_id.to_i != 0 %><% else %>&slug=<%= @question.slug %><% end %>" class="location-view-response-count"><strong><%=country[1]["response"]%></strong></a></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <%  total_known_view_count+= country[1]["view"].present? ? country[1]["view"] : 0%>
+                <%  total_known_response_count+= country[1]["response"].present? ? country[1]["response"] : 0 %>
+              <%end%>
+            <%end%>
+            <%unknown_view= calculate_unknown_count(@total_views_count,total_known_view_count) %>
+            <%unknown_response= calculate_unknown_count(@total_responses_count,total_known_response_count) %>
+            <li>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <div class="location-name">
+                    <h3><span class="icon-location">&nbsp;</span> <span class="locatename">Unknown</span></h3>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <div class="shared-counts text-right">
+                    <div class="shared-views">
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                      <span class="share-ct"><strong><%= unknown_view > 0 ? unknown_view : 0 %></strong></span>
+                    </div>
+                    <div class="shared-response">
+                      <span class="glyphicon glyphicon-envelope"></span>
+                      <span class="share-ct"><strong><%= unknown_response > 0 ? unknown_response : 0 %></strong></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>

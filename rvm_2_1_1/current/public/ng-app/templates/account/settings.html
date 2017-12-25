@@ -1,0 +1,99 @@
+<div class="row M0">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" data-ng-animate="'fade'">{{alert.msg}}</alert>
+          <div class="col-sm-12 col-md-12 col-lg-12 P0 panel-container">
+            <div class="container-fluid P0M0">
+
+              <div class="col-sm-8 col-md-8 col-lg-8">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">DETAILS</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inq-panel-container">
+                    <div class="container-fluid">
+                      <form class="inq-from" name="form.userForm">
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">First Name</label>
+                          <input type="text" ng-model="settings.first_name" class="form-control" placeholder="Enter First name">
+                            <span style="color:red" class="help-block" ng-show="form.userForm.first_name.$error.serverMessage">{{form.userForm.first_name.$error.serverMessage}}</span>
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Last Name</label>
+                          <input type="text" ng-model="settings.last_name" class="form-control" placeholder="Enter Last name">
+                          <span style="color:red" class="help-block" ng-show="form.userForm.last_name.$error.serverMessage">{{form.userForm.last_name.$error.serverMessage}}</span>
+                        </div>
+
+                        <div class="form-group inq-form-group">
+                          <label class="fnt-sm">Email</label>
+			              <a style="float:right;" ng-click="changePassword()" data-ng-show="!isTenantUser">Change Password</a>
+                          <input type="text" ng-model="settings.email" class="form-control" placeholder="Enter Email address">
+                            <span style="color:red" class="help-block" ng-show="form.userForm.email.$error.serverMessage">{{form.userForm.email.$error.serverMessage}}</span>
+                        </div>
+
+                          <div class="form-group inq-form-group">
+                              <label class="fnt-sm">Mobile</label>
+                              <input type="text" ng-model="settings.mobile" class="form-control" placeholder="Enter mobile number with Country code (e.g) 91123456789">
+                              <span style="color:red" class="help-block" ng-show="form.userForm.mobile.$error.serverMessage">{{form.userForm.mobile.$error.serverMessage}}</span>
+                          </div>
+
+                          <div class="form-group inq-form-group">
+                              <label class="fnt-sm">Currency</label>
+                              <select class="form-control" ng-model="settings.currency_id">
+                                  <option  ng-selected="{{ currency.id == settings.currency_id}}" ng-repeat="currency in allCurrencies" value="{{currency.id}}">{{currency.name}}</option>
+                              </select>
+                              <span style="color:red" class="help-block" ng-show="form.userForm.currency.$error.serverMessage">{{form.userForm.currency.$error.serverMessage}}</span>
+                          </div>
+
+                        <div class="form-actions row">
+                          <button type="button" class="col-sm-4 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 btn btn-warning btn-lg" ng-click="saveUserDetails(settings)">Save</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-sm-4 col-md-4 col-lg-4 Pl0">
+
+                <div class="inq-panel">
+                  <div class="inq-panel-title-bar">
+                    <div class="row">
+                      <div class="col-md-12 col-md-12 col-lg-12">
+                        <div class="inq-panel-title fnt-sm">PROFILE PHOTO</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="inq-panel-container">
+                    <div class="container-fluid" style="padding-bottom:20px;">
+                      <div class="row">
+                        <div class="inq-upload-img col-md-12 col-md-12 col-lg-12">
+                          <div class="img-container">
+                            <img ng-src="{{ user_profile }}" ngf-thumbnail="picFile[0]" style="width:100%;">
+                            <div class="actions-container" ng-show="!imageUploading">
+                              <span class="action"><a href="javascript:void(0);" accept="image/*" ngf-select="" ng-model="picFile" name="file" ngf-change="generateThumb(picFile[0], $files); upload_image(picFile);" ngf-max-size="5000000">Change</a></span>
+                              <span class="action-seperator">|</span>
+                              <span class="action"> <a ng-model="removePic" ng-click="removeImage(settings)">Delete</a></span>
+                            </div>
+                            <div class="actions-container" style="color:white;" ng-show="imageUploading">
+                                  Loading: <span class="action"><img src="/ng-app/Images/ajax_loading.gif"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>

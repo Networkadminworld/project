@@ -1,0 +1,34 @@
+<%unless @question.blank?%>
+          <div class="col-md-4">
+
+            <div class="white-box-wrapper has-bot">
+              <div class="box-head clearfix">
+                <h3><span class="glyphicon glyphicon-star"></span>Popular Categories</h3>
+              </div>
+                      <div class="white-box">
+          <div class="word-cloud box-fixed" id ="word_cloud_dashboard" >
+
+          </div>
+        </div>
+              <div class="box-foot wc">
+                <ul class="foot-links list-inline">
+                  <% click_link = "sentiment_analysis(#{ @question.id })" %>
+                  <li><%= link_to "Sentiment ","javascript:void(0);", :onClick => click_link,:class => "load", :tabindex => 8 %></li>
+                  <li><a href="javascript:void(0);" id="keywords_list_id" tabindex=9>Keywords</a></li>
+                  <li class="text-right"><a href="/word/answers?slug=<%= @question.slug %>" tabindex=10>Comments</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+<%else%>
+
+        <div class="white-box">
+          <div class="word-cloud box-fixed" id ="word_cloud_dashboard" ></div>
+        </div>
+        <div class="box-foot">
+          <ul class="foot-links text-center">
+            <li></li>
+          </ul>
+        </div>
+<%end%>
