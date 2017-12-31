@@ -6,7 +6,7 @@
 # dockerfile/java renamed to java
 ### 
 FROM ubuntu:16.04
-MAINTAINER vikas chennybirru@gmail.com
+MAINTAINER rajkisore
 
 EXPOSE 8080
 

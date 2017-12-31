@@ -23,41 +23,32 @@ RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install 2.1.1"
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 RUN /bin/bash -l -c "rvm use 2.1.1 --default"
-
 RUN /bin/bash -l -c "rvm use 2.1.1@Rails4.1_inquirly --create"
 RUN /bin/bash -l -c "rvm use ruby-2.1.1@Rails4.1_inquirly --default"
-RUN mkdir -p /var/www/apps/inquirly/
+RUN mkdir -p /var/www/apps/inquirly/ && mkdir -p /home/inquirly/markethubs_repo
 WORKDIR /var/www/apps/inquirly/
-ADD markethubs_repo /var/www/apps/inquirly/
+ADD markethubs_repo /home/inquirly/markethubs_repo
+WORKDIR /home/inquirly/markethubs_repo
+RUN ln -s /home/inquirly/markethubs_repo/www_files/current  /var/www/apps/inquirly/
 RUN /bin/bash -l -c "gem install pg -v '0.14.1'"
-
+RUN /bin/bash -l -c "gem install rmagick"
 RUN /bin/bash -l -c "gem install bundler"
-WORKDIR /var/www/apps/inquirly/markethubs_repo/www_files/current/
+WORKDIR /var/www/apps/inquirly/current/
 RUN /bin/bash -l -c "bundle install"
-
 RUN apt-get install redis-server -y
 #service redis-server start
-
-RUN /bin/bash -l -c "bundle exec whenever --update-crontab -set enviroment=production"
-RUN  mkdir /var/www/apps/inquirly/markethubs_repo/www_files/current/tmp
-RUN /bin/bash -l -c "bundle exec rake assets:precompile RAILS_ENV=production"
+RUN  mkdir -p /var/www/apps/inquirly/markethubs_repo/www_files/current/tmp
 ADD thin.yml /var/www/apps/inquirly/current/
 WORKDIR /var/www/apps/inquirly/current/
-RUN /bin/bash -l -c "thin config -C config/thin.yml -c /var/www/apps/inquirly/current/ --servers l -e production"
-RUN /bin/bash -l -c "thin restart -C /var/www/apps/inquirly/current/config/thin.yml"
-
 RUN mkdir /etc/supervisor && mkdir /etc/supervisor/conf.d && mkdir /var/log/supervisor && chmod 775 /var/log/supervisor
 ADD supervisord.conf  /etc/supervisor/
 RUN supervisord -c /etc/supervisor/supervisord.conf
 # Define mountable directories.
 VOLUME ["/etc/supervisor/conf.d"]
-
 # Define working directory.
 WORKDIR /etc/supervisor/conf.d
-
 RUN echo "root:root" | chpasswd
 RUN mkdir -p /var/log/inquirly_modules && chmod 775 /var/log/inquirly_modules
-
 RUN apt-get clean
 # Define default command.
 CMD /usr/local/bin/supervisord -n
